@@ -7,7 +7,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import passport from "./auth/google";
 import authRoutes from "./routes/auth";
-
+import contentRoutes from "./routes/content";
 
 
 const app = express();
@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use("/auth", authRoutes);
+app.use("/content", contentRoutes);
 
 mongoose.connect(process.env.MONGO_URI!).then(() => {
   console.log("✅ MongoDB connected");
