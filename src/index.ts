@@ -17,9 +17,9 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use("/auth", authRoutes);
 
-// mongoose.connect(process.env.MONGO_URI!).then(() => {
-//   console.log("✅ MongoDB connected");
-// });
+mongoose.connect(process.env.MONGO_URI!).then(() => {
+  console.log("✅ MongoDB connected");
+});
 
 app.get("/", (_, res) => res.send("Blogo backend running 🚀"));
 

@@ -3,7 +3,9 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { User } from "../models/User";
 
 
-console.log("Google Client ID:", process.env.GOOGLE_CLIENT_ID);
+// console.log("Google Client ID:", process.env.GOOGLE_CLIENT_ID);
+// console.log("JWT secret:", process.env.JWT_SECRET);
+
 passport.use(
   new GoogleStrategy(
     {
