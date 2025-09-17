@@ -8,7 +8,8 @@ import cookieParser from "cookie-parser";
 import passport from "./auth/google";
 import authRoutes from "./routes/auth";
 import contentRoutes from "./routes/content";
-
+import linkedinAuthRoutes from "./routes/linkedinAuth";
+import publishRoutes from "./routes/publish";
 
 const app = express();
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
@@ -17,6 +18,8 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use("/auth", authRoutes);
 app.use("/content", contentRoutes);
+app.use(linkedinAuthRoutes);
+app.use("/publish", publishRoutes);
 
 mongoose.connect(process.env.MONGO_URI!).then(() => {
   console.log("✅ MongoDB connected");

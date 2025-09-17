@@ -1,12 +1,17 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, InferSchemaType, Document, Types } from "mongoose";
 
-interface IUser {
+export interface IUser extends Document {
+  // _id: string;
   googleId: string;
   email: string;
   name: string;
   avatar: string;
-  accessToken?: string; // for LinkedIn/Meta later
+  accessToken?: string;
+  linkedinToken?: string
+ // for LinkedIn/Meta later
 }
+export interface UserDocument extends IUser, Document {}
+// export type UserDocument = IUser & Document;
 
 const userSchema = new Schema<IUser>({
   googleId: { type: String, required: true, unique: true },
@@ -14,6 +19,8 @@ const userSchema = new Schema<IUser>({
   name: String,
   avatar: String,
   accessToken: String,
+  linkedinToken: String
 });
+// export type IUser = InferSchemaType<typeof userSchema> & Document;
 
 export const User = model<IUser>("User", userSchema);
