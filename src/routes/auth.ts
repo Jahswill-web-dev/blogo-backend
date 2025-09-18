@@ -2,6 +2,7 @@ import { Router } from "express";
 import passport from "passport";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User";
+import jwtAuth from "../middleware/jwtAuth";
 
 const router = Router();
 
@@ -19,7 +20,7 @@ router.get(
   }
 );
 
-router.get("/me", async (req, res) => {
+router.get("/me", jwtAuth, async (req, res) => {
   try {
     const token = req.cookies.token;
     if (!token) return res.status(401).json({ error: "Not logged in" });

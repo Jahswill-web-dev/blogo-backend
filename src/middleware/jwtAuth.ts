@@ -7,17 +7,27 @@ interface JwtPayload {
 }
 
 export default async function jwtAuth(
-    req: Request & { user?: any },
+    req: Request & { user?: any, cookies?: any },
     res: Response,
     next: NextFunction
 ) {
     try {
+        // Check Authorization header first
+        let token = undefined;
         const authHeader = req.headers["authorization"];
-        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        if (authHeader && authHeader.startsWith("Bearer ")) {
+            token = authHeader.split(" ")[1];
+        }
+
+        // If not in header, check cookie
+        if (!token && req.cookies?.token) {
+            token = req.cookies.token;
+        }
+
+        if (!token) {
             return res.status(401).json({ error: "No token provided" });
         }
 
-        const token = authHeader.split(" ")[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
 
         const user = await User.findById(decoded.id);
