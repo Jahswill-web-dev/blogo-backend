@@ -7,8 +7,9 @@ export interface IUser extends Document {
   name: string;
   avatar: string;
   accessToken?: string;
-  linkedinToken?: string
- // for LinkedIn/Meta later
+  linkedinToken?: string;
+  facebookPageId?: string; 
+  facebookPageToken?: string;
 }
 export interface UserDocument extends IUser, Document {}
 // export type UserDocument = IUser & Document;
@@ -19,7 +20,9 @@ const userSchema = new Schema<IUser>({
   name: String,
   avatar: String,
   accessToken: String,
-  linkedinToken: String
+  linkedinToken: String,
+  facebookPageId: String,
+  facebookPageToken: String,
 });
 // export type IUser = InferSchemaType<typeof userSchema> & Document;
 
