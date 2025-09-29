@@ -4,7 +4,7 @@ import { Router, Request, Response } from "express";
 import jwtAuth from "../middleware/jwtAuth";
 import axios from "axios";
 import { User } from "../models/User";
-import { decryptToken } from "../services/facebookToken";
+import { decryptToken } from "../services/tokendecrypt";
 
 const router = Router();
 

@@ -8,10 +8,14 @@ export interface IUser extends Document {
   avatar: string;
   accessToken?: string;
   linkedinToken?: string;
-  facebookPageId?: string; 
+  facebookPageId?: string;
   facebookPageToken?: string;
+  xUserId?: string;
+  xAccessToken?: string;
+  xRefreshToken?: string;       
+  xTokenExpiry?: Date;
 }
-export interface UserDocument extends IUser, Document {}
+export interface UserDocument extends IUser, Document { }
 // export type UserDocument = IUser & Document;
 
 const userSchema = new Schema<IUser>({

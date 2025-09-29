@@ -23,9 +23,11 @@ const router = Router();
 router.get("/auth/facebook", jwtAuth, (req, res) => {
   const appId = process.env.FACEBOOK_APP_ID!;
   const redirectUri = encodeURIComponent(process.env.FACEBOOK_REDIRECT_URI!);
-  const scope = "pages_manage_posts,pages_read_engagement,pages_show_list";
-  const state = "fb_conn_" + (req.user as any)._id; // optional, track which user
-  const url = `https://www.facebook.com/v23.0/dialog/oauth?client_id=${appId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code&state=${state}`;
+  const scope = "pages_manage_posts,pages_show_list";
+  const state = "a3f1c7d9e245b18a6d34f9b2c17e8d01" + (req.user as any)._id;
+  const configId = process.env.FACEBOOK_CONFIGURATION_ID!;
+  const url = `https://www.facebook.com/v23.0/dialog/oauth?client_id=${appId}&redirect_uri=${redirectUri}&scope=pages_manage_posts,pages_show_list&response_type=code&state=${state}`
+
   res.redirect(url);
 });
 
@@ -41,7 +43,7 @@ router.get("/auth/facebook/callback", jwtAuth, async (req: Request, res: Respons
 
   try {
     // Exchange code for user access token
-    const tokenRes = await axios.get(`https://graph.facebook.com/v17.0/oauth/access_token`, {
+    const tokenRes = await axios.get(`https://graph.facebook.com/v23.0/oauth/access_token`, {
       params: {
         client_id: process.env.FACEBOOK_APP_ID!,
         client_secret: process.env.FACEBOOK_APP_SECRET!,
@@ -53,7 +55,7 @@ router.get("/auth/facebook/callback", jwtAuth, async (req: Request, res: Respons
     const userAccessToken = tokenRes.data.access_token;
 
     // Use user token to fetch Pages managed by this user (and page access tokens)
-    const pagesRes = await axios.get(`https://graph.facebook.com/v17.0/me/accounts`, {
+    const pagesRes = await axios.get(`https://graph.facebook.com/v23.0/me/accounts`, {
       params: {
         access_token: userAccessToken,
       }

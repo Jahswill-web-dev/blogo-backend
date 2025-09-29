@@ -6,7 +6,7 @@ import { User } from "../models/User";
 const router = Router();
 
 // POST /publish/linkedin
-router.post("/publish/linkedin", jwtAuth, async (req, res) => {
+router.post("/linkedin", jwtAuth, async (req, res) => {
     try {
         const { post } = req.body;
         if (!post) return res.status(400).json({ error: "Post text required" });
