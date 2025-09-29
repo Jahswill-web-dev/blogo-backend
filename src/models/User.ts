@@ -12,7 +12,7 @@ export interface IUser extends Document {
   facebookPageToken?: string;
   xUserId?: string;
   xAccessToken?: string;
-  xRefreshToken?: string;       
+  xRefreshToken?: string;
   xTokenExpiry?: Date;
 }
 export interface UserDocument extends IUser, Document { }
@@ -27,6 +27,10 @@ const userSchema = new Schema<IUser>({
   linkedinToken: String,
   facebookPageId: String,
   facebookPageToken: String,
+  xUserId: String,
+  xAccessToken: String,
+  xRefreshToken: String,
+  xTokenExpiry: Date,
 });
 // export type IUser = InferSchemaType<typeof userSchema> & Document;
 

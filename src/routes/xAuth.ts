@@ -50,6 +50,8 @@ router.get("/auth/x", jwtAuth, (req, res) => {
 //  Handle callback
 router.get("/auth/x/callback", jwtAuth, async (req: Request, res: Response) => {
     const { code } = req.query;
+    // console.log("X Auth callback:", req.user);
+    // console.log("DEBUG session verifier:", (req.session as any).xCodeVerifier);
     if (!code) return res.status(400).json({ error: "Missing code" });
     const clientId = process.env.X_CLIENT_ID!;
     const clientSecret = process.env.X_CLIENT_SECRET!;
@@ -72,7 +74,7 @@ router.get("/auth/x/callback", jwtAuth, async (req: Request, res: Response) => {
                 }
             }
         );
-
+        // console.log("DEBUG token response:", tokenRes.data);
         const { access_token, refresh_token, expires_in } = tokenRes.data;
         const encryptedAccess = encryptToken(access_token);
         const encryptedRefresh = encryptToken(refresh_token);
