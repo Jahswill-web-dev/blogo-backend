@@ -5,6 +5,7 @@ import crypto from "crypto";
 import axios from "axios";
 import { User } from "../models/User";
 import { decryptToken } from "../services/tokendecrypt";
+import { getValidAccessToken } from "../services/xTokenService";
 const router = Router();
 const ENCRYPTION_KEY = process.env.TOKEN_ENCRYPTION_KEY!;
 const IV_LENGTH = 16;
@@ -96,20 +97,20 @@ router.get("/auth/x/callback", jwtAuth, async (req: Request, res: Response) => {
 // posting a tweet
 router.post("/x/tweet", jwtAuth, async (req: Request, res: Response) => {
     try {
-        const user = await User.findById((req.user as any)._id);
-        if (!user?.xAccessToken) {
-            return res.status(400).json({ error: "No X account connected" });
-        }
-
-
-        const decryptedAccess = decryptToken(user.xAccessToken);
+         const access_token = await getValidAccessToken((req.user as any)._id);
+         
+        // const user = await User.findById((req.user as any)._id);
+        // if (!user?.xAccessToken) {
+        //     return res.status(400).json({ error: "No X account connected" });
+        // }
+        // const decryptedAccess = decryptToken(user.xAccessToken);
 
         const tweetRes = await axios.post(
             "https://api.x.com/2/tweets",
             { text: req.body.text },
             {
                 headers: {
-                    "Authorization": `Bearer ${decryptedAccess}`,
+                    "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json",
                 }
             }
