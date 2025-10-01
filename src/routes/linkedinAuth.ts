@@ -2,6 +2,7 @@ import { Router, Request, Response, RequestHandler } from "express";
 import axios from "axios";
 import jwtAuth from "../middleware/jwtAuth";
 import { User, IUser, UserDocument } from "../models/User";
+import { encryptToken } from "../services/tokendecrypt";
 // import { Document } from "mongoose";
 
 // interface AuthenticatedRequest extends Request {
@@ -14,7 +15,7 @@ router.get("/auth/linkedin", jwtAuth, (req, res) => {
     const scope = encodeURIComponent("openid profile w_member_social");
     const redirectUri = encodeURIComponent(process.env.LINKEDIN_REDIRECT_URI!);
     const state = "someRandomString123";
-    const url = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${process.env.LINKEDIN_CLIENT_ID}&redirect_uri=${redirectUri}&scope=${scope}&state=${state}`;
+    const url = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${process.env.LINKEDIN_CLIENT_ID}&redirect_uri=${redirectUri}&scope=${scope}&state=${process.env.RANDOM_STATE || state}`;
     res.redirect(url);
 });
 
@@ -40,11 +41,14 @@ const handler: RequestHandler = async (req, res) => {
                 headers: { "Content-Type": "application/x-www-form-urlencoded" }
             }
         );
+        // console.log("LinkedIn token response:", tokenRes.data);
+        const { access_token, refresh_token, expires_in, refresh_token_expires_in } = tokenRes.data;
+        const expiryDate = new Date(Date.now() + expires_in * 1000);
+        const refreshTokenExpiry = new Date(Date.now() + refresh_token_expires_in * 1000);
 
-        const accessToken = tokenRes.data.access_token;
         const meRes = await axios.get("https://api.linkedin.com/v2/userinfo", {
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${access_token}`,
                 "LinkedIn-Version": "202401", // Always include API version
             },
         });
@@ -53,7 +57,10 @@ const handler: RequestHandler = async (req, res) => {
         const linkedinUrn = `urn:li:person:${personId}`;
 
         await User.findByIdAndUpdate((req.user as any)._id, {
-            linkedinToken: accessToken,
+            linkedinToken: access_token ? encryptToken(access_token) : undefined,
+            linkedinRefreshToken: refresh_token ? encryptToken(refresh_token) : undefined,
+            linkedinTokenExpiry: expiryDate,
+            linkedinRefreshTokenExpiry: refreshTokenExpiry,
             linkedinUrn: linkedinUrn,
         });
 

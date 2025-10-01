@@ -9,6 +9,7 @@ export interface IUser extends Document {
   accessToken?: string;
   linkedinToken?: string;
   linkedinTokenExpiry?: Date;
+  linkedinRefreshTokenExpiry?: Date;
   linkedinRefreshToken?: string;
   facebookPageId?: string;
   facebookPageToken?: string;
@@ -29,6 +30,7 @@ const userSchema = new Schema<IUser>({
   accessToken: String,
   linkedinToken: String,
   linkedinTokenExpiry:Date,
+  linkedinRefreshTokenExpiry:Date,
   linkedinRefreshToken: String,
   linkedinUrn: String,
   facebookPageId: String,
