@@ -2,7 +2,7 @@ import { Router, Request, Response, RequestHandler } from "express";
 import axios from "axios";
 import jwtAuth from "../middleware/jwtAuth";
 import { User, IUser, UserDocument } from "../models/User";
-import { Document } from "mongoose";
+// import { Document } from "mongoose";
 
 // interface AuthenticatedRequest extends Request {
 //     user?: IUser & Document;
@@ -11,9 +11,9 @@ const router = Router();
 
 // Step 1: Redirect user to LinkedIn consent page
 router.get("/auth/linkedin", jwtAuth, (req, res) => {
-    const scope = encodeURIComponent("openid profile");
+    const scope = encodeURIComponent("openid profile w_member_social");
     const redirectUri = encodeURIComponent(process.env.LINKEDIN_REDIRECT_URI!);
-    const state = "someRandomString123"; 
+    const state = "someRandomString123";
     const url = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${process.env.LINKEDIN_CLIENT_ID}&redirect_uri=${redirectUri}&scope=${scope}&state=${state}`;
     res.redirect(url);
 });
@@ -40,15 +40,24 @@ const handler: RequestHandler = async (req, res) => {
                 headers: { "Content-Type": "application/x-www-form-urlencoded" }
             }
         );
-        // console.log("LinkedIn token response:", tokenRes.data);
-        const accessToken = tokenRes.data.access_token;
 
-        // Save token to user record
+        const accessToken = tokenRes.data.access_token;
+        const meRes = await axios.get("https://api.linkedin.com/v2/userinfo", {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "LinkedIn-Version": "202401", // Always include API version
+            },
+        });
+        // console.log("LinkedIn profile data:", meRes.data);
+        const personId = meRes.data.sub;
+        const linkedinUrn = `urn:li:person:${personId}`;
+
         await User.findByIdAndUpdate((req.user as any)._id, {
             linkedinToken: accessToken,
+            linkedinUrn: linkedinUrn,
         });
 
-        res.json({ success: true });
+        // res.json({ success: true });
         res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
     } catch (err) {
         console.error(err);

@@ -13,7 +13,7 @@ import linkedinAuthRoutes from "./routes/linkedinAuth";
 import publishRoutes from "./routes/publish";
 import facebookAuthRoutes from "./routes/facebookAuth";
 import xAuthRoutes from "./routes/xAuth";
-
+import linkedinPostRoutes from "./routes/linkedinPost";
 
 const app = express();
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
@@ -33,6 +33,7 @@ app.use(
 app.use("/auth", authRoutes);
 app.use("/content", contentRoutes);
 app.use(linkedinAuthRoutes);
+app.use(linkedinPostRoutes);
 app.use("/publish", publishRoutes);
 app.use(facebookAuthRoutes);
 app.use(xAuthRoutes);
