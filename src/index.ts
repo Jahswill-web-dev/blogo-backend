@@ -14,6 +14,9 @@ import publishRoutes from "./routes/publish";
 import facebookAuthRoutes from "./routes/facebookAuth";
 import xAuthRoutes from "./routes/xAuth";
 import linkedinPostRoutes from "./routes/linkedinPost";
+import userProfileRoutes from "./routes/userProfile";
+import contentPlanRoutes from "./routes/contentPlan";
+
 
 const app = express();
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
@@ -37,6 +40,9 @@ app.use(linkedinPostRoutes);
 app.use("/publish", publishRoutes);
 app.use(facebookAuthRoutes);
 app.use(xAuthRoutes);
+app.use("/profile", userProfileRoutes);
+app.use("/content-plan", contentPlanRoutes);
+
 mongoose.connect(process.env.MONGO_URI!).then(() => {
   console.log("✅ MongoDB connected");
 });

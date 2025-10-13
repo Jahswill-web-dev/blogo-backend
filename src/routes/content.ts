@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { runGemini } from "../services/geminiClient";
-import { prompts } from "../services/prompts";
+import { prompts } from "../services/prompts/prompts";
 
 const router = Router();
 

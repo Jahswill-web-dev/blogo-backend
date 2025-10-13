@@ -1,7 +1,7 @@
 import { Schema, model, InferSchemaType, Document, Types } from "mongoose";
 
 export interface IUser extends Document {
-  // _id: string;
+  _id: Types.ObjectId;
   googleId: string;
   email: string;
   name: string;
@@ -19,7 +19,7 @@ export interface IUser extends Document {
   xTokenExpiry?: Date;
   linkedinUrn?: string;
 }
-export interface UserDocument extends IUser, Document { }
+// export interface UserDocument extends IUser, Document { }
 // export type UserDocument = IUser & Document;
 
 const userSchema = new Schema<IUser>({
