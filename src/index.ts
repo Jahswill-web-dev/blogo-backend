@@ -16,6 +16,7 @@ import xAuthRoutes from "./routes/xAuth";
 import linkedinPostRoutes from "./routes/linkedinPost";
 import userProfileRoutes from "./routes/userProfile";
 import contentPlanRoutes from "./routes/contentPlan";
+import generateIdeas from "./routes/generateIdeas";
 
 
 const app = express();
@@ -42,6 +43,7 @@ app.use(facebookAuthRoutes);
 app.use(xAuthRoutes);
 app.use("/profile", userProfileRoutes);
 app.use("/content-plan", contentPlanRoutes);
+app.use(generateIdeas);
 
 mongoose.connect(process.env.MONGO_URI!).then(() => {
   console.log("✅ MongoDB connected");

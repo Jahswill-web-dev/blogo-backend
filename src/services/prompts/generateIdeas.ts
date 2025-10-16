@@ -1,6 +1,23 @@
-export const generateIdeasPrompt = {
+type GenerateIdeasPrompt = Record<
+  "generatePostIdeas" |
+  "generalIdeas" |
+  "storyBasedideas" |
+  "startupstoryBasedIdeas" |
+  "startupgeneralIdeas",
+  (data: PromptData) => string
+>;
+export interface PromptData {
+  startup_name: string;
+  industry: string;
+  description: string;
+  // product_overview: string;
+  audience: string;
+  platform: string;
+}
 
-generatePostIdeas:()=>`
+export const generateIdeasPrompt: GenerateIdeasPrompt = {
+
+generatePostIdeas:(data: PromptData)=>`
 
 You are an experienced Content Strategist and Social Media Copywriter who helps startup founders create engaging, platform-tailored post ideas.
 
@@ -10,12 +27,11 @@ Your task: Using the provided startup information, generate high-quality, creati
 
 INPUT INFORMATION
 
-Startup Name: {{startup_name}}
-Industry / Sector: {{industry}}
-Description: {{description}}
-Product/Service Overview: {{product_overview}}
-Audience: {{audience}}
-Platform Preference: {{platform}}
+Startup Name: ${data.startup_name}
+Industry / Sector: ${data.industry}
+Description: ${data.description}
+Audience: ${data.audience}
+Platform Preference: ${data.platform}
 
 ---
 
@@ -34,7 +50,7 @@ INSTRUCTIONS:
 
 4. Output strictly in the following JSON format — no explanations, commentary, or text outside of the JSON object. Do not include markdown formatting such as triple backticks:
 {
-  "startup_name": "{{startup_name}}",
+  "startup_name": "${data.startup_name}",
   "ideas": [
     {
       "title_hook": ""
@@ -44,16 +60,18 @@ INSTRUCTIONS:
 
 `,
 
-generalIdeas: ()=> `You are an experienced Content Strategist and Social Media Copywriter who helps startup founders create engaging, platform-tailored post ideas.
+
+// Product/Service Overview: {{product_overview}}
+
+generalIdeas: (data:PromptData)=> `You are an experienced Content Strategist and Social Media Copywriter who helps startup founders create engaging, platform-tailored post ideas.
 Your task: Using the provided startup information, generate high-quality, creative post ideas that focus on conceptual or topical themes such as startup lessons, market trends, product insights, or thought leadership angles.
 ---
 INPUT INFORMATION
-Startup Name: {{startup_name}}
-Industry / Sector: {{industry}}
-Description: {{description}}
-Product/Service Overview: {{product_overview}}
-Audience: {{audience}}
-Platform Preference: {{platform}}
+Startup Name: ${data.startup_name}
+Industry / Sector: ${data.industry}
+Description: ${data.description}
+Audience: ${data.audience}
+Platform Preference: ${data.platform}
 ---
 INSTRUCTIONS:
 1. Analyze the startup’s focus, industry, and audience.
@@ -74,7 +92,7 @@ INSTRUCTIONS:
    
 4. Output strictly in the following JSON format — no explanations, commentary, or text outside of the JSON object. Do not include markdown formatting such as triple backticks.
 {
-"startup_name": "{{startup_name}}",
+"startup_name": "${data.startup_name}",
 "ideas": [
 {
 "title_hook": ""
@@ -85,16 +103,15 @@ INSTRUCTIONS:
 GOAL:
 Produce 10 conceptual, industry-relevant, and platform-aligned post ideas that a startup founder could use to educate, inspire, or share insights with their audience.`,
 
-storyBasedideas:()=>`You are an experienced Content Strategist and Social Media Copywriter who helps startup founders create authentic, story-driven, platform-tailored post ideas.
+storyBasedideas:(data:PromptData)=>`You are an experienced Content Strategist and Social Media Copywriter who helps startup founders create authentic, story-driven, platform-tailored post ideas.
 Your task: Using the provided startup information, generate high-quality, creative post ideas that focus on personal or story-based themes such as the founder’s journey, challenges, experiences, and key moments behind the startup.
 ---
 INPUT INFORMATION
-Startup Name: {{startup_name}}
-Industry / Sector: {{industry}}
-Description: {{description}}
-Product/Service Overview: {{product_overview}}
-Audience: {{audience}}
-Platform Preference: {{platform}}
+Startup Name: ${data.startup_name}
+Industry / Sector: ${data.industry}
+Description: ${data.description}
+Audience: ${data.audience}
+Platform Preference: ${data.platform}
 ---
 INSTRUCTIONS:
 1. Analyze the startup’s story, audience, and tone.
@@ -115,7 +132,7 @@ INSTRUCTIONS:
    
 4. Output strictly in the following JSON format — no explanations, commentary, or text outside of the JSON object. Do not include markdown formatting such as triple backticks.
 {
-"startup_name": "{{startup_name}}",
+"startup_name": "${data.startup_name}",
 "ideas": [
 {
 "title_hook": ""
@@ -126,7 +143,7 @@ INSTRUCTIONS:
 GOAL:
 Produce 10 personal, authentic, and story-based post ideas that humanize the startup and help the founder connect emotionally with their audience.`,
 //startup voice
-startupstoryBasedIdeas:()=>`You are an experienced Content Strategist and Social Media Copywriter who helps startups create authentic, brand-driven, platform-tailored post ideas.
+startupstoryBasedIdeas:(data:PromptData)=>`You are an experienced Content Strategist and Social Media Copywriter who helps startups create authentic, brand-driven, platform-tailored post ideas.
 
 Your task: Using the provided startup information, generate high-quality, creative post ideas that focus on *personal or story-based themes* from the perspective of the startup’s official social media account. Examples include team milestones, customer success stories, product development journeys, company culture highlights, and key behind-the-scenes moments.
 
@@ -134,12 +151,11 @@ Your task: Using the provided startup information, generate high-quality, creati
 
 INPUT INFORMATION
 
-Startup Name: {{startup_name}}
-Industry / Sector: {{industry}}
-Description: {{description}}
-Product/Service Overview: {{product_overview}}
-Audience: {{audience}}
-Platform Preference: {{platform}}
+Startup Name: ${data.startup_name}
+Industry / Sector: ${data.industry}
+Description: ${data.description}
+Audience: ${data.audience}
+Platform Preference: ${data.platform}
 
 ---
 
@@ -160,7 +176,7 @@ INSTRUCTIONS:
 4. Output strictly in the following JSON format — no explanations, commentary, or text outside of the JSON object. Do not include markdown formatting such as triple backticks.
 
 {
-  "startup_name": "{{startup_name}}",
+  "startup_name": "${data.startup_name}",
   "ideas": [
     {
       "title_hook": ""
@@ -173,7 +189,7 @@ INSTRUCTIONS:
 GOAL:
 Produce 10 personal, brand-aligned, and story-driven post ideas that a startup social media account could use to connect with its audience and showcase the company’s journey and values.`,
 
-startupgeneralIdeas:()=>`You are an experienced Content Strategist and Social Media Copywriter who helps startups create engaging, brand-focused, platform-tailored post ideas.
+startupgeneralIdeas:(data:PromptData)=>`You are an experienced Content Strategist and Social Media Copywriter who helps startups create engaging, brand-focused, platform-tailored post ideas.
 
 Your task: Using the provided startup information, generate high-quality, creative post ideas that focus on *conceptual or topical themes* from the perspective of the startup’s official social media account. Examples include industry insights, product updates, startup lessons, and thought leadership content.
 
@@ -181,12 +197,11 @@ Your task: Using the provided startup information, generate high-quality, creati
 
 INPUT INFORMATION
 
-Startup Name: {{startup_name}}
-Industry / Sector: {{industry}}
-Description: {{description}}
-Product/Service Overview: {{product_overview}}
-Audience: {{audience}}
-Platform Preference: {{platform}}
+Startup Name: ${data.startup_name}
+Industry / Sector: ${data.industry}
+Description: ${data.description}
+Audience: ${data.audience}
+Platform Preference: ${data.platform}
 
 ---
 
@@ -206,7 +221,7 @@ INSTRUCTIONS:
 4. Output strictly in the following JSON format — no explanations, commentary, or text outside of the JSON object. Do not include markdown formatting such as triple backticks.
 
 {
-  "startup_name": "{{startup_name}}",
+  "startup_name": "${data.startup_name}",
   "ideas": [
     {
       "title_hook": ""
