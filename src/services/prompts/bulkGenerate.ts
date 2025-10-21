@@ -1,25 +1,39 @@
+export interface PostIdea {
+  title_hook: string;
+  topic: string;
+}
+
+export interface BulkGeneratePromptInput {
+  startup_name: string;
+  industry: string;
+  description: string;
+  // product_overview: string;
+  audience: string;
+  platform: string;
+  voice: "Founder" | "Startup Account";
+  ideas: PostIdea[];
+}
+
+
 export const bulkGeneratePrompt = {
-    developPosts: () => `You are an experienced Content Strategist and Social Media Copywriter who creates engaging, platform-tailored posts for startups.
+  developPosts: (input: BulkGeneratePromptInput) => {
+    const { startup_name, industry, description, audience, platform, voice, ideas } = input
+    const ideasJson = JSON.stringify(ideas, null, 2);
+    return `You are an experienced Content Strategist and Social Media Copywriter who creates engaging, platform-tailored posts for startups.
 Your task: Using the provided startup information and list of post ideas, develop a full, ready-to-publish post for each idea. Each post must match the platform’s tone, style, and audience. The posts should reflect the voice of the founder or the startup account (as specified) and be actionable, informative, and engaging.
 
 ---
 
 INPUT INFORMATION
 
-Startup Name: {{startup_name}}
-Industry / Sector: {{industry}}
-Description: {{description}}
-Product/Service Overview: {{product_overview}}
-Audience: {{audience}}
-Platform Preference: {{platform}}
-Voice: {{voice}} // "Founder" or "Startup Account"
+Startup Name: ${startup_name}
+Industry / Sector: ${industry}
+Description: ${description}
+Audience: ${audience}
+Platform Preference: ${platform}
+Voice: ${voice} // "Founder" or "Startup Account"
 
-Post Ideas: [
-  { "title_hook": "", "topic": "" },
-  { "title_hook": "", "topic": "" },
-  { "title_hook": "", "topic": "" },
-  ...
-]
+Post Ideas: ${ideasJson}
 
 ---
 
@@ -41,7 +55,6 @@ INSTRUCTIONS:
 7. Output strictly in valid JSON format, with no explanations, commentary, or text outside the JSON. Do not include markdown formatting or backticks.
 
 {
-  "startup_name": "{{startup_name}}",
   "posts": [
     { "content": "" },
     { "content": "" }
@@ -62,5 +75,5 @@ GOAL:
 Produce 5–10 polished, platform-optimized posts — each one unique, relevant, and ready to publish — ensuring consistent quality, brand alignment, and audience engagement across all outputs.`
 
 
-
+  }
 } 
