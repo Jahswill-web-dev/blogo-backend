@@ -12,8 +12,8 @@ export interface IContentIdea extends Document {
 
 const contentIdeaSchema = new Schema<IContentIdea>({
   userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  promptId: { type: Schema.Types.ObjectId, ref: "ContentPrompt", required: true },
-  batchId: { type: String, required: true },
+  promptId: { type: Schema.Types.ObjectId, ref: "ContentPrompt" },
+  batchId: { type: String },
   ideas: [{ type: String, required: true }],
   generatedCount: { type: Number, default: 5 },
   totalCount: { type: Number, default: 30 },

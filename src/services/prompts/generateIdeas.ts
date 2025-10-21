@@ -48,15 +48,11 @@ INSTRUCTIONS:
    - Align with the startup’s mission, audience, and product.
    - Use a mix of curiosity, emotion, and insight to make the hooks stand out.
 
-4. Output strictly in the following JSON format — no explanations, commentary, or text outside of the JSON object. Do not include markdown formatting such as triple backticks:
-{
-  "startup_name": "${data.startup_name}",
-  "ideas": [
-    {
-      "title_hook": ""
-    }
-  ]
-}
+4. Return only a valid JSON array of ideas — no explanations, commentary, or text outside of the JSON array. Do not include markdown formatting such as triple backticks.
+
+e.g:
+["idea 1", "idea 2", "idea 3" ]
+
 
 `,
 
@@ -90,15 +86,11 @@ INSTRUCTIONS:
    
    Use curiosity, authority, or insight to make the hooks stand out.
    
-4. Output strictly in the following JSON format — no explanations, commentary, or text outside of the JSON object. Do not include markdown formatting such as triple backticks.
-{
-"startup_name": "${data.startup_name}",
-"ideas": [
-{
-"title_hook": ""
-}
-]
-}
+4. Return only a valid JSON array of ideas — no explanations, commentary, or text outside of the JSON array. Do not include markdown formatting such as triple backticks.
+
+e.g:
+["idea 1", "idea 2", "idea 3" ]
+
 ---
 GOAL:
 Produce 10 conceptual, industry-relevant, and platform-aligned post ideas that a startup founder could use to educate, inspire, or share insights with their audience.`,
@@ -130,15 +122,11 @@ INSTRUCTIONS:
    
    Use emotion, vulnerability, or curiosity to make the hooks memorable.
    
-4. Output strictly in the following JSON format — no explanations, commentary, or text outside of the JSON object. Do not include markdown formatting such as triple backticks.
-{
-"startup_name": "${data.startup_name}",
-"ideas": [
-{
-"title_hook": ""
-}
-]
-}
+4. Return only a valid JSON array of ideas — no explanations, commentary, or text outside of the JSON array. Do not include markdown formatting such as triple backticks.
+
+e.g:
+["idea 1", "idea 2", "idea 3" ]
+
 ---
 GOAL:
 Produce 10 personal, authentic, and story-based post ideas that humanize the startup and help the founder connect emotionally with their audience.`,
@@ -173,16 +161,11 @@ INSTRUCTIONS:
      - Blog → longer storytelling with educational insights
    - Use curiosity, emotion, or human-interest elements to make the hooks memorable.
 
-4. Output strictly in the following JSON format — no explanations, commentary, or text outside of the JSON object. Do not include markdown formatting such as triple backticks.
+4. Return only a valid JSON array of ideas — no explanations, commentary, or text outside of the JSON array. Do not include markdown formatting such as triple backticks.
 
-{
-  "startup_name": "${data.startup_name}",
-  "ideas": [
-    {
-      "title_hook": ""
-    }
-  ]
-}
+e.g:
+["idea 1", "idea 2", "idea 3" ]
+
 
 ---
 
@@ -218,16 +201,11 @@ INSTRUCTIONS:
      - Blog → detailed, educational, and SEO-friendly
    - Use insight, curiosity, or authority to make the hooks stand out.
 
-4. Output strictly in the following JSON format — no explanations, commentary, or text outside of the JSON object. Do not include markdown formatting such as triple backticks.
+4. Return only a valid JSON array of ideas — no explanations, commentary, or text outside of the JSON array. Do not include markdown formatting such as triple backticks.
 
-{
-  "startup_name": "${data.startup_name}",
-  "ideas": [
-    {
-      "title_hook": ""
-    }
-  ]
-}
+e.g:
+["idea 1", "idea 2", "idea 3"]
+
 
 ---
 

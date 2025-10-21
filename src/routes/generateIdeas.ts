@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { runGemini } from "../services/geminiClient";
-// import ContentIdea from "../models/ContentIdea";
-// import ContentPrompt from "../models/ContentPrompt";
-import UserProfile from "../models/UserProfile"; // assuming you already created this
+import ContentIdea from "../models/ContentIdeas";
+import ContentPrompt from "../models/ContentPrompt";
+import UserProfile from "../models/UserProfile";
 import { generateIdeasPrompt } from "../services/prompts/generateIdeas";
-// import { v4 as uuidv4 } from "uuid";
+import crypto from "crypto";
 import jwtAuth from "../middleware/jwtAuth";
 
 const router = Router();
@@ -72,22 +72,57 @@ router.post("/generate-ideas", jwtAuth, async (req, res) => {
             return res.status(500).json({ error: "AI generation failed" });
         }
         console.log("AI Response:", aiResponse);
-        const generatedIdeas = aiResponse.split("\n").filter(Boolean); // clean list
+        let generatedIdeas: string[] = [];
+        try {
+            // parse it as JSON first
+            const parsed = JSON.parse(aiResponse);
+            if (Array.isArray(parsed)) {
+                generatedIdeas = parsed;
+            } else {
+                throw new Error("Not an array");
+            }
+        } catch {
+            // Fallback: handle as text if it's not valid JSON
+            generatedIdeas = aiResponse
+                .split("\n")
+                .map((line) => line.trim().replace(/^"|"$/g, ""))
+                .filter(Boolean);
+        }
 
-        // // 4️⃣ Save ideas to database
-        // const newContentIdea = await ContentIdea.create({
-        //     userId,
-        //     promptId: contentPrompt._id,
-        //     batchId: uuidv4(),
-        //     ideas: generatedIdeas,
-        //     generatedCount: generatedIdeas.length,
-        //     totalCount: 30,
-        // });
+
+        // if (typeof generatedIdeas === "string") {
+        //     try {
+        //         generatedIdeas = JSON.parse(generatedIdeas);
+        //     } catch {
+        //         generatedIdeas = generatedIdeas
+        //             .replace(/^\[|\]$/g, "") // remove outer brackets
+        //             .split("\n")
+        //             .map((i: string) => i.trim().replace(/^"|"$/g, "")) // clean quotes
+        //             .filter(Boolean);
+        //     }
+        // } else if (Array.isArray(generatedIdeas)) {
+        //     // It’s already an array, so let’s make sure each element is a clean string
+        //     generatedIdeas = generatedIdeas.map((i: string) =>
+        //         i.trim().replace(/^"|"$/g, "")
+        //     );
+        // }
+        // console.log("Parsed Ideas:", generatedIdeas);
+
+        // 4️⃣ Save ideas to database
+
+        const newContentIdea = await ContentIdea.create({
+            userId: (user as any)._id,
+            // promptId: ContentPrompt.batchId,
+            batchId: crypto.randomUUID(),
+            ideas: generatedIdeas,
+            generatedCount: generatedIdeas.length,
+            totalCount: 5,
+        });
 
         res.json({
             message: "Ideas generated successfully",
             ideas: generatedIdeas,
-            // record: newContentIdea,
+            record: newContentIdea,
         });
     } catch (err) {
         console.error(err);
