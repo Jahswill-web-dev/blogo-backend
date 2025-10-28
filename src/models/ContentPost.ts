@@ -2,48 +2,27 @@ import { Schema, model, models, Document } from "mongoose";
 
 export interface IContentPost extends Document {
   userId: Schema.Types.ObjectId;
-  ideaId: Schema.Types.ObjectId;
-  rawIdea: string;
-  refinedIdea: string;
-  postText: string;
-  platformVersions: {
-    linkedin?: { text: string; hashtags?: string[] };
-    x?: { text: string };
-    blog?: { text: string };
-  };
-  userActions?: {
-    refined?: boolean;
-    regenerated?: boolean;
-    scheduled?: boolean;
-  };
-  engagementPrediction?: number;
+  batchId: string;  // unique ID for this generation batch
+  platform: string; // e.g., "linkedin", "x", "blog"
+  posts: {
+    idea: string;      // idea used for the post
+    postText: string;  // generated post text
+  }[];
+  generatedCount: number;
   createdAt: Date;
 }
 
 const contentPostSchema = new Schema<IContentPost>({
   userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  ideaId: { type: Schema.Types.ObjectId, ref: "ContentIdea", required: true },
-  rawIdea: { type: String, required: true },
-  refinedIdea: { type: String },
-  postText: { type: String },
-  platformVersions: {
-    linkedin: {
-      text: String,
-      hashtags: [String],
+  batchId: { type: String, required: true },
+  platform: { type: String, enum: ["Linkedin", "X", "Blog"], default: "Linkedin" },
+  posts: [
+    {
+      idea: { type: String },
+      postText: { type: String, required: true },
     },
-    x: {
-      text: String,
-    },
-    blog: {
-      text: String,
-    },
-  },
-  userActions: {
-    refined: { type: Boolean, default: false },
-    regenerated: { type: Boolean, default: false },
-    scheduled: { type: Boolean, default: false },
-  },
-  engagementPrediction: { type: Number },
+  ],
+  generatedCount: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
 });
 
