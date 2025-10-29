@@ -6,8 +6,11 @@ export interface IContentPost extends Document {
   platform: string; // e.g., "linkedin", "x", "blog"
   posts: {
     idea: string;      // idea used for the post
-    postText: string;  // generated post text
-  }[];
+    postText: string;
+    isPublished:Boolean;
+    publishedAt:Date;
+    scheduledFor:Date;  
+  }[];// generated post text
   generatedCount: number;
   createdAt: Date;
 }
@@ -20,6 +23,9 @@ const contentPostSchema = new Schema<IContentPost>({
     {
       idea: { type: String },
       postText: { type: String, required: true },
+      isPublished: { type: Boolean, default: false },
+      publishedAt: { type: Date },
+      scheduledFor: { type: Date },
     },
   ],
   generatedCount: { type: Number, default: 0 },
