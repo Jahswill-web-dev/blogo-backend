@@ -17,7 +17,8 @@ import linkedinPostRoutes from "./routes/linkedinPost";
 import userProfileRoutes from "./routes/userProfile";
 import contentPlanRoutes from "./routes/contentPlan";
 import generateIdeas from "./routes/generateIdeas";
-
+import post from "./routes/post";
+import scheduledPost from "./routes/scheduledPost";
 
 const app = express();
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
@@ -44,6 +45,8 @@ app.use(xAuthRoutes);
 app.use("/profile", userProfileRoutes);
 app.use("/content-plan", contentPlanRoutes);
 app.use(generateIdeas);
+app.use(post);
+app.use(scheduledPost);
 
 mongoose.connect(process.env.MONGO_URI!).then(() => {
   console.log("✅ MongoDB connected");
