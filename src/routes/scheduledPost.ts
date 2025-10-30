@@ -8,6 +8,7 @@ const router = Router();
 /**
  * Schedule a post to be published later
  */
+
 router.post("/schedule-post", jwtAuth, async (req: Request, res: Response) => {
   try {
     const userId = (req.user as any)._id;

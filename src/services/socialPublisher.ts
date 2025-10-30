@@ -11,12 +11,18 @@ import { User } from "../models/User";
  * @param text - The post text
  * @returns API response or error
  */
+const capitalize = (value: string) => {
+  if (!value) return value;
+  return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+};
+
 export async function publishToSocial(userId: string, platform: string, text: string) {
   try {
     const user = await User.findById(userId);
     if (!user) throw new Error("User not found");
+    const formattedPlatform = capitalize(platform);
 
-    if (platform === "Linkedin") {
+    if (formattedPlatform === "Linkedin") {
       if (!user.linkedinUrn) throw new Error("LinkedIn not connected");
 
       const accessToken = await getValidLinkedInAccessToken(userId);
@@ -44,10 +50,10 @@ export async function publishToSocial(userId: string, platform: string, text: st
         },
       });
 
-      return { platform, success: true, data: resp.data };
+      return { formattedPlatform, success: true, data: resp.data };
     }
 
-    if (platform === "X") {
+    if (formattedPlatform === "X") {
       const accessToken = await getValidAccessToken(userId);
 
       const tweetRes = await axios.post(
