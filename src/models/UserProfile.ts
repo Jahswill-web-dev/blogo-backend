@@ -7,8 +7,10 @@ export interface IUserProfile extends Document {
   stage: "idea" | "mvp" | "seed" | "growth" | "scaling";
   description: string;
   audience: string[];
-  goals: string[];
-  tonePreference: string[];
+  painPoints?: string[];
+  benefits?: string[];    
+  // goals: string[];
+  tone: string[];
   contentExamples?: string[];
   createdAt: Date;
 }
@@ -20,8 +22,10 @@ const userProfileSchema = new Schema<IUserProfile>({
   stage: { type: String, enum: ["idea", "mvp", "seed", "growth", "scaling"], required: true },
   description: { type: String, required: true },
   audience: [{ type: String }],
-  goals: [{ type: String }],
-  tonePreference: [{ type: String }],
+  painPoints: [{ type: String }],
+  benefits: [{ type: String }],
+  // goals: [{ type: String }],
+  tone: [{ type: String }],
   contentExamples: [{ type: String }],
   createdAt: { type: Date, default: Date.now },
 });
