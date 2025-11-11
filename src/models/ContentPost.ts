@@ -7,7 +7,7 @@ export interface IContentPost extends Document {
   category: string;
   posts: {
     idea: string;      // idea used for the post
-    postText: string;
+    content: string;
     isPublished:Boolean;
     publishedAt:Date;
     scheduledFor:Date;  
@@ -28,7 +28,7 @@ const contentPostSchema = new Schema<IContentPost>({
   posts: [
     {
       idea: { type: String },
-      postText: { type: String, required: true },
+      content: { type: String, required: true },
       isPublished: { type: Boolean, default: false },
       publishedAt: { type: Date },
       scheduledFor: { type: Date },

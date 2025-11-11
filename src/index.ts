@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
+import swaggerUi from "swagger-ui-express";
+import swaggerFile from "./swagger-output.json";
 import session from "express-session";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -21,6 +23,7 @@ import post from "./routes/post";
 import scheduledPost from "./routes/scheduledPost";
 
 const app = express();
+
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -35,6 +38,7 @@ app.use(
 );
 
 
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use("/auth", authRoutes);
 app.use("/content", contentRoutes);
 app.use(linkedinAuthRoutes);
