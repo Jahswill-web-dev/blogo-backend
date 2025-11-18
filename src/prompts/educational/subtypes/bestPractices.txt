@@ -1,0 +1,15 @@
+Subtype: Best Practices
+Goal: Provide proven, reliable recommendations the target market can apply immediately. Tie each practice to the startup’s industry and user context.
+
+REQUIRED JSON SCHEMA:
+
+  "hook": "string (short, insight-driven opener)",
+  "principles": ["array of best practices (3–7 concise, actionable rules)"],
+  "why_it_matters": "string (explain why these practices improve results for the target market)",
+  "common_mistake": "string (one mistake the audience commonly makes)",
+  "cta": "string (call-to-action encouraging follow-up or saving the post)"
+
+WRITING NOTES:
+- Each principle should be practical, not theoretical.
+- Frame every practice around the target market’s workflow or pain points.
+- Example: “Instead of X, do Y because…”

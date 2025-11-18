@@ -1,0 +1,16 @@
+Subtype: Foundational Concept
+Goal: Teach a core principle the target audience must understand before anything else.
+
+REQUIRED JSON SCHEMA:
+
+  "concept": "string (the foundational idea)",
+  "definition": "string (clear definition in simple terms)",
+  "key_principles": ["array of 2–5 fundamental truths about the concept"],
+  "example": "string (example tied to the startup’s industry or target users)",
+  "common_pitfall": "string (a misunderstanding beginners often have)",
+  "cta": "string"
+
+WRITING NOTES:
+- Focus on fundamentals, not tactics.
+- Think “101-level knowledge”.
+- Keep key principles universal and evergreen.

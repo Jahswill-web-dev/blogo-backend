@@ -1,0 +1,14 @@
+Subtype: Framework / Model
+Goal: Teach a structured approach or mental model.
+
+REQUIRED JSON SCHEMA:
+
+  "framework_name": "string (name of the framework)",
+  "components": ["array of component descriptions"],
+  "application": "string (how to apply the framework in practice)",
+  "cta": "string (call-to-action)"
+
+WRITING NOTES:
+- Break down the framework into clear, actionable components.
+- Include industry-relevant examples for each component if possible.
+- CTA should encourage application or engagement.

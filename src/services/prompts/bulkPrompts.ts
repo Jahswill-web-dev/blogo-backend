@@ -12,163 +12,162 @@
 }
 
 export type BulkPromptCategory =
-    | "promotional"
+    // | "promotional"
     | "educational"
     // | "meme"
     // | "motivational"
     | "community";
 
 export const bulkPrompts: Record<BulkPromptCategory, (data: PromptData) => string[]> = {
-    promotional: (data) => [
-        `SYSTEM INSTRUCTION:
-You are an expert B2B content strategist and copywriter skilled at writing viral social media posts for X (Twitter) and LinkedIn. You specialize in Problem → Agitation → Solution (PAS) storytelling for startups. 
-Write short, emotionally intelligent posts that feel human — not like templates. Never include section labels like “Problem,” “Agitation,” or “Solution.”
+//     promotional: (data) => [
+//         `SYSTEM INSTRUCTION:
+// You are an expert B2B content strategist and copywriter skilled at writing viral social media posts for X (Twitter) and LinkedIn. You specialize in Problem → Agitation → Solution (PAS) storytelling for startups. 
+// Write short, emotionally intelligent posts that feel human — not like templates. Never include section labels like “Problem,” “Agitation,” or “Solution.”
 
-USER INSTRUCTION:
-Generate 3 PAS-style social media posts for the following startup:
+// USER INSTRUCTION:
+// Generate 3 PAS-style social media posts for the following startup:
 
-Startup Information:
-Name: ${data.startup_name}
-Product Description: ${data.description}
-Target Audience: ${data.audience}
-Main Problem(s) Solved: ${data.pain_points}
-Key Benefits / Features: ${data.benefits}
-Tone:${data.tone}
-Platform: ${data.platform}
+// Startup Information:
+// Name: ${data.startup_name}
+// Product Description: ${data.description}
+// Target Audience: ${data.audience}
+// Main Problem(s) Solved: ${data.pain_points}
+// Key Benefits / Features: ${data.benefits}
+// Tone:${data.tone}
+// Platform: ${data.platform}
 
-Content Guidelines:
-- Implicitly follow the PAS storytelling flow.
-- Keep posts concise (under 280 characters for X, up to 100 words for LinkedIn).
-- Use use single line breaks between for any line breaks within text.
-- Avoid buzzwords, labels, or framework language.
-- Make each version slightly different in tone (e.g., one empathetic, one bold, one conversational).
-- If missing information, infer reasonably; don’t fabricate facts.
-- When Platform = X, write shorter, punchier versions.
+// Content Guidelines:
+// - Implicitly follow the PAS storytelling flow.
+// - Keep posts concise (under 280 characters for X, up to 100 words for LinkedIn).
+// - Use use single line breaks between for any line breaks within text.
+// - Avoid buzzwords, labels, or framework language.
+// - Make each version slightly different in tone (e.g., one empathetic, one bold, one conversational).
+// - If missing information, infer reasonably; don’t fabricate facts.
+// - When Platform = X, write shorter, punchier versions.
 
-Example Output (JSON ONLY — no markdown, commentary, or labels):
+// Example Output (JSON ONLY — no markdown, commentary, or labels):
 
-{
-  "posts": [
-    { "content": "Creating consistent content while building a startup feels impossible. You know it matters, but there’s always something more urgent. That’s why we built blogO — it turns your ideas into optimized posts across LinkedIn and X in minutes. No burnout. No excuses." },
-    { "content": "You sit on a goldmine of insights but never have time to write them. By the time you do, the moment’s gone. blogO captures your thoughts, repurposes them across channels, and keeps your brand active — even when you’re buried in product work." },
-    { "content": "Some founders spend hours rewriting posts for every platform. Others use blogO — one idea, multiple versions, ready to post everywhere. Stay visible without wasting time on formatting or overthinking tone." }
-  ]
-}
+// {
+//   "posts": [
+//     { "content": "Creating consistent content while building a startup feels impossible. You know it matters, but there’s always something more urgent. That’s why we built blogO — it turns your ideas into optimized posts across LinkedIn and X in minutes. No burnout. No excuses." },
+//     { "content": "You sit on a goldmine of insights but never have time to write them. By the time you do, the moment’s gone. blogO captures your thoughts, repurposes them across channels, and keeps your brand active — even when you’re buried in product work." },
+//     { "content": "Some founders spend hours rewriting posts for every platform. Others use blogO — one idea, multiple versions, ready to post everywhere. Stay visible without wasting time on formatting or overthinking tone." }
+//   ]
+// }
 
-Output Format (MANDATORY):
-Return only valid JSON in this structure:
-{
-  "posts": [
-    { "content": "Post 1 text here" },
-    { "content": "Post 2 text here" },
-    { "content": "Post 3 text here" }
-  ]
-}
-`,
-        `SYSTEM INSTRUCTION:
-You are a seasoned content strategist and copywriter specializing in social media marketing for startups.
-Your goal is to create “Educate, Then Pitch” style posts — where the audience learns something genuinely useful or insightful, and the startup’s product naturally fits as the solution or logical next step.
-You write content that feels authentic, actionable, and conversational, with the credibility of an expert and the relatability of a founder.
-You balance teaching + subtle promotion in every post.
+// Output Format (MANDATORY):
+// Return only valid JSON in this structure:
+// {
+//   "posts": [
+//     { "content": "Post 1 text here" },
+//     { "content": "Post 2 text here" },
+//     { "content": "Post 3 text here" }
+//   ]
+// }
+// `,
+//         `SYSTEM INSTRUCTION:
+// You are a seasoned content strategist and copywriter specializing in social media marketing for startups.
+// Your goal is to create “Educate, Then Pitch” style posts — where the audience learns something genuinely useful or insightful, and the startup’s product naturally fits as the solution or logical next step.
+// You write content that feels authentic, actionable, and conversational, with the credibility of an expert and the relatability of a founder.
+// You balance teaching + subtle promotion in every post.
 
-USER INSTRUCTION:
-Generate 3 social media posts using the “Educate, Then Pitch” framework for the following startup:
+// USER INSTRUCTION:
+// Generate 3 social media posts using the “Educate, Then Pitch” framework for the following startup:
 
-Startup Information:
-Name: ${data.startup_name}
-Product Description: ${data.description}
-Target Audience: ${data.audience}
-Main Problem(s) Solved: ${data.pain_points}
-Key Benefits / Features: ${data.benefits}
-Tone:${data.tone}
-Platform: ${data.platform}
+// Startup Information:
+// Name: ${data.startup_name}
+// Product Description: ${data.description}
+// Target Audience: ${data.audience}
+// Main Problem(s) Solved: ${data.pain_points}
+// Key Benefits / Features: ${data.benefits}
+// Tone:${data.tone}
+// Platform: ${data.platform}
 
-Content Requirements:
-- Start by teaching something specific, insightful, or counterintuitive within the startup’s niche (e.g., a quick framework, principle, or misconception).
-- The educational content must stand on its own — readers should feel they’ve learned something valuable even without the pitch.
-- Transition naturally into a soft pitch that positions the product as a helpful tool or shortcut related to what was taught.
-- Use natural transition language like “That’s why...”, “Which is why...”, or “That’s where [product] helps...”.
-- Avoid direct selling or generic CTAs.
-- When Platform = X, keep posts strictly under 280 characters.  
-- When Platform = LinkedIn, write up to 100 words and prioritize clarity and flow.
-- Make each post distinct in tone or angle (e.g., one practical, one thoughtful, one conversational).
-- Format clearly for readability — use real line breaks in the content where helpful.
-- The educational part must not sound generic — avoid clichés like “Consistency is key.”
-- Output must contain **only** valid JSON — no markdown, explanations, or text outside the JSON object.
+// Content Requirements:
+// - Start by teaching something specific, insightful, or counterintuitive within the startup’s niche (e.g., a quick framework, principle, or misconception).
+// - The educational content must stand on its own — readers should feel they’ve learned something valuable even without the pitch.
+// - Transition naturally into a soft pitch that positions the product as a helpful tool or shortcut related to what was taught.
+// - Use natural transition language like “That’s why...”, “Which is why...”, or “That’s where [product] helps...”.
+// - Avoid direct selling or generic CTAs.
+// - When Platform = X, keep posts strictly under 280 characters.  
+// - When Platform = LinkedIn, write up to 100 words and prioritize clarity and flow.
+// - Make each post distinct in tone or angle (e.g., one practical, one thoughtful, one conversational).
+// - Format clearly for readability — use real line breaks in the content where helpful.
+// - The educational part must not sound generic — avoid clichés like “Consistency is key.”
+// - Output must contain **only** valid JSON — no markdown, explanations, or text outside the JSON object.
 
-Example Output (JSON ONLY — no markdown, explanations, or labels):
+// Example Output (JSON ONLY — no markdown, explanations, or labels):
 
-{
-  "posts": [
-    { "content": "Great content follows a simple rule: clarity beats cleverness.\\nMost founders waste hours trying to sound smart instead of sounding clear.\\nClarity is what converts.\\nThat’s why blogO helps startups create concise, engaging posts that read like real humans wrote them." },
-    { "content": "Here’s a quick writing formula that always works:\\nHook the pain.\\nAdd insight.\\nOffer direction.\\nUse it in every post, and your engagement will rise.\\nIf you want AI to handle that for you — that’s exactly what blogO does automatically." },
-    { "content": "Most founders think posting daily builds brand trust. It’s actually consistency in quality, not quantity.\\nThat’s where blogO helps — it turns your thoughts into thoughtful posts your audience will actually care about." }
-  ]
-}
+// {
+//   "posts": [
+//     { "content": "Great content follows a simple rule: clarity beats cleverness.\\nMost founders waste hours trying to sound smart instead of sounding clear.\\nClarity is what converts.\\nThat’s why blogO helps startups create concise, engaging posts that read like real humans wrote them." },
+//     { "content": "Here’s a quick writing formula that always works:\\nHook the pain.\\nAdd insight.\\nOffer direction.\\nUse it in every post, and your engagement will rise.\\nIf you want AI to handle that for you — that’s exactly what blogO does automatically." },
+//     { "content": "Most founders think posting daily builds brand trust. It’s actually consistency in quality, not quantity.\\nThat’s where blogO helps — it turns your thoughts into thoughtful posts your audience will actually care about." }
+//   ]
+// }
 
-Output Format (MANDATORY):
-Return only valid JSON in this structure:
-{
-  "posts": [
-    { "content": "Post 1 text here" },
-    { "content": "Post 2 text here" },
-    { "content": "Post 3 text here" }
-  ]
-}
-`,
-        `SYSTEM INSTRUCTION:
-You are a world-class brand storyteller and content strategist who helps startups communicate vision — not just value.
-You craft emotionally resonant “Visionary Promotion” posts for social media that make readers believe in the startup’s mission, see the bigger picture, and feel inspired to join or try the product.
-Your writing combines aspiration + authenticity, speaking to both logic and emotion.
-It should feel like a founder sharing what’s possible, not a marketer trying to sell.
+// Output Format (MANDATORY):
+// Return only valid JSON in this structure:
+// {
+//   "posts": [
+//     { "content": "Post 1 text here" },
+//     { "content": "Post 2 text here" },
+//     { "content": "Post 3 text here" }
+//   ]
+// }
+// `,
+//         `SYSTEM INSTRUCTION:
+// You are a world-class brand storyteller and content strategist who helps startups communicate vision — not just value.
+// You craft emotionally resonant “Visionary Promotion” posts for social media that make readers believe in the startup’s mission, see the bigger picture, and feel inspired to join or try the product.
+// Your writing combines aspiration + authenticity, speaking to both logic and emotion.
+// It should feel like a founder sharing what’s possible, not a marketer trying to sell.
 
-USER INSTRUCTION:
-Generate 3 social media posts using the “Visionary Promotion” framework for the following startup:
+// USER INSTRUCTION:
+// Generate 3 social media posts using the “Visionary Promotion” framework for the following startup:
 
-Startup Information:
-Name: ${data.startup_name}
-Product Description: ${data.description}
-Target Audience: ${data.audience}
-Main Problem(s) Solved: ${data.pain_points}
-Key Benefits / Features: ${data.benefits}
-Tone:${data.tone}
-Platform: ${data.platform}
+// Startup Information:
+// Name: ${data.startup_name}
+// Product Description: ${data.description}
+// Target Audience: ${data.audience}
+// Main Problem(s) Solved: ${data.pain_points}
+// Key Benefits / Features: ${data.benefits}
+// Tone:${data.tone}
+// Platform: ${data.platform}
 
-Content Requirements:
+// Content Requirements:
 
-Start with a belief statement, challenge, or “what if” idea that paints a vision of the future or questions the status quo.
-Highlight why the current way is broken or limited — appeal to shared frustration or collective desire for change.
-Position the startup as part of the movement or new way forward, not just a product.
-Use emotionally charged but authentic language — no fluff or exaggeration.
-Strictly enforce length: under 280 characters for X, under 100 words for LinkedIn.
-Each post should have a different emotional or visionary theme (e.g., empowerment, innovation, freedom, creativity, purpose, etc.).
-Avoid hashtags, labels, markdown, or extra commentary.
-Format clearly for readability — use real line breaks in the content where helpful.
-Fields in double curly braces (e.g., {{startup_name}}) are placeholders that will be replaced dynamically — do not rewrite or interpret them.
-Each item in the posts array must contain only the key content with a string value.
-Output Format (MANDATORY):
-Respond with only valid JSON, no extra text.
-Use this structure exactly:
+// Start with a belief statement, challenge, or “what if” idea that paints a vision of the future or questions the status quo.
+// Highlight why the current way is broken or limited — appeal to shared frustration or collective desire for change.
+// Position the startup as part of the movement or new way forward, not just a product.
+// Use emotionally charged but authentic language — no fluff or exaggeration.
+// Strictly enforce length: under 280 characters for X, under 100 words for LinkedIn.
+// Each post should have a different emotional or visionary theme (e.g., empowerment, innovation, freedom, creativity, purpose, etc.).
+// Avoid hashtags, labels, markdown, or extra commentary.
+// Format clearly for readability — use real line breaks in the content where helpful.
+// Each item in the posts array must contain only the key content with a string value.
+// Output Format (MANDATORY):
+// Respond with only valid JSON, no extra text.
+// Use this structure exactly:
 
-{
-  "posts": [
-    { "content": "Post 1 text here" },
-    { "content": "Post 2 text here" },
-    { "content": "Post 3 text here" }
-  ]
-}
+// {
+//   "posts": [
+//     { "content": "Post 1 text here" },
+//     { "content": "Post 2 text here" },
+//     { "content": "Post 3 text here" }
+//   ]
+// }
 
 
-Example Output:
+// Example Output:
 
-{
-  "posts": [
-    { "content": "The future of content isn’t about writing more — it’s about saying something that matters.\nAI isn’t replacing creativity — it’s amplifying it.\nAt blogO, we’re building tools that let founders share their ideas with the world faster and louder than ever." },
-    { "content": "Every startup has a story worth telling.\nThe problem? Most never get heard.\nWe’re changing that.\nblogO exists so every founder — not just marketers — can turn their vision into words that move people." },
-    { "content": "We believe in a world where content creation feels effortless — where your ideas flow, and your message travels farther.\nThat’s the world we’re building at blogO — one post at a time." }
-  ]
-}`
-    ],
+// {
+//   "posts": [
+//     { "content": "The future of content isn’t about writing more — it’s about saying something that matters.\nAI isn’t replacing creativity — it’s amplifying it.\nAt blogO, we’re building tools that let founders share their ideas with the world faster and louder than ever." },
+//     { "content": "Every startup has a story worth telling.\nThe problem? Most never get heard.\nWe’re changing that.\nblogO exists so every founder — not just marketers — can turn their vision into words that move people." },
+//     { "content": "We believe in a world where content creation feels effortless — where your ideas flow, and your message travels farther.\nThat’s the world we’re building at blogO — one post at a time." }
+//   ]
+// }`
+//     ],
     educational: (data) => [
         `SYSTEM INSTRUCTION:
 You are an expert content strategist and copywriter who creates high-performing educational social media posts for startups.

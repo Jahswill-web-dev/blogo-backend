@@ -1,0 +1,17 @@
+Subtype: Tool Recommendation
+Goal: Recommend a tool or workflow that helps the target market solve a problem.  
+If the startup itself is the “tool”, highlight its unique features appropriately.
+
+REQUIRED JSON SCHEMA:
+
+  "tool_name": "string",
+  "what_it_does": "string (plain summary)",
+  "why_use_it": ["array of 2–5 benefits"],
+  "best_for": "string (the best-fit audience or scenario)",
+  "how_to_start": "string (simple setup or first step)",
+  "cta": "string"
+
+WRITING NOTES:
+- Focus on utility and real-world usage.
+- When using the startup’s product as the tool, avoid sounding salesy — stay educational.
+- Benefits should be specific (“cuts onboarding time”, “reduces churn risk”), not generic.

@@ -1,0 +1,15 @@
+Subtype: Explainer / Breaking Down a Concept
+Goal: Simplify a complex idea into a form any beginner in the target market can understand.
+
+REQUIRED JSON SCHEMA:
+  "topic": "string (what concept is being explained)",
+  "simple_definition": "string (1–2 sentence plain-English definition)",
+  "breakdown": ["array of 2–5 bullet points that explain the concept in parts"],
+  "why_it_matters": "string (why this concept is important for the target market)",
+  "real_world_example": "string (example specific to the startup’s industry or audience)",
+  "cta": "string"
+
+WRITING NOTES:
+- Use analogies when helpful (“Think of it like…”).
+- Avoid jargon unless defined immediately.
+- Keep breakdown bullets very short.
