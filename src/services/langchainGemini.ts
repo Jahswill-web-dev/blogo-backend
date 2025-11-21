@@ -1,0 +1,8 @@
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+
+export const lcGemini = new ChatGoogleGenerativeAI({
+  apiKey: process.env.GEMINI_API_KEY!,
+  model: "gemini-2.5-flash",
+  maxOutputTokens: 2048,
+  temperature: 0.3,
+});

@@ -2,16 +2,18 @@ import "dotenv/config";
 import { howToParser } from "../lib/educationalParser";
 import { buildEducationalPromptTemplate } from "../lib/promptFactory";
 import { runGemini } from "../services/geminiClient";
+import { platform } from "os";
 async function testHowToPrompt() {
   const inputVars = {
-    industry: "PropTech",
-    product: "AI Home Valuation Tool",
-    target_market: "Real estate agents",
-    pain_points: "slow manual pricing",
-    content_goal: "educate agents",
-    topic: "price properties faster",
-    tone: "expert but friendly",
-    creativity: "medium"
+    industry: "SaaS / Marketing Tech",
+    product: "AI Content Engine for Startups",
+    target_market: ["startup founders", "early-stage startups", "small startup teams"],
+    pain_points: "inconsistent posting and lack of time to create content",
+    content_goal: "help startups stay visible and build credibility",
+    description: "generate and schedule weeks of startup-focused content automatically",
+    tone: "friendly",
+    creativity: "medium",
+    platform: "X",
   };
 
   const promptTemplate = await buildEducationalPromptTemplate("howTo", Object.keys(inputVars));
