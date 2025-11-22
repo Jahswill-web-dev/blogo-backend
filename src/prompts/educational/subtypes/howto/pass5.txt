@@ -36,4 +36,4 @@ The most important changes needed to make the post feel more human, emotionally 
 
 Do not rewrite the post. Only critique.
 
-here is the post:{rewrite3}
+here is the post:{rewrite2}

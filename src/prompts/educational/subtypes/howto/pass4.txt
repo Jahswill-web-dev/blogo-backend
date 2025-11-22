@@ -6,6 +6,6 @@ Do not add new ideas or change the direction of the message.
 
 Do not critique. Only rewrite.
 
-Critique from pass 3: {critique}
+Critique from pass 3: {critique2}
 
-here is the post: {rewrite2}
+here is the post: {rewrite1}
