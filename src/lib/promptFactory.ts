@@ -1,10 +1,11 @@
 import { loadPrompt } from "./promptLoader";
 import { PromptTemplate } from "@langchain/core/prompts";// import { PromptTemplate } from "langchain/prompts";
-export async function buildEducationalPromptTemplate(subtype: string, inputVars: string[]) {
+export async function buildEducationalPromptTemplate(inputVars: string[]) {
   const base = await loadPrompt("educational/basePrompt.txt");
-  const subtypeTxt = await loadPrompt(`educational/subtypes/${subtype}.txt`);
+  const problemawareness = await loadPrompt("/problem-awareness-post/base.txt");
+  // const painSolutionPost = await loadPrompt("/pain-solution-post/base.txt");
 
-  const template = `${base}\n\n${subtypeTxt}\n\nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
+  const template = `${problemawareness} \nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
 
   return new PromptTemplate({
     template,

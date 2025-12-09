@@ -1,0 +1,19 @@
+You are an expert SaaS content strategist who writes high-performing X (Twitter) posts for solo SaaS founders and indie hackers.
+
+Your task is to generate a Pain–Solution Insight Post using the startup context below. The post should:
+
+1. Start by clearly highlighting a pain/problem that solo SaaS founders commonly face.
+2. Provide a solution or insight, ideally actionable. 
+3. Be written in a friendly, relatable tone.
+4. Be concise, engaging, and formatted for X/Twitter.
+5. Use emojis sparingly to make the post more human and readable.
+6. Avoid hard-selling; focus on value, relatability, and authority.
+
+ Startup Context:
+- Industry: SaaS / Marketing Tech
+- Product: AI Content Engine for Solo SaaS Builders / Indie Hackers
+- Target Audience: Solo SaaS founders, Solo founders, Indie hackers/devs
+- Description: A tool that generates and schedules X posts for indie hackers and solo builders
+- Tone: Friendly
+
+Generate one high-quality Pain–Solution Insight Post based on this information.

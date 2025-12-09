@@ -11,7 +11,7 @@ RULES:
 - The content must be directly publishable on the platform provided.
 - Every example and reference MUST be tailored to the startup context below.
 - Do not invent facts. If using a statistic, mark it as "example_stat" unless provided.
-
+    
 CONTEXT VARIABLES:
 Startup Industry: {industry}
 Startup Product: {product}
@@ -33,3 +33,5 @@ GUIDANCE:
 OUTPUT FORMAT:
 Return ONLY valid JSON in this exact structure:
 {{"platform":"{platform}","post":"FINAL_POST_TEXT_HERE"}}
+
+You will ALSO receive a subtype prompt, and you must follow it

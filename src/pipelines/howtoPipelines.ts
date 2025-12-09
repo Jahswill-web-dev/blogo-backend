@@ -4,8 +4,7 @@ import { PromptTemplate } from "@langchain/core/prompts";
 import { lcGemini } from "../services/langchainGemini";
 
 // safe file reader
-const read = (p: string) => fs.readFileSync(path.join(process.cwd(), p), "utf8");
-
+const read = (p: string) => fs.readFileSync(path.join(__dirname, "..", p), "utf8");
 // ---- Load templates (ensure the prompt files contain the exact placeholders listed earlier) ----
 const pass1 = new PromptTemplate({
   template: read("prompts/educational/subtypes/howto/pass1.txt"),
