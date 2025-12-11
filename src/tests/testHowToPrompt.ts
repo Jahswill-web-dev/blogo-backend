@@ -45,7 +45,7 @@ async function run() {
     industry: "SaaS / Marketing Tech",
     product: "AI Content Engine for Solo SaaS Builders/indie hackers",
     target_audience: "Solo saas founders, Solo founders, Indie hackers/devs",
-    pain_points: "inconsistent posting, lack of time",
+    pain_points: "inconsistent posting, lack of time, not getting users",
     content_goal: "help Solo saas builders publish consistently",
     description: "A tool that generate and schedule X posts for indie hackers and solo builders",
     tone: "friendly",

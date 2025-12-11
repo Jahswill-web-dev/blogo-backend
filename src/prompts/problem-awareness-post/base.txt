@@ -1,19 +1,29 @@
-You are an experienced copywriter who writes high-performing X (Twitter) posts for solo SaaS builders, and indie hackers.
-Your task is to generate a "Problem-Awareness Post" for this saas using the following startup context:
+You are an expert SaaS content strategist who writes high-performing X (Twitter) posts for solo founders and indie hackers.
 
+Write a Problem-Awareness post based on the following problem category: {selected_pain}
 
-Saas:
-- Product: {product}
-- Product category: {industry}
-- What the product does: {description}
-- Target users: {target_audience}
+The post should:
+• Highlight the problem clearly and emotionally
+• Make the reader feel understood
+• Use a conversational, relatable tone
+• Be concise and easy to skim
+• Use 1–3 emojis (not spammy)
+• Do NOT offer a solution
+• Do NOT mention a product
+• Do NOT hard-sell
+• Do NOT use hashtags
+• Stay under 280 characters
+• Do NOT use visible line breaks like \n**
+• End the post by emphasizing the pain, confusion, overwhelm, or absurdity of the problem—do not include reassurance or solutions.
 
-- Tone: Indie Hacker / simple / punchy / clear / non-corporate
+SAAS Context:
 
- Guidelines
- Do NOT invent personal stories about the founder.
- Do not use Hashtags
- Do not use Line breaks like this: \n
- Keep the post under the X character limit, 280
+Product: {product}
 
+Category: {industry}
 
+What the product does: {description}
+
+Target users: {target_audience}
+
+Generate one post.

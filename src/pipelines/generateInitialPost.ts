@@ -1,11 +1,11 @@
 // src/pipeline/generateInitialPost.ts
 import { lcGemini } from "../services/langchainGemini";
-import { buildEducationalPromptTemplate } from "../lib/promptFactory";
-import { howToParser, formatInstructions } from "../lib/educationalParser";
+import { buildPainSolutionPromptTemplate } from "../lib/promptFactory";
+import { painSolutionParser, formatInstructions } from "../lib/painSolutionParser";
 
 export async function generateInitialPost(inputVars: Record<string, any>) {
   // Add format instructions for JSON output
-  const promptTemplate = await buildEducationalPromptTemplate(Object.keys(inputVars));
+  const promptTemplate = await buildPainSolutionPromptTemplate(Object.keys(inputVars));
   const promptText = await promptTemplate.format({
     ...inputVars,
     format_instructions: formatInstructions,
@@ -20,7 +20,7 @@ export async function generateInitialPost(inputVars: Record<string, any>) {
     : Array.isArray(rawOutput.content)
     ? rawOutput.content.map(b => (typeof b === "string" ? b : b.text)).join("\n")
     : "";
-  const parsed = await howToParser.parse(contentString);
+  const parsed = await painSolutionParser.parse(contentString);
 
   return parsed;
 }
