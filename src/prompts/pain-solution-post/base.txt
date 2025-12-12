@@ -1,8 +1,17 @@
-You are an expert SaaS content strategist.
-Given the SaaS context below, list 15–20 distinct, real pain categories the target users face.
-Focus on pains related to their work, workflow, frustrations, limitations, and bottlenecks.
-Do NOT mention solutions.
-Output only the list of pain categories.
+You are an expert SaaS content strategist who writes high-performing X (Twitter) posts for solo founders and indie hackers.
+
+Write an X post based on the following pain category: {selected_pain}
+
+Requirements:
+• Start with the pain clearly and directly
+• Follow with a simple, actionable solution or insight
+• Use a conversational tone
+• Be concise and easy to skim
+• Use 1–3 emojis (not spammy)
+• Do NOT hard-sell
+• Do NOT use hashtags
+• Stay under 280 characters
+• Do NOT use visible line breaks like \n**
 
 SAAS Context:
 
@@ -13,3 +22,5 @@ Category: {industry}
 What the product does: {description}
 
 Target users: {target_audience}
+
+Generate one post

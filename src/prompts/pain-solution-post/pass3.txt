@@ -1,20 +1,2 @@
-Subtype: Myths & Misconceptions
-Goal: Correct false beliefs that the target market commonly holds.
-
-REQUIRED JSON SCHEMA:
-
-  "hook": "string (attention-grabbing myth-related opener)",
-  "myths": [
-    {
-      "myth": "string (the misconception)",
-      "truth": "string (the correct explanation)",
-      "why_it_matters": "string (why this truth impacts the target market)"
-    }
-  ],
-  "cta": "string"
-
-
-WRITING NOTES:
-- Include 2–4 myths total.
-- Choose myths that are truly common in the startup’s industry.
-- Tone should be confident, corrective, and supportive.
+I want you to Identify parts in the Given Post that does not sound human or naturall and recommend how to fix it
+Post:{user_post}

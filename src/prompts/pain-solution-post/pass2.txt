@@ -1,17 +1,4 @@
-Subtype: Data-Backed Insight
-Goal: Share a compelling insight rooted in data, trends, reports, or patterns.  
-If exact data isn’t provided, clearly mark any stat as an illustrative example.
+I want you to use the crtique and Improvement suggestions provided to rewrite the Given post
 
-REQUIRED JSON SCHEMA:
-
-  "hook": "string (statistic-based or insight-based opener)",
-  "insight": "string (the main analytical takeaway)",
-  "supporting_data": ["array of 1–3 data points or trends (real or marked as example)"],
-  "implication": "string (explain what this means for the target market)",
-  "action_step": "string (one clear next step the audience can take)",
-  "cta": "string (optional CTA to follow or share)"
-
-WRITING NOTES:
-- Avoid fake accuracy; use placeholders like “example_stat” if needed.
-- Focus on trend → meaning → action.
-- Insights must relate to the startup’s product category or user base.
+Given Post:{user_post}
+Critique: {critique1}

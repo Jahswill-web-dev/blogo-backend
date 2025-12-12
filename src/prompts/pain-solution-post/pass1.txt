@@ -1,15 +1,6 @@
-Subtype: Checklist / Do-This-Not-That
-Goal: Give the audience a quick, scannable list they can immediately apply.
+I want you to critique this post based on how human and conversational it sounds 
+highlight exactly which phrases could be tweaked for a more conversational feel.
+Do not rewrite the post.
+Only Critique and state how it can be improved
 
-REQUIRED JSON SCHEMA:
-
-  "title": "string (short title for the checklist)",
-  "do": ["array of positive items (3–10 items the audience SHOULD do)"],
-  "dont": ["array of negative items (3–10 items the audience should AVOID)"],
-  "context_note": "string (explain why this checklist matters in the startup’s industry)",
-  "cta": "string (short call-to-action to save, follow, or apply the checklist)"
-
-WRITING NOTES:
-- Keep items extremely concise (max one sentence).
-- Use verbs (“Validate early…”, “Avoid guessing user intent…”).
-- Ensure items relate to the startup’s product or ICP when possible.
+POST: {user_post}
