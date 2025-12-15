@@ -1,2 +1,2 @@
 I want you to Identify parts in the Given Post that does not sound human or naturall and recommend how to fix it
-Post:{user_post}
+Post:{rewrite1}

@@ -7,11 +7,11 @@ export async function generateEducationalPost(inputVars: Record<string, any>) {
   const initial = await generateInitialPost(inputVars);
     // console.log("Initial Structured Post:", initial);
   // 2. Run through 6-pass pipeline
-  const finalPostText = await generatePipeline(initial.post);
+  const finalPostText = await generatePipeline(initial.category);
         console.log("Final Post Text:", finalPostText);
   // 3. Wrap for DB storage
   return {
-    platform: initial.platform,
+    platform: initial,
     post: finalPostText,
   };
 }

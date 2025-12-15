@@ -1,4 +1,4 @@
 I want you to use the crtique and Improvement suggestions provided to rewrite the Given post
 
-Given Post:{user_post}
+Given Post:{rewrite1}
 Critique: {critique2}

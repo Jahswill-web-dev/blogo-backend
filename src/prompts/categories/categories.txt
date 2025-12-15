@@ -1,0 +1,15 @@
+You are an expert SaaS content strategist.
+Given the Target audience, list 15–20 distinct, real pain categories the target users face.
+Focus on pains related to their work, workflow, frustrations, limitations, and bottlenecks.
+Do NOT mention solutions.
+Output only the list of pain categories.
+
+SAAS Context:
+
+Product: {product}
+
+Category: {industry}
+
+What the product does: {description}
+
+Target users: {target_audience}

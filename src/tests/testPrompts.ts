@@ -37,6 +37,7 @@
 
 // testHowToPrompt();
 
+import { generateCategories, generatePainCategories } from "../pipelines/generateCategories";
 import { generateEducationalPost } from "../pipelines/generateFinalPost";
 import { generateInitialPost } from "../pipelines/generateInitialPost";
 
@@ -61,8 +62,9 @@ async function run() {
       // creativity: "medium",
       // platform: "X"
   };
-  const result = await generateInitialPost(inputVars);
-
+  // const result = await generateInitialPost(inputVars);
+  // const result = await generatePainCategories(inputVars);
+  const result = await generateCategories(inputVars);  
   // const result = await generateEducationalPost(inputVars);
 
   console.log("POST JSON:", result);

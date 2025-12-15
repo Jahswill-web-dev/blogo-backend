@@ -1,7 +1,7 @@
 // src/pipeline/generateInitialPost.ts
 import { lcGemini } from "../services/langchainGemini";
 import { buildPainSolutionPromptTemplate } from "../lib/promptFactory";
-import { painSolutionParser, formatInstructions } from "../lib/painSolutionParser";
+import { painSolutionParser, formatInstructions } from "../lib/parsers";
 
 export async function generateInitialPost(inputVars: Record<string, any>) {
   // Add format instructions for JSON output

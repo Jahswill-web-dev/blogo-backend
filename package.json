@@ -6,7 +6,7 @@
   "scripts": {
     "swagger-autogen": "ts-node src/swagger-autogen.ts",
     "dev": "npm run swagger-autogen && ts-node-dev --respawn --transpile-only src/index.ts",
-    "test-prompt": "ts-node src/tests/testHowToPrompt.ts",
+    "test-prompt": "ts-node src/tests/testPrompts.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
