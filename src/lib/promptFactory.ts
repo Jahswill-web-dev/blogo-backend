@@ -37,8 +37,8 @@ export async function buildCategoriesPromptTemplate(inputVars: string[]) {
   });
 
 }
-export async function buildQuestionTypes(inputVars: string[]) {
-  const questionTypesPrompt = await loadPrompt("/questions-posts/questionTypes.txt");
+export async function buildQuestionTypesPromptTemplate(inputVars: string[]) {
+  const questionTypesPrompt = await loadPrompt("/questions-post/questionTypes.txt");
   const template = `${questionTypesPrompt} \nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
 
   return new PromptTemplate({

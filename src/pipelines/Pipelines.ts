@@ -1,6 +1,15 @@
 import { lcGemini } from "../services/langchainGemini";
-import { buildPainCategoriesPromptTemplate, buildCategoriesPromptTemplate } from "../lib/promptFactory";
-import { PainCategoriesParser, formatInstructions } from "../lib/parsers";
+import {
+  buildPainCategoriesPromptTemplate,
+  buildCategoriesPromptTemplate,
+  buildQuestionTypesPromptTemplate
+} from "../lib/promptFactory";
+import {
+  PainCategoriesParser,
+  formatInstructions,
+  questionTypesParser,
+  QuestionTypesformatInstructions
+} from "../lib/parsers";
 
 //Category generation pipeline
 export async function generatePainCategories(inputVars: Record<string, any>) {
@@ -17,7 +26,7 @@ export async function generatePainCategories(inputVars: Record<string, any>) {
       : Array.isArray(rawOutput.content)
         ? rawOutput.content.map(b => (typeof b === "string" ? b : b.text)).join("\n")
         : "";
-        const parsed = await PainCategoriesParser.parse(contentString);
+  const parsed = await PainCategoriesParser.parse(contentString);
 
   return {
     painCategories: parsed.category,
@@ -38,7 +47,7 @@ export async function generateCategories(inputVars: Record<string, any>) {
       : Array.isArray(rawOutput.content)
         ? rawOutput.content.map(b => (typeof b === "string" ? b : b.text)).join("\n")
         : "";
-        const parsed = await PainCategoriesParser.parse(contentString);
+  const parsed = await PainCategoriesParser.parse(contentString);
 
   return {
     categories: parsed.category,
@@ -47,3 +56,24 @@ export async function generateCategories(inputVars: Record<string, any>) {
 }
 
 
+//question types generation pipeline
+export async function generateQuestionTypes(inputVars: Record<string, any>) {
+  const promptTemplate = await buildQuestionTypesPromptTemplate(Object.keys(inputVars));
+  const promptText = await promptTemplate.format({
+    ...inputVars,
+    format_instructions: QuestionTypesformatInstructions,
+  });
+  const rawOutput = await lcGemini.invoke(promptText);
+  const contentString =
+    typeof rawOutput.content === "string"
+      ? rawOutput.content
+      : Array.isArray(rawOutput.content)
+        ? rawOutput.content.map(b => (typeof b === "string" ? b : b.text)).join("\n")
+        : "";
+  const parsed = await questionTypesParser.parse(contentString);
+
+  return {
+    items: parsed.items,
+  };
+}
+//Latst step store in DB

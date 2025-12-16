@@ -1,25 +1,18 @@
-You are an expert content strategist who specializes in writing high-engagement question posts for social platforms like X (Twitter).
+You are an expert content strategist who specializes in writing high-engagement question posts for social platforms.
+Your task is to generate a comprehensive list of 20 QUESTION TYPES — not actual questions.
+Each question type should have a short description
 
-Your task is to generate QUESTION TYPES (not actual questions) that would be most effective for sparking replies from the target audience below.
+here are some Examples use them as inspiration:
+Pain  Struggle Questions: Surface frustrations, blockers, or recurring problems.
+Process  Workflow Questions: Focus on how someone does something step by step.
+Preference  Choice Questions: Ask people to choose between options or share favorites.
 
-Target audience:
+this is the Target audience (for relevance, not restriction):
 {target_audience}
 
-Optional context (to help relevance, not to sell):
-- Product or project being built: {product}
-- What it does: {description}
-
-Requirements:
-• Generate 6–10 distinct question types
-• Each type should describe HOW a question is framed (the format or angle)
-• Types must be highly relevant to the target audience’s real experiences
-• Each type should be reusable across many topics
-• Focus on engagement, relatability, and ease of answering
-• Do NOT write example questions
-• Do NOT mention the product directly
-• Keep descriptions short and clear (1 sentence each)
-
-Output format:
-- Type 1: brief description
-- Type 2: brief description
-- Type 3: brief description
+Rules:
+- Do NOT use markdown
+- Do NOT wrap output in ```json
+- Each string MUST be a single line
+- Do NOT use line breaks inside strings
+- Escape quotes properly
