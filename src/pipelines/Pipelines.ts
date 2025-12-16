@@ -11,7 +11,19 @@ import {
   QuestionTypesformatInstructions
 } from "../lib/parsers";
 
-//Category generation pipeline
+
+// utility functions for pipelines
+function cleanLLMJson(text: string): string {
+  return text
+    .replace(/```json/g, "")
+    .replace(/```/g, "")
+    .replace(/\n/g, " ") // remove newlines inside strings
+    .trim();
+}
+
+
+
+//Pain Category generation pipeline
 export async function generatePainCategories(inputVars: Record<string, any>) {
 
   const promptTemplate = await buildPainCategoriesPromptTemplate(Object.keys(inputVars));
@@ -33,6 +45,7 @@ export async function generatePainCategories(inputVars: Record<string, any>) {
     items: parsed.items,
   };
 }
+//General Categories generation pipeline
 export async function generateCategories(inputVars: Record<string, any>) {
 
   const promptTemplate = await buildCategoriesPromptTemplate(Object.keys(inputVars));
@@ -70,10 +83,11 @@ export async function generateQuestionTypes(inputVars: Record<string, any>) {
       : Array.isArray(rawOutput.content)
         ? rawOutput.content.map(b => (typeof b === "string" ? b : b.text)).join("\n")
         : "";
-  const parsed = await questionTypesParser.parse(contentString);
+  const cleaned = cleanLLMJson(contentString);
+  const parsed = await questionTypesParser.parse(cleaned);
 
   return {
     items: parsed.items,
   };
 }
-//Latst step store in DB
+//Last step store in DB

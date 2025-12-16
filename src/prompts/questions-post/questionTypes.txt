@@ -7,8 +7,7 @@ Pain  Struggle Questions: Surface frustrations, blockers, or recurring problems.
 Process  Workflow Questions: Focus on how someone does something step by step.
 Preference  Choice Questions: Ask people to choose between options or share favorites.
 
-this is the Target audience (for relevance, not restriction):
-{target_audience}
+
 
 Rules:
 - Do NOT use markdown
