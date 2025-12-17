@@ -2,22 +2,20 @@ Rewrite the following question to follow the Sound Like Something You’d Ask a 
 
 Guideline for Prompt (Sound Like Something You’d Ask a Friend)
 
-Focus: Make the question feel personal, approachable, and peer-to-peer.
-
-Instructions for AI:
-
-Write as if you were asking a friend or colleague directly.
-
-Use casual, friendly language — no formal or corporate tone.
-
-Avoid jargon, stiff phrasing, or overly structured sentences.
-
-Keep it relatable, warm, and human.
+Guideline:
+- Make the question feel casual, warm, and peer-to-peer.
+- Write as if speaking to a friend in a DM or in conversation.
+- Use interjections, short pauses, or phrasing that mimics natural speech.
+- Keep it relatable, human, and approachable.
+- Avoid stiff, formal, or corporate phrasing.
 
 Maintain the original topic or intent while enhancing conversational tone.
 
-Examples to guide AI:
+Examples to guide:
 
 ❌ Stiff/Corporate: “Please share your top priorities when managing tasks.”
 
-✅ Friendly/Conversational: “How do you usually decide what to tackle first?”
+✅ Friendly/Conversational: 
+“How do you usually decide what to tackle first?”
+“Ever have one of those days where nothing seems to go right? How do you usually handle it?”
+"Some days just drag — how do you get yourself motivated?”

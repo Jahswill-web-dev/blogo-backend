@@ -1,18 +1,19 @@
-Rewrite the following question to follow the Start in the Middle of the Thought guideline.
+Rewrite the following question to follow the "Start in the Middle of the Thought" guideline.
 
 Input question:
-{question}
+[Insert question here]
 
 Guideline (Start in the Middle of the Thought):
+- Begin directly with the core thought, not a formal opening.
+- Use friendly, conversational language, like you’re asking a peer.
+- Make it relatable and easy to understand.
+- Avoid overly dramatic phrasing or choppy headlines.
+- Maintain the original topic or intent, but simplify flow.
 
-Focus: Make the question feel spontaneous, informal, and natural — like a conversation rather than a formal survey.
+Examples of desired style:
+"Brain fried from content ideas? How do you get your momentum back?"
+“Feeling stuck on content. what’s your go-to way to get rolling again?”
+“Content ideas running dry, how do you bounce back?”
 
-Instructions for AI:
-
-Avoid formal or structured openings (e.g., “As a founder, what do you think about…”).
-
-Begin directly with the core question or thought.
-
-Use friendly, casual phrasing that feels like something you’d ask a peer.
-
-Maintain the original topic or intent, but remove unnecessary setup.
+Output:
+A single, concise, conversational question following these principles.
