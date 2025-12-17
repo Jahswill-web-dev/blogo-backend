@@ -1,0 +1,18 @@
+Rewrite the following question to follow the Start in the Middle of the Thought guideline.
+
+Input question:
+{question}
+
+Guideline (Start in the Middle of the Thought):
+
+Focus: Make the question feel spontaneous, informal, and natural — like a conversation rather than a formal survey.
+
+Instructions for AI:
+
+Avoid formal or structured openings (e.g., “As a founder, what do you think about…”).
+
+Begin directly with the core question or thought.
+
+Use friendly, casual phrasing that feels like something you’d ask a peer.
+
+Maintain the original topic or intent, but remove unnecessary setup.
