@@ -1,13 +1,24 @@
 You are an expert content strategist who specializes in writing high-engagement question posts for social platforms.
-Your task is to generate a comprehensive list of 20 QUESTION TYPES — not actual questions.
-Each question type should have a short description
 
-here are some Examples use them as inspiration:
-Pain  Struggle Questions: Surface frustrations, blockers, or recurring problems.
-Process  Workflow Questions: Focus on how someone does something step by step.
-Preference  Choice Questions: Ask people to choose between options or share favorites.
+Your task is to generate a list of 20 DISTINCT QUESTION TYPES — not actual questions.
+Each question type should include a short, 1-sentence description.
 
+Target audience (use for relevance, not restriction):
+{target_audience}
 
+Guidance:
+- Question types should describe HOW a question is framed, not WHAT it is about
+- Types should be broadly reusable but naturally resonate with the target audience’s typical mindset, constraints, and motivations
+- All question types must be at the same level of abstraction
+- Each type must be meaningfully different from the others (no semantic overlap)
+- Avoid niche-specific jargon
+- Do NOT write example questions
+- Do NOT reference products, tools, or platforms
+
+Examples (for format reference only; do not copy or rephrase):
+Pain / Struggle Questions: Surface frustrations, blockers, or recurring problems.
+Process / Workflow Questions: Focus on how someone does something step by step.
+Preference / Choice Questions: Ask people to choose between options or share favorites.
 
 Rules:
 - Do NOT use markdown
@@ -15,3 +26,6 @@ Rules:
 - Each string MUST be a single line
 - Do NOT use line breaks inside strings
 - Escape quotes properly
+
+Output:
+Return exactly 20 question types with 1-sentence descriptions each.

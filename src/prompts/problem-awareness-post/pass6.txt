@@ -1,2 +1,2 @@
-Rewrite this post Original Post:{rewrite2} based on this Critique:{critique3}
+Rewrite this post:{rewrite2} based on this Critique:{critique3}
 Now rewrite the post.
