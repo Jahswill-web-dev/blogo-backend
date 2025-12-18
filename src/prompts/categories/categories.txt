@@ -1,15 +1,37 @@
-You are an expert SaaS content strategist.
-Given the Target audience, list 15–20 distinct, real pain categories the target users face.
-Focus on pains related to their work, workflow, frustrations, limitations, and bottlenecks.
-Do NOT mention solutions.
-Output only the list of pain categories.
+Generate Content Categories
 
-SAAS Context:
+You are an expert content strategist.
 
-Product: {product}
+Your task is to generate a list of CONTENT CATEGORIES (not posts, not questions) that would be highly relevant to the target audience below.
 
-Category: {industry}
+Target audience:
+{target_audience}
 
-What the product does: {description}
+Guidelines:
 
-Target users: {target_audience}
+Categories should describe areas of experience, focus, or interest for this audience
+
+Categories do NOT need to be pain-based only
+
+Categories should be broad enough to generate many different posts
+
+Categories should be human and experience-driven, not tactical or jargon-heavy
+
+Avoid platform-specific or product-specific wording
+
+Keep all categories at the same level of abstraction
+
+Examples of good categories (for any audience):
+
+How people manage their time and energy
+
+How people make tradeoffs and decisions
+
+Tools and systems people rely on
+
+Moments of progress, wins, or setbacks
+
+Beliefs or opinions people hold strongly
+
+Output:
+A list of 15–20 content categories, each written as a short phrase (1 line each), no explanations.

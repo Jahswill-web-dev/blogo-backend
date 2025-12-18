@@ -5,7 +5,7 @@ import { PainSolutionSchema } from "../schemas/painSolution.schema";
 import { PainCategoriesSchema } from "../schemas/painCategories.schema";
 import { QuestionTypesSchema } from "../schemas/questionsTypes.schema";
 export const painSolutionParser = StructuredOutputParser.fromZodSchema(PainSolutionSchema);
-export const formatInstructions = painSolutionParser.getFormatInstructions();
+export const PainSolutionformatInstructions = painSolutionParser.getFormatInstructions();
 
 export const PainCategoriesParser = StructuredOutputParser.fromZodSchema(PainCategoriesSchema);
 export const PainCategoriesformatInstructions = PainCategoriesParser.getFormatInstructions();
