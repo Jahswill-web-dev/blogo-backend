@@ -63,10 +63,10 @@ async function run() {
       // platform: "X"
   };
   // const result = await generateInitialPost(inputVars);
-  // const result = await generatePainCategories(inputVars);
+  const result = await generatePainCategories(inputVars);
   // const result = await generateCategories(inputVars);  
   // const result = await generateEducationalPost(inputVars);
-     const result = await generateQuestionTypes(inputVars);
+    //  const result = await generateQuestionTypes(inputVars);
 
   console.log("POST JSON:", result);
 }

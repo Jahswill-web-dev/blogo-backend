@@ -34,4 +34,4 @@ Moments of progress, wins, or setbacks
 Beliefs or opinions people hold strongly
 
 Output:
-A list of 15–20 content categories, each written as a short phrase (1 line each), no explanations.
+A list of 10 content categories, each written as a short phrase (1 line each), no explanations.

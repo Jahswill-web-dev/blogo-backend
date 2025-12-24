@@ -1,5 +1,5 @@
 You are an expert SaaS content strategist.
-Given the SaaS context below, list 15–20 distinct, real pain categories the target users face.
+Given the SaaS context below, list 10 distinct, real pain categories the target users face.
 Focus on pains related to their work, workflow, frustrations, limitations, and bottlenecks.
 Do NOT mention solutions.
 Output only the list of pain categories.

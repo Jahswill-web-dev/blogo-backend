@@ -28,4 +28,4 @@ Rules:
 - Escape quotes properly
 
 Output:
-Return exactly 20 question types with 1-sentence descriptions each.
+Return exactly 10 question types with 1-sentence descriptions each.

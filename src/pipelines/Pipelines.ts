@@ -67,8 +67,6 @@ async function runWithRetry<T>(
   throw new Error("Unexpected failure in runWithRetry");
 }
 
-
-
 // utility functions for pipelines
 function cleanLLMJson(text: string): string {
   return text
@@ -83,7 +81,6 @@ function isCompleteJsonObject(text: string): boolean {
 }
 
 
-
 //Pain Category generation pipeline
 export async function generatePainCategories(inputVars: Record<string, any>) {
 
@@ -94,7 +91,7 @@ export async function generatePainCategories(inputVars: Record<string, any>) {
   });
   const parsed = await runWithRetry(
     () => lcGemini.invoke(promptText), // LLM call
-    questionTypesParser,               // Zod parser
+    PainCategoriesParser,               // Zod parser
     2                                  // maxRetries (optional)
   );
 
