@@ -1,6 +1,15 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types, Document } from "mongoose";
 
-const CategorySchema = new Schema(
+export interface CategoryDocument extends Document {
+  userId: Types.ObjectId;
+  type: "pain" | "general" | "questions";
+  items: string[];
+  meta?: Record<string, any>;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const CategorySchema = new Schema<CategoryDocument>(
     {
     userId: {
       type: Schema.Types.ObjectId,
@@ -24,4 +33,4 @@ const CategorySchema = new Schema(
   { timestamps: true }
 );
 
-export const CategoryModel = model("Category", CategorySchema);
+export const CategoryModel = model<CategoryDocument>("Category", CategorySchema);

@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
 
-import { generateCategories, generatePainCategories, generateQuestionTypes } from "../pipelines/Pipelines";
+import { generateCategories, generatePainCategories, generateQuestionTypes } from "../pipelines/categoriesPipeline";
 import { generateEducationalPost } from "../pipelines/generateFinalPost";
 import { generateInitialPost } from "../pipelines/generateInitialPost";
 
