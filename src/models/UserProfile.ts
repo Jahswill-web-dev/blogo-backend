@@ -4,11 +4,10 @@ export interface IUserProfile extends Document {
   userId: Schema.Types.ObjectId;
   companyName: string;
   industry: string;
-  stage: "idea" | "mvp" | "seed" | "growth" | "scaling";
   description: string;
   audience: string[];
   painPoints?: string[];
-  benefits?: string[];    
+  benefits?: string[];
   // goals: string[];
   tone: string[];
   contentExamples?: string[];
@@ -19,7 +18,6 @@ const userProfileSchema = new Schema<IUserProfile>({
   userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
   companyName: { type: String, required: true },
   industry: { type: String, required: true },
-  stage: { type: String, enum: ["idea", "mvp", "seed", "growth", "scaling"], required: true },
   description: { type: String, required: true },
   audience: [{ type: String }],
   painPoints: [{ type: String }],

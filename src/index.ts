@@ -21,6 +21,7 @@ import contentPlanRoutes from "./routes/contentPlan";
 import generateIdeas from "./routes/generateIdeas";
 import post from "./routes/post";
 import scheduledPost from "./routes/scheduledPost";
+import categoriesRoutes from "./routes/categories";
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use(
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use("/auth", authRoutes);
 app.use("/content", contentRoutes);
+app.use(categoriesRoutes);
 app.use(linkedinAuthRoutes);
 app.use(linkedinPostRoutes);
 app.use("/publish", publishRoutes);
@@ -52,12 +54,21 @@ app.use(generateIdeas);
 app.use(post);
 app.use(scheduledPost);
 
-mongoose.connect(process.env.MONGO_URI!).then(() => {
-  console.log("✅ MongoDB connected");
-});
+async function startServer() {
+  try {
+    await mongoose.connect(process.env.MONGO_URI!, {
+    });
+    console.log("✅ MongoDB connected");
+    app.get("/", (_, res) => res.send("Blogo backend running 🚀"));
 
-app.get("/", (_, res) => res.send("Blogo backend running 🚀"));
+    app.listen(4000, () => {
+      console.log("Server running on http://localhost:4000");
+    });
+  } catch (err) {
+    console.error("❌ MongoDB connection error:", err);
+    process.exit(1);
+  }
+}
 
-app.listen(4000, () => {
-  console.log("Server running on http://localhost:4000");
-});
+startServer();
+

@@ -11,6 +11,7 @@ import {
   questionTypesParser,
   QuestionTypesformatInstructions
 } from "../lib/parsers";
+import { storeCategories } from "../repositories/category.repository";
 
 
 
@@ -84,9 +85,13 @@ function isCompleteJsonObject(text: string): boolean {
 //Pain Category generation pipeline
 export async function generatePainCategories(inputVars: Record<string, any>) {
 
-  const promptTemplate = await buildPainCategoriesPromptTemplate(Object.keys(inputVars));
+  const { userId, ...promptVars } = inputVars;
+  if (!userId) {
+    throw new Error("userId is required to Create and store categories");
+  }
+  const promptTemplate = await buildPainCategoriesPromptTemplate(Object.keys(promptVars));
   const promptText = await promptTemplate.format({
-    ...inputVars,
+    ...promptVars,
     format_instructions: PainCategoriesformatInstructions,
   });
   const parsed = await runWithRetry(
@@ -94,6 +99,12 @@ export async function generatePainCategories(inputVars: Record<string, any>) {
     PainCategoriesParser,               // Zod parser
     2                                  // maxRetries (optional)
   );
+  await storeCategories({
+    userId,
+    type: "pain",
+    items: parsed.items,
+    meta: { promptVars },
+  });
 
   return {
     items: parsed.items,
@@ -101,10 +112,13 @@ export async function generatePainCategories(inputVars: Record<string, any>) {
 }
 //General Categories generation pipeline
 export async function generateCategories(inputVars: Record<string, any>) {
-
-  const promptTemplate = await buildCategoriesPromptTemplate(Object.keys(inputVars));
+  const { userId, ...promptVars } = inputVars;
+  if (!userId) {
+    throw new Error("userId is required to Create and store categories");
+  }
+  const promptTemplate = await buildCategoriesPromptTemplate(Object.keys(promptVars));
   const promptText = await promptTemplate.format({
-    ...inputVars,
+    ...promptVars,
     format_instructions: PainCategoriesformatInstructions,
   });
 
@@ -112,6 +126,12 @@ export async function generateCategories(inputVars: Record<string, any>) {
     () => lcGemini.invoke(promptText),
     PainCategoriesParser
   );
+  await storeCategories({
+    userId,
+    type: "general",
+    items: parsed.items,
+    meta: { promptVars },
+  });
   return {
     items: parsed.items,
   };
@@ -120,9 +140,13 @@ export async function generateCategories(inputVars: Record<string, any>) {
 
 //question types generation pipeline
 export async function generateQuestionTypes(inputVars: Record<string, any>) {
-  const promptTemplate = await buildQuestionTypesPromptTemplate(Object.keys(inputVars));
+  const { userId, ...promptVars } = inputVars;
+  if (!userId) {
+    throw new Error("userId is required to Create and store categories");
+  }
+  const promptTemplate = await buildQuestionTypesPromptTemplate(Object.keys(promptVars));
   const promptText = await promptTemplate.format({
-    ...inputVars,
+    ...promptVars,
     format_instructions: QuestionTypesformatInstructions,
   });
   const parsed = await runWithRetry(
@@ -130,7 +154,12 @@ export async function generateQuestionTypes(inputVars: Record<string, any>) {
     questionTypesParser,               // Zod parser
     2                                  // maxRetries (optional)
   );
-
+  await storeCategories({
+    userId,
+    type: "questions",
+    items: parsed.items,
+    meta: { promptVars },
+  });
   return {
     items: parsed.items,
   };
