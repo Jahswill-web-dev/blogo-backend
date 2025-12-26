@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 import { generateCategories, generatePainCategories, generateQuestionTypes } from "../pipelines/categoriesPipeline";
 import { generateEducationalPost } from "../pipelines/generateFinalPost";
-import { generateInitialPost } from "../pipelines/generateInitialPost";
+import { generateInitialPost } from "../pipelines/painSolution.pipeline";
 
 async function run() {
   try {

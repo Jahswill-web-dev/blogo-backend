@@ -1,5 +1,5 @@
 // src/pipeline/generateFinalPost.ts
-import { PainSolutionPost } from "./generateInitialPost";
+import { PainSolutionPost } from "./painSolution.pipeline";
 import { generatePipeline } from "../pipelines/howtoPipelines";
 
 export async function generateEducationalPost(inputVars: Record<string, any>) {
