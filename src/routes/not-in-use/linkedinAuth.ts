@@ -1,8 +1,8 @@
 import { Router, Request, Response, RequestHandler } from "express";
 import axios from "axios";
-import jwtAuth from "../middleware/jwtAuth";
-import { User, IUser, } from "../models/User";
-import { encryptToken } from "../services/tokendecrypt";
+import jwtAuth from "../../middleware/jwtAuth";
+import { User, IUser, } from "../../models/User";
+import { encryptToken } from "../../services/tokendecrypt";
 // import { Document } from "mongoose";
 
 // interface AuthenticatedRequest extends Request {

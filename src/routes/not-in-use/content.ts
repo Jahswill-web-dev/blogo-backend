@@ -107,11 +107,11 @@
 
 import { Router, Request, Response } from "express";
 import crypto from "crypto";
-import ContentPost from "../models/ContentPost";
-import jwtAuth from "../middleware/jwtAuth";
-import { runGemini } from "../services/geminiClient";
-import { bulkPrompts } from "../services/prompts/bulkPrompts";
-import UserProfile from "../models/UserProfile";
+import ContentPost from "../../models/ContentPost";
+import jwtAuth from "../../middleware/jwtAuth";
+import { runGemini } from "../../services/geminiClient";
+import { bulkPrompts } from "../../services/prompts/bulkPrompts";
+import UserProfile from "../../models/UserProfile";
 
 const router = Router();
 

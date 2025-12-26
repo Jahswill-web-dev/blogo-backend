@@ -1,12 +1,9 @@
 // src/routes/categories.ts
 import { Router } from "express";
-import jwtAuth from "../middleware/jwtAuth";
-import {
-    generatePainCategories,
-    generateCategories,
-    generateQuestionTypes,
-} from "../pipelines/categoriesPipeline";
-import { getSaasContext } from "../services/domain/getSaasContext";
+import jwtAuth from "../../middleware/jwtAuth";
+
+import { getSaasContext } from "../../services/domain/getSaasContext";
+import { generateCategories } from "../../services/domain/generateCategories.service";
 
 const router = Router();
 
@@ -16,15 +13,10 @@ router.post("/generate-categories", jwtAuth, async (req, res) => {
         const userId = (req.user as any)._id;
         const saasContext = await getSaasContext(userId);
 
-        const inputVars = {
-            ...saasContext,
+        const { pain, general, questions } = await generateCategories({
             userId,
-        };
-
-        const pain = await generatePainCategories(inputVars);
-        const general = await generateCategories(inputVars);
-        const questions = await generateQuestionTypes(inputVars);
-
+            saasContext,
+        });
         res.json({
             pain,
             general,

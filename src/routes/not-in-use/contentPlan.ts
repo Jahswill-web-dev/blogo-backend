@@ -1,6 +1,6 @@
 import express from "express";
-import ContentPrompt from "../models/ContentPrompt";
-import jwtAuth from "../middleware/jwtAuth";
+import ContentPrompt from "../../models/ContentPrompt";
+import jwtAuth from "../../middleware/jwtAuth";
 
 const router = express.Router();
 

@@ -1,8 +1,8 @@
 import { Router } from "express";
-import jwtAuth from "../middleware/jwtAuth";
+import jwtAuth from "../../middleware/jwtAuth";
 
-import { getSaasContext } from "../services/domain/getSaasContext";
-import { createPainSolutionPost } from "../services/domain/painSolution.service";
+import { getSaasContext } from "../../services/domain/getSaasContext";
+import { createPainSolutionPost } from "../../services/domain/painSolution.service";
 
 const router = Router();
 

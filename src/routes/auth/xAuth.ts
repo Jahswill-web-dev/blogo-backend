@@ -1,11 +1,11 @@
 // routes/xAuth.ts
 import { Router, Request, Response } from "express";
-import jwtAuth from "../middleware/jwtAuth";
+import jwtAuth from "../../middleware/jwtAuth";
 import crypto from "crypto";
 import axios from "axios";
-import { User } from "../models/User";
-import { decryptToken } from "../services/tokendecrypt";
-import { getValidAccessToken } from "../services/xTokenService";
+import { User } from "../../models/User";
+import { decryptToken } from "../../services/tokendecrypt";
+import { getValidAccessToken } from "../../services/xTokenService";
 const router = Router();
 const ENCRYPTION_KEY = process.env.TOKEN_ENCRYPTION_KEY!;
 const IV_LENGTH = 16;

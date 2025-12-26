@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 // import { IUserProfile } from "../models/UserProfile"
-import jwtAuth from "../middleware/jwtAuth";
-import UserProfile from "../models/UserProfile";
+import jwtAuth from "../../middleware/jwtAuth";
+import UserProfile from "../../models/UserProfile";
 const router = express.Router();
 
 // Create or update user profile

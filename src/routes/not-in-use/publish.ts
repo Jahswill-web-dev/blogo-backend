@@ -1,7 +1,7 @@
 import { Router } from "express";
 import axios from "axios";
-import jwtAuth from "../middleware/jwtAuth";
-import { User } from "../models/User";
+import jwtAuth from "../../middleware/jwtAuth";
+import { User } from "../../models/User";
 
 const router = Router();
 

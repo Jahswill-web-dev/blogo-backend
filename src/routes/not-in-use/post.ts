@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
-import jwtAuth from "../middleware/jwtAuth";
-import ContentPost from "../models/ContentPost";
-import { publishToSocial } from "../services/socialPublisher";
+import jwtAuth from "../../middleware/jwtAuth";
+import ContentPost from "../../models/ContentPost";
+import { publishToSocial } from "../../services/socialPublisher";
 import { Types } from "mongoose";
 
 const router = Router();

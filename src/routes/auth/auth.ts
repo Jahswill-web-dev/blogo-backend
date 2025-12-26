@@ -1,8 +1,8 @@
 import { Router } from "express";
 import passport from "passport";
 import jwt from "jsonwebtoken";
-import { User } from "../models/User";
-import jwtAuth from "../middleware/jwtAuth";
+import { User } from "../../models/User";
+import jwtAuth from "../../middleware/jwtAuth";
 
 const router = Router();
 

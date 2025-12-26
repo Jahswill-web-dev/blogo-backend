@@ -1,9 +1,9 @@
 // src/routes/linkedinPost.ts
 import { Router, Request, Response } from "express";
-import jwtAuth from "../middleware/jwtAuth";
-import { getValidLinkedInAccessToken } from "../services/linkedinTokenService";
+import jwtAuth from "../../middleware/jwtAuth";
+import { getValidLinkedInAccessToken } from "../../services/linkedinTokenService";
 import axios from "axios";
-import { User } from "../models/User";
+import { User } from "../../models/User";
 
 const router = Router();
 

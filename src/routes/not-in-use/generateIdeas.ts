@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { runGemini } from "../services/geminiClient";
-import ContentIdea from "../models/ContentIdeas";
-import ContentPrompt from "../models/ContentPrompt";
-import UserProfile from "../models/UserProfile";
-import { generateIdeasPrompt } from "../services/prompts/generateIdeas";
+import { runGemini } from "../../services/geminiClient";
+import ContentIdea from "../../models/ContentIdeas";
+import ContentPrompt from "../../models/ContentPrompt";
+import UserProfile from "../../models/UserProfile";
+import { generateIdeasPrompt } from "../../services/prompts/generateIdeas";
 import crypto from "crypto";
-import jwtAuth from "../middleware/jwtAuth";
+import jwtAuth from "../../middleware/jwtAuth";
 
 const router = Router();
 // first get the type of user(founder or startup account)

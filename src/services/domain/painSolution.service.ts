@@ -1,5 +1,5 @@
 // src/services/domain/painSolution.service.ts
-import { fetchUserCategories } from "./category.service";
+import { fetchUserCategories } from "./fetchCategory.service";
 import { selectRandomItem } from "../../utils/selectRandomItem";
 import { generatePainSolutionPost } from "../../pipelines/painSolution.pipeline";
 

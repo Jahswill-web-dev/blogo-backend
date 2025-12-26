@@ -1,10 +1,10 @@
 // routes/facebookPost.ts
 
 import { Router, Request, Response } from "express";
-import jwtAuth from "../middleware/jwtAuth";
+import jwtAuth from "../../middleware/jwtAuth";
 import axios from "axios";
-import { User } from "../models/User";
-import { decryptToken } from "../services/tokendecrypt";
+import { User } from "../../models/User";
+import { decryptToken } from "../../services/tokendecrypt";
 
 const router = Router();
 

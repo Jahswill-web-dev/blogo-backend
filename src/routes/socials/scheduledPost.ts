@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
-import jwtAuth from "../middleware/jwtAuth";
-import agenda from "../services/agenda";
-import ContentPost from "../models/ContentPost";
+import jwtAuth from "../../middleware/jwtAuth";
+import agenda from "../../services/agenda";
+import ContentPost from "../../models/ContentPost";
 import { ObjectId, Types } from "mongoose";
 const router = Router();
 

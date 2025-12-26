@@ -111,7 +111,7 @@ export async function generatePainCategories(inputVars: Record<string, any>) {
   };
 }
 //General Categories generation pipeline
-export async function generateCategories(inputVars: Record<string, any>) {
+export async function generateGeneralCategories(inputVars: Record<string, any>) {
   const { userId, ...promptVars } = inputVars;
   if (!userId) {
     throw new Error("userId is required to Create and store categories");
