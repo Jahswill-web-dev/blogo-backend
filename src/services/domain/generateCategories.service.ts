@@ -1,4 +1,8 @@
-import { generateGeneralCategories, generatePainCategories, generateQuestionTypes } from "../../pipelines/categoriesPipeline";
+import {
+    generateGeneralCategories,
+    generatePainCategories,
+    generateQuestionTypes
+} from "../../pipelines/categoriesPipeline";
 
 export async function generateCategories({
     userId,
