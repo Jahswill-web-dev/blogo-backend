@@ -20,5 +20,8 @@ router.post("/generate-pain-post", jwtAuth, async (req, res) => {
     res.json({ success: true, post });
   } catch (err) {
     res.status(500).json({ error: (err as Error).message });
+    console.error("❌ Pain post generation error:", err);
   }
 });
+
+export default router;

@@ -1,2 +1,5 @@
-I want you to Identify parts in the Given Post that does not sound human or naturall and recommend how to fix it
-Post:{rewrite1}
+Rewrite this as a personal experience.
+Use first-person language (“I,” “for me,” “what I noticed,” “this is what I do”).
+Describe what actually happened and how it felt.
+Make it sound like someone sharing a real moment, not writing a post.
+Post:{rewrite2}

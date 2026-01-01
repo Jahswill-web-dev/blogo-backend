@@ -1,4 +1,3 @@
-I want you to use the crtique and Improvement suggestions provided to rewrite the Given post
+Make this more emotional and easier to relate to.
 
-Given Post:{user_post}
-Critique: {critique1}
+Given Post:{rewrite1}

@@ -7,20 +7,13 @@ Requirements:
 • Follow with a simple, actionable solution or insight
 • Use a conversational tone
 • Be concise and easy to skim
-• Use 1–3 emojis (not spammy)
+• 
 • Do NOT hard-sell
 • Do NOT use hashtags
 • Stay under 280 characters
 • Do NOT use visible line breaks like \n**
 
-SAAS Context:
 
-Product: {product}
+Target audience: {target_audience}
 
-Category: {industry}
-
-What the product does: {description}
-
-Target users: {target_audience}
-
-Generate one post
+Generate one post and print out the pain category used 

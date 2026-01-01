@@ -2,8 +2,8 @@
 import { z } from "zod";
 
 export const PainSolutionSchema = z.object({
-  category: z.string(),
-  items: z.array(z.string()).length(20),
+  content: z.string(),
+  category: z.string(), 
 });
 
 export type PainSolution = z.infer<typeof PainSolutionSchema>;

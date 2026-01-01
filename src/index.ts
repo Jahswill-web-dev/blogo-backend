@@ -22,7 +22,8 @@ import generateIdeas from "./routes/not-in-use/generateIdeas";
 import post from "./routes/not-in-use/post";
 import scheduledPost from "./routes/socials/scheduledPost";
 import categoriesRoutes from "./routes/content/categories.routes";
-
+import painPostsRoutes from "./routes/content/painSolution.routes";
+import bulkPosts from "./routes/content/generateBulk.routes";
 const app = express();
 
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
@@ -53,7 +54,8 @@ app.use("/content-plan", contentPlanRoutes);
 app.use(generateIdeas);
 app.use(post);
 app.use(scheduledPost);
-
+app.use(painPostsRoutes);
+app.use(bulkPosts);
 async function startServer() {
   try {
     await mongoose.connect(process.env.MONGO_URI!, {

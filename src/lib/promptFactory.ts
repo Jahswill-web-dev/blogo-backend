@@ -4,11 +4,11 @@ import { PromptTemplate } from "@langchain/core/prompts";
 
 // Pain-Solution Prompt Template Builder
 export async function buildPainSolutionPromptTemplate(inputVars: string[]) {
-  const base = await loadPrompt("educational/basePrompt.txt");
-  const problemawareness = await loadPrompt("/problem-awareness-post/base.txt");
+  // const base = await loadPrompt("educational/basePrompt.txt");
+  // const problemawareness = await loadPrompt("/problem-awareness-post/base.txt");
   const painSolutionPost = await loadPrompt("/pain-solution-post/base.txt");
-  const painCategories = await loadPrompt("/categories/painCategories.txt");
-  const template = `${painCategories} \nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
+  // const painCategories = await loadPrompt("/categories/painCategories.txt");
+  const template = `${painSolutionPost} \nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
 
   return new PromptTemplate({
     template,

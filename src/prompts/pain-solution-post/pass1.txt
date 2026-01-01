@@ -1,6 +1,5 @@
-I want you to critique this post based on how human and conversational it sounds 
-highlight exactly which phrases could be tweaked for a more conversational feel.
-Do not rewrite the post.
-Only Critique and state how it can be improved
+Rewrite this as if you’re explaining it casually to a friend. 
+Strip out polished phrasing, jargon, and “smart-sounding” language. 
+It should sound slightly messy and human.
 
 POST: {user_post}
