@@ -1,4 +1,5 @@
-import { lcGemini } from "../services/langchainGemini";
+// import { lcGemini } from "../services/langchainGemini";
+import {lcOpenAI} from "../services/langchainOpenai";
 import {
   buildPainCategoriesPromptTemplate,
   buildCategoriesPromptTemplate,
@@ -95,7 +96,7 @@ export async function generatePainCategories(inputVars: Record<string, any>) {
     format_instructions: PainCategoriesformatInstructions,
   });
   const parsed = await runWithRetry(
-    () => lcGemini.invoke(promptText), // LLM call
+    () => lcOpenAI.invoke(promptText), // LLM call
     PainCategoriesParser,               // Zod parser
     2                                  // maxRetries (optional)
   );
@@ -123,7 +124,7 @@ export async function generateGeneralCategories(inputVars: Record<string, any>) 
   });
 
   const parsed = await runWithRetry(
-    () => lcGemini.invoke(promptText),
+    () => lcOpenAI.invoke(promptText),
     PainCategoriesParser
   );
   await storeCategories({
@@ -150,7 +151,7 @@ export async function generateQuestionTypes(inputVars: Record<string, any>) {
     format_instructions: QuestionTypesformatInstructions,
   });
   const parsed = await runWithRetry(
-    () => lcGemini.invoke(promptText), // LLM call
+    () => lcOpenAI.invoke(promptText), // LLM call
     questionTypesParser,               // Zod parser
     2                                  // maxRetries (optional)
   );

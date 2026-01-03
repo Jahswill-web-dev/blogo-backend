@@ -1,5 +1,6 @@
 // src/pipeline/generateInitialPost.ts
 import { lcGemini } from "../services/langchainGemini";
+import { lcOpenAI } from "../services/langchainOpenai";
 import { buildPainSolutionPromptTemplate } from "../lib/promptFactory";
 import { painSolutionParser, PainSolutionformatInstructions } from "../lib/parsers";
 
@@ -11,7 +12,7 @@ export async function generatePainSolutionPost(inputVars: Record<string, any>) {
     format_instructions: PainSolutionformatInstructions,
   });
 
-  const rawOutput = await lcGemini.invoke(promptText);
+  const rawOutput = await lcOpenAI.invoke(promptText);
 
   // Parse JSON output to { platform, post }
   const contentString =
