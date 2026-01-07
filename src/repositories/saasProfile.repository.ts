@@ -21,16 +21,17 @@ export async function storeAISaasProfile({
     if (!userId) {
         throw new Error("storeAISaasProfile: userId is required");
     }
-    return SaasAIProfile.create({
-        userId,
+    return await SaasAIProfile.findOneAndUpdate(
+        { userId },
+        { content, meta },
+        { upsert: true, new: true }
         // saasName,
         // productDescription,
         // niche,
         // targetAudience,
         // audiencePainPoints,
-        content,
-        meta,
-    });
+
+    );
 }
 
 

@@ -26,7 +26,7 @@ export async function generateSaasProfile(inputVars: Record<string, any>) {
         saasProfileParser,               // Zod parser
         2                                  // maxRetries (optional)
     );
-    console.log("Generated SaaS Profile:", parsed);
+    console.log("Generated SaaS Profile:", parsed.content);
     await storeAISaasProfile({
         userId: inputVars.userId,
         content: parsed.content,
