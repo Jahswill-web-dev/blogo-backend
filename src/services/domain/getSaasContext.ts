@@ -1,19 +1,20 @@
-import UserProfile, { IUserProfile } from "../../models/UserProfile";
-
+// import UserProfile, { IUserProfile } from "../../models/UserProfile";
+import { SaasAIProfile } from "../../models/SaasAIProfile";
 export async function getSaasContext(userId: string) {
-  const profile = await UserProfile.findOne({ userId }).lean<IUserProfile>();
+  const profile = await SaasAIProfile.findOne({ userId }).lean();
 
+  
   if (!profile) {
     throw new Error("User SaaS profile not found");
   }
 
   return {
-    industry: profile.industry,
-    product: profile.companyName,
-    description: profile.description,
-    target_audience: profile.audience?.join(", "),
-    pain_points: profile.painPoints?.join(", "),
-    benefits: profile.benefits?.join(", "),
-    tone: profile.tone ?? "neutral",
+    saasName: profile.saasName,
+    niche: profile.niche,
+    description: profile.productDescription,
+    target_audience: profile.targetAudience,
+    pain_points: profile.audiencePainPoints,
+    // benefits: profile.benefits?.join(", "),
+    // tone: profile.tone ?? "neutral",
   };
 }

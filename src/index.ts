@@ -24,6 +24,8 @@ import scheduledPost from "./routes/socials/scheduledPost";
 import categoriesRoutes from "./routes/content/categories.routes";
 import painPostsRoutes from "./routes/content/painSolution.routes";
 import bulkPosts from "./routes/content/generateBulk.routes";
+import aiSaasProfile from "./routes/content/saasProfile.routes";
+
 const app = express();
 
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
@@ -56,6 +58,7 @@ app.use(post);
 app.use(scheduledPost);
 app.use(painPostsRoutes);
 app.use(bulkPosts);
+app.use(aiSaasProfile);
 async function startServer() {
   try {
     await mongoose.connect(process.env.MONGO_URI!, {

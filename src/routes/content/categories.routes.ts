@@ -1,4 +1,3 @@
-// src/routes/categories.ts
 import { Router } from "express";
 import jwtAuth from "../../middleware/jwtAuth";
 

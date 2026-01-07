@@ -10,7 +10,7 @@ router.post("/", jwtAuth, async (req: Request, res: Response) => {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" });
         }
-        const { userType, name, companyName, stage, industry, description, audience, contentGoals, tonePreference } = req.body;
+        const { saasName, productDescription, productPromise, targetAudience, painPoints } = req.body;
         const userId = (req.user as any)._id;
 
         const existingProfile = await UserProfile.findOne({ userId });
@@ -18,29 +18,20 @@ router.post("/", jwtAuth, async (req: Request, res: Response) => {
 
         if (existingProfile) {
             existingProfile.set({
-                userType,
-                name,
-                companyName,
-                stage,
-                industry,
-                description,
-                audience,
-                contentGoals,
-                tonePreference,
+                saasName, 
+                productDescription,
+                productPromise, 
+                targetAudience, 
+                painPoints
             });
             profile = await existingProfile.save();
         } else {
             profile = await UserProfile.create({
                 userId,
-                userType,
-                name,
-                companyName,
-                stage,
-                industry,
-                description,
-                audience,
-                contentGoals,
-                tonePreference,
+                saasName, productDescription,
+                productPromise, 
+                targetAudience, 
+                painPoints
             });
         }
 
@@ -48,6 +39,22 @@ router.post("/", jwtAuth, async (req: Request, res: Response) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Error saving user profile" });
+    }
+});
+
+router.get("/", jwtAuth, async (req: Request, res: Response) => {
+    try {
+        const userId = (req.user as any)._id;
+
+        const profile = await UserProfile.findOne({ userId });
+        if (!profile) {
+            return res.status(404).json({ message: "Profile not found" });
+        }
+
+        res.json({ success: true, profile });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Error fetching profile" });
     }
 });
 

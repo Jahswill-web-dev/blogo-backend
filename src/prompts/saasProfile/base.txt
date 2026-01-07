@@ -1,0 +1,42 @@
+Using the information below:
+
+Product description:{productDescription} 
+
+product promise:{productPromise}
+
+target audience:{targetAudience} 
+
+audience pain points:{audiencePainPoints}
+
+Generate an Ultra-Concise SaaS Founder Profile.
+
+Use this structure exactly:
+
+SaaS Founder Profile (Ultra-Concise)
+
+Niche
+1–2 sentences describing who this is for and the specific growth or outcome they want.
+
+Product
+1–2 sentences explaining what the product does and how it helps, without listing features.
+
+Audience
+One short line or  a list describing the type of people building or using this product.
+
+Promise
+One outcome-focused sentence describing the transformation.
+
+Core Pains
+A short bullet list (3–5 items max) of real, practical frustrations.
+
+Guidelines:
+
+Keep every section  concise.
+
+Use plain language (no buzzwords).
+
+Focus on outcomes, not features.
+
+Avoid marketing fluff or hype.
+
+Do not add explanations or commentary.

@@ -4,6 +4,7 @@ import { StructuredOutputParser } from "@langchain/core/output_parsers";
 import { PainSolutionSchema } from "../schemas/painSolution.schema";
 import { PainCategoriesSchema } from "../schemas/painCategories.schema";
 import { QuestionTypesSchema } from "../schemas/questionsTypes.schema";
+import { SaasProfileSchema } from "../schemas/SaasProfile.schema";
 export const painSolutionParser = StructuredOutputParser.fromZodSchema(PainSolutionSchema);
 export const PainSolutionformatInstructions = painSolutionParser.getFormatInstructions();
 
@@ -12,3 +13,6 @@ export const PainCategoriesformatInstructions = PainCategoriesParser.getFormatIn
 
 export const questionTypesParser = StructuredOutputParser.fromZodSchema(QuestionTypesSchema);
 export const QuestionTypesformatInstructions = questionTypesParser.getFormatInstructions();
+
+export const saasProfileParser = StructuredOutputParser.fromZodSchema(SaasProfileSchema);
+export const SaasProfileFormatInstructions = saasProfileParser.getFormatInstructions();

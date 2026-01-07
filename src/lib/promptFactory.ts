@@ -47,3 +47,15 @@ export async function buildQuestionTypesPromptTemplate(inputVars: string[]) {
   });
 
 }
+
+
+export async function buildSaasProfilePromptTemplate(inputVars: string[]) {
+  const saasProfilePrompt = await loadPrompt("/saasProfile/base.txt");
+  const template = `${saasProfilePrompt} \nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
+
+  return new PromptTemplate({
+    template,
+    inputVariables: inputVars.concat("format_instructions"),
+  });
+
+}
