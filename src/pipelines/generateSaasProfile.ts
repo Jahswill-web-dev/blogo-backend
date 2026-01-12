@@ -3,7 +3,7 @@
 import { SaasProfileSchema } from "../schemas/SaasProfile.schema";
 import { buildSaasProfilePromptTemplate } from "../lib/promptFactory";
 import { SaasProfileFormatInstructions, saasProfileParser } from "../lib/parsers";
-import { lcOpenAI } from "../services/langchainOpenai";
+import { lcOpenAI } from "../services/langchainOpenAI";
 import { runWithRetry } from "../lib/retry";
 import { storeAISaasProfile } from "../repositories/saasProfile.repository";
 

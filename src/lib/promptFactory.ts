@@ -48,7 +48,7 @@ export async function buildQuestionTypesPromptTemplate(inputVars: string[]) {
 
 }
 
-
+//SaaS Profile Prompt Template Builder
 export async function buildSaasProfilePromptTemplate(inputVars: string[]) {
   const saasProfilePrompt = await loadPrompt("/saasProfile/base.txt");
   const template = `${saasProfilePrompt} \nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
@@ -58,4 +58,15 @@ export async function buildSaasProfilePromptTemplate(inputVars: string[]) {
     inputVariables: inputVars.concat("format_instructions"),
   });
 
+}
+
+
+//Subtopics Prompt Template Builder
+export async function buildSubtopicsPromptTemplate(inputVars: string[]) {
+  const subtopicsPrompt = await loadPrompt("/categories/subtopics.txt");
+  const template = `${subtopicsPrompt} \nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
+  return new PromptTemplate({
+    template,
+    inputVariables: inputVars.concat("format_instructions"),
+  });
 }

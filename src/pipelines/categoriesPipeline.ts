@@ -1,16 +1,19 @@
 // import { lcGemini } from "../services/langchainGemini";
-import {lcOpenAI} from "../services/langchainOpenai";
+import {lcOpenAI} from "../services/langchainOpenAI";
 import {
   buildPainCategoriesPromptTemplate,
   buildCategoriesPromptTemplate,
-  buildQuestionTypesPromptTemplate
+  buildQuestionTypesPromptTemplate,
+  buildSubtopicsPromptTemplate
 } from "../lib/promptFactory";
 import {
   PainCategoriesParser,
   PainSolutionformatInstructions,
   PainCategoriesformatInstructions,
   questionTypesParser,
-  QuestionTypesformatInstructions
+  QuestionTypesformatInstructions,
+  ContentStrategyFormatInstructions,
+  contentStrategyParser
 } from "../lib/parsers";
 import { storeCategories } from "../repositories/category.repository";
 import { runWithRetry }  from "../lib/retry";
@@ -52,6 +55,7 @@ export async function generatePainCategories(inputVars: Record<string, any>) {
     items: parsed.items,
   };
 }
+
 //General Categories generation pipeline
 export async function generateGeneralCategories(inputVars: Record<string, any>) {
   const { userId, ...promptVars } = inputVars;
@@ -91,6 +95,7 @@ export async function generateQuestionTypes(inputVars: Record<string, any>) {
     ...promptVars,
     format_instructions: QuestionTypesformatInstructions,
   });
+  
   const parsed = await runWithRetry(
     () => lcOpenAI.invoke(promptText), // LLM call
     questionTypesParser,               // Zod parser
@@ -106,4 +111,34 @@ export async function generateQuestionTypes(inputVars: Record<string, any>) {
     items: parsed.items,
   };
 }
+
+
+//Subtopics generation pipeline
+export async function generateSubtopics(inputVars: Record<string, any>) {
+  const { userId, ...promptVars } = inputVars;  
+  if (!userId) {
+    throw new Error("userId is required to Create and store categories");
+  }
+  const promptTemplate = await buildSubtopicsPromptTemplate(Object.keys(promptVars));
+  const promptText = await promptTemplate.format({
+    ...promptVars,
+    format_instructions: ContentStrategyFormatInstructions,
+  });
+  const parsed = await runWithRetry(
+    () => lcOpenAI.invoke(promptText), // LLM call
+    contentStrategyParser,               // Zod parser
+    2                                  // maxRetries (optional)
+  );
+  //store subtopics in DB
+  // await storeCategories({
+  //   userId,
+  //   type: "subtopics",
+  //   items: parsed.items,
+  //   meta: { promptVars },
+  // });   
+
+}
+
+
+
 //Last step store in DB

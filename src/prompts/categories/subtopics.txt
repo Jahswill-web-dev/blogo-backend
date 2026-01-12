@@ -1,0 +1,4 @@
+based on this saas founders Product information:
+{saasinformation} 
+Generate a List of 7 educational content Pillars with a short description of the pain they solve and with 5 subtopics for each pillar that would Helps Position the saas founder as an expert in this niche. 
+These should reflect real problems, decisions, and patterns the audience encounters.

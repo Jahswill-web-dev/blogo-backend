@@ -274,36 +274,38 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "userType": {
+                  "saasName": {
                     "example": "any"
                   },
-                  "name": {
+                  "productDescription": {
                     "example": "any"
                   },
-                  "companyName": {
+                  "productPromise": {
                     "example": "any"
                   },
-                  "stage": {
+                  "targetAudience": {
                     "example": "any"
                   },
-                  "industry": {
-                    "example": "any"
-                  },
-                  "description": {
-                    "example": "any"
-                  },
-                  "audience": {
-                    "example": "any"
-                  },
-                  "contentGoals": {
-                    "example": "any"
-                  },
-                  "tonePreference": {
+                  "painPoints": {
                     "example": "any"
                   }
                 }
               }
             }
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -512,6 +514,19 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/generate-saas-profile": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
