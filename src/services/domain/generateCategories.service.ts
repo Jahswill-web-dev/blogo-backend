@@ -35,7 +35,7 @@ export async function generateSubtopicsForUser({
     saasContext: Record<string, any>;
 }) {
     const inputVars = {
-        ...saasContext,
+        saasContext,
         userId,
     };
     const subtopics = await generateSubtopics(inputVars);

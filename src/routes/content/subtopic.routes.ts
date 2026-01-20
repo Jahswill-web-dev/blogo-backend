@@ -1,7 +1,7 @@
 import { Router } from "express";
 import jwtAuth from "../../middleware/jwtAuth";
 import { generateSubtopicsForUser } from "../../services/domain/generateCategories.service";
-import { getAIimpovedSaasContext,  } from "../../services/domain/getSaasContext";
+import { getAIimpovedSaasContext  } from "../../services/domain/getSaasContext";
 
 
 const router = Router();

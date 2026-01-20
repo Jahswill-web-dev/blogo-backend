@@ -115,13 +115,14 @@ export async function generateQuestionTypes(inputVars: Record<string, any>) {
 
 //Subtopics generation pipeline
 export async function generateSubtopics(inputVars: Record<string, any>) {
-  const { userId, ...promptVars } = inputVars;  
+  const { userId, saasContext } = inputVars; 
+  // console.log("saascontext:", saasContext) 
   if (!userId) {
     throw new Error("userId is required to Create and store categories");
   }
-  const promptTemplate = await buildSubtopicsPromptTemplate(Object.keys(promptVars));
+  const promptTemplate = await buildSubtopicsPromptTemplate(Object.keys(saasContext));
   const promptText = await promptTemplate.format({
-    ...promptVars,
+    ...saasContext,
     format_instructions: ContentStrategyFormatInstructions,
   });
   const parsed = await runWithRetry(
@@ -129,6 +130,7 @@ export async function generateSubtopics(inputVars: Record<string, any>) {
     contentStrategyParser,               // Zod parser
     2                                  // maxRetries (optional)
   );
+
   //store subtopics in DB
   // await storeCategories({
   //   userId,
@@ -136,7 +138,9 @@ export async function generateSubtopics(inputVars: Record<string, any>) {
   //   items: parsed.items,
   //   meta: { promptVars },
   // });   
-
+ console.log("parsed subtopics:", parsed);
+ return parsed;
+ 
 }
 
 
