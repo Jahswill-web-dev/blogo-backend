@@ -70,3 +70,34 @@ export async function buildSubtopicsPromptTemplate(inputVars: string[]) {
     inputVariables: inputVars.concat("format_instructions"),
   });
 }
+
+
+//build post skeleton prompt template
+export async function buildSubtopicPostSkeletonPromptTemplate(inputVars: string[]) {
+  const postSkeletonPrompt = await loadPrompt("/educational-post/post_skeleton.txt"); 
+  const template = `${postSkeletonPrompt} \nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
+  return new PromptTemplate({
+    template,
+    inputVariables: inputVars.concat("format_instructions"),
+  });
+}
+
+//build subtopic(educational) post prompt template
+export async function buildSubtopicPromptTemplate(inputVars: string[]) {
+  const subtopicPostPrompt = await loadPrompt("/educational-post/post_development.txt");
+  const template = `${subtopicPostPrompt} \nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
+  return new PromptTemplate({
+    template,
+    inputVariables: inputVars.concat("format_instructions"),
+  });
+}
+
+//build subtopic rewrite post prompt template
+export async function buildSubtopicPostRewriteTemplate(inputVars: string[]) {
+  const postRewritePrompt = await loadPrompt("/educational-post/post_rewrite.txt");  
+  const template = `${postRewritePrompt} \nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
+  return new PromptTemplate({
+    template,
+    inputVariables: inputVars.concat("format_instructions"),
+  });
+}

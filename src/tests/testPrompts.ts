@@ -2,9 +2,9 @@ import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
 
-import { generateCategories, generatePainCategories, generateQuestionTypes } from "../pipelines/categoriesPipeline";
-import { generateEducationalPost } from "../pipelines/generateFinalPost";
-import { generateInitialPost } from "../pipelines/painSolution.pipeline";
+// import { generateCategories, generatePainCategories, generateQuestionTypes } from "../pipelines/categoriesPipeline";
+// import { generateEducationalPost } from "../pipelines/generateSubtopicPost";
+// import { generateInitialPost } from "../pipelines/painSolution.pipeline";
 
 async function run() {
   try {
@@ -34,9 +34,9 @@ async function run() {
     // const result = await generatePainCategories(inputVars);
     // const result = await generateCategories(inputVars);  
     // const result = await generateEducationalPost(inputVars);
-     const result = await generateQuestionTypes(inputVars);
+    //  const result = await generateQuestionTypes(inputVars);
 
-    console.log("POST JSON:", result);
+    // console.log("POST JSON:", result);
   } catch (error) {
     console.error("Error in test script:", error);
   } finally {

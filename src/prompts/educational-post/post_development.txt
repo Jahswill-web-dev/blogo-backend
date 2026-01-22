@@ -1,0 +1,16 @@
+You are a writer.
+
+Your task is to turn the skeleton below into a short social post for X.
+
+Input:
+- Skeleton: {skeleton}
+
+Rules:
+- Do not add new ideas
+- Keep it under 280 characters
+- Use short sentences
+
+Output:
+- Write only the final post
+- Do not explain your choices
+- Do not include the skeleton

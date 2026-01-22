@@ -6,6 +6,8 @@ import { PainCategoriesSchema } from "../schemas/painCategories.schema";
 import { QuestionTypesSchema } from "../schemas/questionsTypes.schema";
 import { SaasProfileSchema } from "../schemas/SaasProfile.schema";
 import { contentStrategySchema } from "../schemas/subtopic.schema";
+import { subtopicPostSchema, subtopicSkeletonSchema } from "../schemas/subtopicPost.schema";
+
 export const painSolutionParser = StructuredOutputParser.fromZodSchema(PainSolutionSchema);
 export const PainSolutionformatInstructions = painSolutionParser.getFormatInstructions();
 
@@ -20,3 +22,9 @@ export const SaasProfileFormatInstructions = saasProfileParser.getFormatInstruct
 
 export const contentStrategyParser = StructuredOutputParser.fromZodSchema(contentStrategySchema);
 export const ContentStrategyFormatInstructions = contentStrategyParser.getFormatInstructions();
+
+export const subtopicPostParser = StructuredOutputParser.fromZodSchema(subtopicPostSchema);    
+export const subtopicPostFormatInstructions = subtopicPostParser.getFormatInstructions();
+
+export const SubtopicPostRewriteParser = StructuredOutputParser.fromZodSchema(subtopicSkeletonSchema);
+export const subtopicPostRewriteFormatInstructions = SubtopicPostRewriteParser.getFormatInstructions();

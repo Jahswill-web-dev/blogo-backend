@@ -15,7 +15,7 @@ import {
   ContentStrategyFormatInstructions,
   contentStrategyParser
 } from "../lib/parsers";
-import { storeCategories } from "../repositories/category.repository";
+import { storeCategories, storeSubtopics } from "../repositories/category.repository";
 import { runWithRetry }  from "../lib/retry";
 
 
@@ -131,16 +131,13 @@ export async function generateSubtopics(inputVars: Record<string, any>) {
     2                                  // maxRetries (optional)
   );
 
-  //store subtopics in DB
-  // await storeCategories({
-  //   userId,
-  //   type: "subtopics",
-  //   items: parsed.items,
-  //   meta: { promptVars },
-  // });   
- console.log("parsed subtopics:", parsed);
- return parsed;
- 
+  // store subtopics in DB
+  await storeSubtopics({
+    userId,
+    parsedPillars: parsed.pillars,
+  });
+  // console.log("parsed subtopics:", parsed);
+  return parsed;
 }
 
 
