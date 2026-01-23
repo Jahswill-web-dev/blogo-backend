@@ -26,5 +26,5 @@ export const ContentStrategyFormatInstructions = contentStrategyParser.getFormat
 export const subtopicPostParser = StructuredOutputParser.fromZodSchema(subtopicPostSchema);    
 export const subtopicPostFormatInstructions = subtopicPostParser.getFormatInstructions();
 
-export const SubtopicPostRewriteParser = StructuredOutputParser.fromZodSchema(subtopicSkeletonSchema);
-export const subtopicPostRewriteFormatInstructions = SubtopicPostRewriteParser.getFormatInstructions();
+export const SubtopicSkeletonParser = StructuredOutputParser.fromZodSchema(subtopicSkeletonSchema);
+export const subtopicSkeletonFormatInstructions = SubtopicSkeletonParser.getFormatInstructions();

@@ -83,7 +83,7 @@ export async function buildSubtopicPostSkeletonPromptTemplate(inputVars: string[
 }
 
 //build subtopic(educational) post prompt template
-export async function buildSubtopicPromptTemplate(inputVars: string[]) {
+export async function buildSubtopicPostPromptTemplate(inputVars: string[]) {
   const subtopicPostPrompt = await loadPrompt("/educational-post/post_development.txt");
   const template = `${subtopicPostPrompt} \nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
   return new PromptTemplate({

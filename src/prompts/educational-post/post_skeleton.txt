@@ -1,6 +1,7 @@
 You are a strategist and editor.
 
-Your task is to create an ABSTRACT SKELETON for a short social post.
+Your task is to create an ABSTRACT SKELETON for a short social post, 
+use the information below:
 
 Inputs:
 - Content pillar: {content_pillar}
