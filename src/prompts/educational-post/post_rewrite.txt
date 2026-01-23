@@ -43,4 +43,4 @@ Focus on clarity: Make your message easy to understand.
 Example: "Please send the file by Monday."
 
 
-Input:{post_text}
+Input:{original_post}

@@ -88,7 +88,7 @@ async function rewriteSubtopicPost(post: string) {
 }
 
 
-
+//pipeline to generate final educational subtopic post
 export async function generateFinalSubtopicPost({
     contentPillar,
     pain,
@@ -109,7 +109,7 @@ export async function generateFinalSubtopicPost({
     );
 
     
-    const skeletonPost = skeletonResult;
+    const skeletonPost = skeletonResult.skeleton;
 
     // Generate full post
     const postResult = await generateSubtopicPost(skeletonPost);

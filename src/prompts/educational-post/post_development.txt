@@ -1,9 +1,9 @@
 You are a writer.
 
-Your task is to turn the skeleton below into a short social post for X.
+Your task is to turn the skeleton post below into a short social post for X.
 
 Input:
-- Skeleton: {skeleton}
+- Skeleton: {skeleton_post}
 
 Rules:
 - Do not add new ideas
