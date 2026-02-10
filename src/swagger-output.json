@@ -478,19 +478,6 @@
         }
       }
     },
-    "/generate-pain-post": {
-      "post": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
     "/generate-bulk-posts": {
       "post": {
         "description": "",
@@ -532,6 +519,19 @@
       }
     },
     "/generate-subtopics": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/generate-subtopic-post": {
       "post": {
         "description": "",
         "responses": {

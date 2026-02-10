@@ -22,10 +22,11 @@ import generateIdeas from "./routes/not-in-use/generateIdeas";
 import post from "./routes/not-in-use/post";
 import scheduledPost from "./routes/socials/scheduledPost";
 import categoriesRoutes from "./routes/content/categories.routes";
-import painPostsRoutes from "./routes/content/painSolution.routes";
+// import painPostsRoutes from "./routes/content/painSolution.routes";
 import bulkPosts from "./routes/content/generateBulk.routes";
 import aiSaasProfile from "./routes/content/saasProfile.routes";
 import subtopicRoutes from "./routes/content/subtopic.routes";
+import subtopicPostRoutes from "./routes/content/subtopicPost.routes";
 
 const app = express();
 
@@ -57,10 +58,13 @@ app.use("/content-plan", contentPlanRoutes);
 app.use(generateIdeas);
 app.use(post);
 app.use(scheduledPost);
-app.use(painPostsRoutes);
+// app.use(painPostsRoutes);
 app.use(bulkPosts);
 app.use(aiSaasProfile);
+// Subtopic routes
 app.use(subtopicRoutes);
+app.use(subtopicPostRoutes);
+
 async function startServer() {
   try {
     await mongoose.connect(process.env.MONGO_URI!, {

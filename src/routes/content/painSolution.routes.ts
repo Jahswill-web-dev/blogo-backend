@@ -1,27 +1,27 @@
-import { Router } from "express";
-import jwtAuth from "../../middleware/jwtAuth";
+// import { Router } from "express";
+// import jwtAuth from "../../middleware/jwtAuth";
 
-import { getSaasContext } from "../../services/domain/getSaasContext";
-import { createPainSolutionPost } from "../../services/domain/painSolution.service";
+// import { getSaasContext } from "../../services/domain/getSaasContext";
+// import { createPainSolutionPost } from "../../services/domain/painSolution.service";
 
-const router = Router();
+// const router = Router();
 
-router.post("/generate-pain-post", jwtAuth, async (req, res) => {
-  try {
-    const userId = (req.user as any)._id;
+// router.post("/generate-pain-post", jwtAuth, async (req, res) => {
+//   try {
+//     const userId = (req.user as any)._id;
 
-    const saasContext = await getSaasContext(userId); // profile, audience, etc.
+//     const saasContext = await getSaasContext(userId); // profile, audience, etc.
 
-    const post = await createPainSolutionPost({
-      userId,
-      saasContext,
-    });
+//     const post = await createPainSolutionPost({
+//       userId,
+//       saasContext,
+//     });
 
-    res.json({ success: true, post });
-  } catch (err) {
-    res.status(500).json({ error: (err as Error).message });
-    console.error("❌ Pain post generation error:", err);
-  }
-});
+//     res.json({ success: true, post });
+//   } catch (err) {
+//     res.status(500).json({ error: (err as Error).message });
+//     console.error("❌ Pain post generation error:", err);
+//   }
+// });
 
-export default router;
+// export default router;

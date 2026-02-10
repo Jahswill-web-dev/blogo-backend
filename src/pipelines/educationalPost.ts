@@ -12,15 +12,15 @@ import { runWithRetry } from "../lib/retry";
 import { lcOpenAI } from "../services/langchainOpenAI";
 
 
-
-async function generateSubtopicSkeletonPost(
+//---Fuunctions to generate skeleton, full post, and rewrite post--
+export async function generateSubtopicSkeletonPost(
     contentPillar: string,
     pain: string,
     subtopic: string,
     userId: string,
 ) {
     if (!userId) {
-        throw new Error("userId is required to Create and store categories");
+        throw new Error("userId is required to Create subtopic skeleton post");
     }
 
     const promptTemplate = await buildSubtopicPostSkeletonPromptTemplate(Object.keys({
@@ -48,9 +48,7 @@ async function generateSubtopicSkeletonPost(
 
 }
 
-
-
-async function generateSubtopicPost(skeletonPost: string) {
+export async function generateSubtopicPost(skeletonPost: string) {
     const promptTemplate = await buildSubtopicPostPromptTemplate(Object.keys({
         skeleton_post: skeletonPost,
     }
@@ -70,7 +68,7 @@ async function generateSubtopicPost(skeletonPost: string) {
 
 }
 
-async function rewriteSubtopicPost(post: string) {
+export async function rewriteSubtopicPost(post: string) {
     const promptTemplate = await buildSubtopicPostRewriteTemplate(Object.keys({
         original_post: post,
     }));
@@ -87,40 +85,3 @@ async function rewriteSubtopicPost(post: string) {
     return parsed;
 }
 
-
-//pipeline to generate final educational subtopic post
-export async function generateFinalSubtopicPost({
-    contentPillar,
-    pain,
-    subtopic,
-    userId,
-}: {
-    contentPillar: string;
-    pain: string;
-    subtopic: string;
-    userId: string;
-}) {
-    // Generate skeleton
-    const skeletonResult = await generateSubtopicSkeletonPost(
-        contentPillar,
-        pain,
-        subtopic,
-        userId
-    );
-
-    
-    const skeletonPost = skeletonResult.skeleton;
-
-    // Generate full post
-    const postResult = await generateSubtopicPost(skeletonPost);
-    const post = postResult.post;
-
-    //    rewrite post
-    const finalResult = await rewriteSubtopicPost(post);
-
-    return {
-        skeleton: skeletonPost,
-        post,
-        finalPost: finalResult.post,
-    };
-}
