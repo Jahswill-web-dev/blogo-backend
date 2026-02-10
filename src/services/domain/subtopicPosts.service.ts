@@ -2,7 +2,7 @@
 //---pipeline to generate final educational subtopic post--
 
 import { generateSubtopicPost, generateSubtopicSkeletonPost, rewriteSubtopicPost } from "../../pipelines/educationalPost";
-import { storeSubtopicPost } from "../../repositories/subtopicPosts.repository";
+import { getRandomSubtopicForUser, storeSubtopicPost } from "../../repositories/subtopicPosts.repository";
 
 
 export async function generateFinalSubtopicPost({

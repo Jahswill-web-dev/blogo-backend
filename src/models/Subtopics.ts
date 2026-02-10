@@ -1,6 +1,29 @@
 // models/SaasContentStrategy.ts
 import { Schema, model, models } from "mongoose";
 
+// TypeScript interfaces
+export interface ISubtopic {
+  subtopic: string;
+}
+
+export interface IPillar {
+  pillar: string;
+  pain?: string;
+  subtopics: ISubtopic[];
+}
+
+export interface IAISaasContentPillars {
+  userId: Schema.Types.ObjectId;
+  pillars: IPillar[];
+}
+
+export interface AISaasContentPillarsDocument extends IAISaasContentPillars, Document {
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+//Schemas
+
 const SubtopicSchema = new Schema(
     {
         subtopic: { type: String, required: true },

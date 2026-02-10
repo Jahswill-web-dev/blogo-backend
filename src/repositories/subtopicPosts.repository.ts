@@ -1,6 +1,6 @@
 // repositories/subtopicPosts.ts
 import { SubtopicPostModel, SubtopicPostDocument } from "../models/SubtopicPosts";
-import {  AISaasContentPillarsModel } from "../models/Subtopics" 
+import {  AISaasContentPillarsModel, IAISaasContentPillars } from "../models/Subtopics" 
 
 export async function storeSubtopicPost({
   userId,
@@ -87,7 +87,7 @@ export async function deleteSubtopicPost(postId: string) {
 // ... random subtopic selection....
 
 export async function getRandomSubtopicForUser(userId: string) {
-  const contentStrategy = await AISaasContentPillarsModel.findOne({ userId }).lean();
+  const contentStrategy = await AISaasContentPillarsModel.findOne({ userId }).lean<IAISaasContentPillars>();
   
   if (!contentStrategy || !contentStrategy.pillars || contentStrategy.pillars.length === 0) {
     throw new Error("No content pillars found for user");
