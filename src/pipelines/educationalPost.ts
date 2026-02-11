@@ -43,7 +43,7 @@ export async function generateSubtopicSkeletonPost(
         2                                  // maxRetries (optional)
     );
 
-    console.log("Generated subtopic skeleton post:", parsed);
+    // console.log("Generated subtopic skeleton post:", parsed);
     return parsed;
 
 }
@@ -62,7 +62,7 @@ export async function generateSubtopicPost(skeletonPost: string) {
         subtopicPostParser,               // Zod parser
         2                                  // maxRetries (optional) 
     );
-    console.log("Generated subtopic post:", parsed);
+    // console.log("Generated subtopic post:", parsed);
     return parsed;
 
 

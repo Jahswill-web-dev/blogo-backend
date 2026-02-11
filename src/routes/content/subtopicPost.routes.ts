@@ -1,6 +1,7 @@
 import jwtAuth from "../../middleware/jwtAuth";
 import { Router } from "express";
 import { generateRandomSubtopicPost } from "../../services/domain/subtopicPosts.service";
+import { generateMultipleSubtopicPosts } from "../../services/domain/multipleSubtopicPosts.service";
 
 
 const router = Router();
@@ -8,14 +9,17 @@ const router = Router();
 router.post("/generate-subtopic-post", jwtAuth, async (req, res) => {
     try {
         const userId = (req.user as any)._id;
-        // console.log("Generating subtopic post for user:", userId);
-        const subtopicPost = await generateRandomSubtopicPost(userId);
+        const { count = 3 } = req.body;
 
-        res.json({ success: true, post: subtopicPost });
+        const posts = await generateMultipleSubtopicPosts(userId, count);
+
+        res.json({ success: true, posts });
+
     } catch (error) {
-        console.error("Error generating subtopic post:", error);
-        res.status(500).json({ error: "Failed to generate subtopic post" });
+        console.error("Error generating posts:", error);
+        res.status(500).json({ error: "Failed to generate post" });
     }
 });
+
 export default router;
 

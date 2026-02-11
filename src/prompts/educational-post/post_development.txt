@@ -1,6 +1,5 @@
-You are a writer.
 
-Your task is to turn the skeleton post below into a short social post for X.
+turn the skeleton post below into a short social post for X.
 
 Input:
 - Skeleton: {skeleton_post}

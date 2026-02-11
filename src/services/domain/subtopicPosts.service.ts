@@ -17,7 +17,7 @@ export async function generateFinalSubtopicPost({
     userId: string;
 }) {
     // Generate skeleton
-    console.log("Generating post for:", { userId, contentPillar, pain, subtopic });
+    // console.log("Generating post for:", { userId, contentPillar, pain, subtopic });
     const skeletonResult = await generateSubtopicSkeletonPost(
         contentPillar,
         pain,
@@ -51,7 +51,8 @@ export async function generateFinalSubtopicPost({
         skeleton: skeletonPost,
         finalPost: finalResult.post,
     };
-}
+} 
+
 
 // New function that randomly selects subtopic and generates post
 export async function generateRandomSubtopicPost(userId: string) {
@@ -62,7 +63,7 @@ export async function generateRandomSubtopicPost(userId: string) {
     // Get random content pillar and subtopic
     const randomSelection = await getRandomSubtopicForUser(userId);
 
-    console.log("Random selection:", randomSelection);
+    // console.log("Random selection:", randomSelection);
 
     // Generate post with the random selection
     return generateFinalSubtopicPost({
