@@ -541,6 +541,20 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "count": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

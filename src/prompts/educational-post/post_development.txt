@@ -1,15 +1,80 @@
 
-turn the skeleton post below into a short social post for X.
+pick a tone and style that fits this skeleton post outline or Post 
+but make sure it uses simple words and value is delivered
 
 Input:
 - Skeleton: {skeleton_post}
+Here is the content pillar and subtopic the skeleton was gotten from for more context:
 
-Rules:
-- Do not add new ideas
-- Keep it under 280 characters
-- Use short sentences
+Content pillar:{content_pillar}
+Pain:{pain}
+Subtopic:{subtopic}
 
-Output:
-- Write only the final post
-- Do not explain your choices
-- Do not include the skeleton
+First identify the persuasion type of the skeleton (contrarian, diagnostic, proof-driven, instructional, corrective, strategic). 
+Then choose a tone that matches that persuasion type.
+
+here are 3 examples to help you understand want I want when picking a tone and style:
+Example 1: 
+Prompt:"pick a tone for that fits this post/skeleton outline but make sure it uses simple words and value is delivered"Hook 
+Show a sharp contrast. Lots of signups but zero paying customers. Add a quick image of a very specific niche to stop the scroll.
+Reframe
+Challenge the idea that a wider audience means more users. Being more specific increases signal and reduces noise.
+Core Insight
+Define one clear ideal customer. Then choose two to three micro niches within that group. Shape your message around one main buying job. Specific messaging increases relevance.
+Supporting Drivers
+• Decision job ladder
+• Use case micro niche matrix
+• Language mirror test
+Implication
+This prevents vague copy that attracts the wrong users. It improves lead quality, makes conversions clearer, and speeds up validation.
+CTA
+Stop targeting a generic audience. Choose one ideal customer. Outline two to three micro niches. Rewrite your main message around their buying job.
+" 
+Response:"Tone
+• Strategic but easy to understand
+• Slightly contrarian
+• Clear and confident
+• Focused on clarity and results
+Style
+• Starts with a strong problem contrast
+• Challenges a common belief
+• Breaks ideas into simple steps
+• Uses plain language instead of jargon
+• Connects each idea to a clear business result
+It should feel like advice from a sharp growth strategist who cuts through vague thinking and shows a clear path to better users, better leads, and better conversions.
+"
+
+Example 2: Prompt:
+""Claims aren't proof. 
+Ship one runnable micro-benchmark: open data, scripts, and a tiny example repo. 
+Make it easy to run and reproduce. Reproducible benchmarks build trust fast — and trust raises conversions."pick a tone for that fits this post but make sure it uses simple words and value is delivered"
+
+Resposne:"Tone
+ • Calm but firm
+ • Practical and builder focused
+ • Slightly corrective
+ • Results driven
+Style
+ • Straight to the point
+ • Simple, clear words
+ • Focus on action steps
+ • No hype or fluff
+ • Ends with a clear business outcome
+It should feel like advice from someone who values real proof over big talk and cares about trust, results, and conversions.
+"
+Example 3: Prompt:"Lots of traffic but few signups? Focus on micro-conversions that push users into a trial mindset: newsletter CTAs, short demo clips, guided feature tours. Small steps unlock signups - prioritize micro -> trial."pick a tone for that fits this post but make sure it uses simple words and value is delivered 
+"
+Response:"Tone
+ • Analytical but clear
+ • Helpful and solution focused
+ • Calm and practical
+ • Slightly diagnostic, like spotting a problem and fixing it
+Style
+ • Starts with a common pain point
+ • Simple, easy words
+ • Clear cause and effect
+ • Actionable examples
+ • Ends with a focused takeaway It should feel like smart growth advice from someone who understands funnels and user behavior, but explains it in a way anyone can apply right away.
+" so the tone and style should fit the skeleton outline given
+
+

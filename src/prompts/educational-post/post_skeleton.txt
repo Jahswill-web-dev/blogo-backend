@@ -1,6 +1,6 @@
 You are a strategist and editor.
 
-Your task is to create an ABSTRACT SKELETON for a short social post, 
+Your task is to create a short execution-ready skeleton for an X post, 
 use the information below:
 
 Inputs:
@@ -9,16 +9,15 @@ Inputs:
 - Subtopic: {subtopic}
 
 Output rules:
-- Do NOT write the post copy
-- Do NOT include full sentences meant for publishing
-- Use abstract descriptions, not polished language
-- Focus on structure, intent, and logic
-- Keep it suitable for a <280 character post
+- Do NOT write the full post
+- Avoid polished, publish-ready phrasing
+- Use concise directional language (expandable into copy)
+- Focus on persuasion flow and clarity
 
 Skeleton requirements:
-- Hook: how the post should interrupt scrolling
+- Hook: how the post should interrupt scrolling specify the tension or contrast to open with
 - Reframe: what belief or assumption should be challenged
-- Core insight: the main idea or mechanism
+- Core insight: define the mechanism or principle clearly
 - Supporting drivers: 2–3 structural or tactical elements (named, not explained)
-- Implication: why this matters to the reader’s pain
-- CTA: what behavior or mindset should change
+- Implication: link back to the audience’s pain
+- CTA: define the action the reader should take next

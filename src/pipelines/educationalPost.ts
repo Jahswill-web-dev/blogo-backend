@@ -48,9 +48,17 @@ export async function generateSubtopicSkeletonPost(
 
 }
 
-export async function generateSubtopicPost(skeletonPost: string) {
+export async function generateSubtopicPost(
+    skeletonPost: string,
+    pain: string,
+    subtopic: string, 
+    contentPillar: string
+) {
     const promptTemplate = await buildSubtopicPostPromptTemplate(Object.keys({
         skeleton_post: skeletonPost,
+        content_pillar: contentPillar,
+        pain,
+        subtopic
     }
     ));
     const promptText = await promptTemplate.format({
