@@ -7,7 +7,7 @@ export async function storeSubtopicPost({
   contentPillar,
   pain,
   subtopic,
-  post,
+  tone,
   skeleton,
   finalPost,
   meta,
@@ -16,7 +16,7 @@ export async function storeSubtopicPost({
   contentPillar: string;
   pain: string;
   subtopic: string;
-  post: string;
+  tone: string;
   skeleton?: string;
   finalPost?: string;
   meta?: Record<string, any>;
@@ -30,7 +30,7 @@ export async function storeSubtopicPost({
     contentPillar,
     pain,
     subtopic,
-    post,
+    tone,
     skeleton,
     finalPost,
     meta,

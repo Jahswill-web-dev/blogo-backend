@@ -1,12 +1,14 @@
 import {
     subtopicPostFormatInstructions,
     subtopicPostParser, subtopicSkeletonFormatInstructions,
-    SubtopicSkeletonParser
+    SubtopicSkeletonParser,
+    subtopicToneFormatInstructions,
+    subtopicToneParser
 } from "../lib/parsers";
 import {
-    buildSubtopicPostPromptTemplate,
     buildSubtopicPostRewriteTemplate,
-    buildSubtopicPostSkeletonPromptTemplate
+    buildSubtopicPostSkeletonPromptTemplate,
+    buildSubtopicToneTemplate
 } from "../lib/promptFactory";
 import { runWithRetry } from "../lib/retry";
 import { lcOpenAI } from "../services/langchainOpenAI";
@@ -48,13 +50,13 @@ export async function generateSubtopicSkeletonPost(
 
 }
 
-export async function generateSubtopicPost(
+export async function generateSkeletonTone(
     skeletonPost: string,
     pain: string,
-    subtopic: string, 
+    subtopic: string,
     contentPillar: string
 ) {
-    const promptTemplate = await buildSubtopicPostPromptTemplate(Object.keys({
+    const promptTemplate = await buildSubtopicToneTemplate(Object.keys({
         skeleton_post: skeletonPost,
         content_pillar: contentPillar,
         pain,
@@ -63,11 +65,14 @@ export async function generateSubtopicPost(
     ));
     const promptText = await promptTemplate.format({
         skeleton_post: skeletonPost,
-        format_instructions: subtopicPostFormatInstructions,
+        content_pillar: contentPillar,
+        pain,
+        subtopic,
+        format_instructions: subtopicToneFormatInstructions,
     });
     const parsed = await runWithRetry(
         () => lcOpenAI.invoke(promptText), // LLM call
-        subtopicPostParser,               // Zod parser
+        subtopicToneParser,               // Zod parser
         2                                  // maxRetries (optional) 
     );
     // console.log("Generated subtopic post:", parsed);
@@ -76,12 +81,27 @@ export async function generateSubtopicPost(
 
 }
 
-export async function rewriteSubtopicPost(post: string) {
+export async function rewriteSubtopicPost(
+    skeletonPost: string,
+    contentPillar: string,
+    pain: string,
+    subtopic: string,
+    tone: string
+
+) {
     const promptTemplate = await buildSubtopicPostRewriteTemplate(Object.keys({
-        original_post: post,
+        skeleton_post: skeletonPost,
+        content_pillar: contentPillar,
+        subtopic,
+        pain,
+        tone
     }));
     const promptText = await promptTemplate.format({
-        original_post: post,
+        skeleton_post: skeletonPost,
+        content_pillar: contentPillar,
+        subtopic,
+        pain,
+        tone,
         format_instructions: subtopicPostFormatInstructions,
     });
     const parsed = await runWithRetry(

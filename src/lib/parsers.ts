@@ -1,12 +1,11 @@
 // src/lib/educationalParser.ts
-import { z } from "zod";
 import { StructuredOutputParser } from "@langchain/core/output_parsers";
 import { PainSolutionSchema } from "../schemas/painSolution.schema";
 import { PainCategoriesSchema } from "../schemas/painCategories.schema";
 import { QuestionTypesSchema } from "../schemas/questionsTypes.schema";
 import { SaasProfileSchema } from "../schemas/SaasProfile.schema";
 import { contentStrategySchema } from "../schemas/subtopic.schema";
-import { subtopicPostSchema, subtopicSkeletonSchema } from "../schemas/subtopicPost.schema";
+import { subtopicPostSchema, subtopicSkeletonSchema, subtopicToneschema } from "../schemas/subtopicPost.schema";
 
 export const painSolutionParser = StructuredOutputParser.fromZodSchema(PainSolutionSchema);
 export const PainSolutionformatInstructions = painSolutionParser.getFormatInstructions();
@@ -25,6 +24,9 @@ export const ContentStrategyFormatInstructions = contentStrategyParser.getFormat
 
 export const subtopicPostParser = StructuredOutputParser.fromZodSchema(subtopicPostSchema);    
 export const subtopicPostFormatInstructions = subtopicPostParser.getFormatInstructions();
+
+export const subtopicToneParser = StructuredOutputParser.fromZodSchema(subtopicToneschema);    
+export const subtopicToneFormatInstructions = subtopicToneParser.getFormatInstructions();
 
 export const SubtopicSkeletonParser = StructuredOutputParser.fromZodSchema(subtopicSkeletonSchema);
 export const subtopicSkeletonFormatInstructions = SubtopicSkeletonParser.getFormatInstructions();

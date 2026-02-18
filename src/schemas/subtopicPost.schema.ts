@@ -8,5 +8,8 @@ export const subtopicSkeletonSchema = z.object({
     skeleton: z.string(),
 });
 
+export const subtopicToneschema = z.object({
+    tone:z.string().min(5, "tone must not be empty"),
+})
 
 export type SubtopicPost = z.infer<typeof subtopicPostSchema>;

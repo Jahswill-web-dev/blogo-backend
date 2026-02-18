@@ -36,7 +36,7 @@ const SubtopicPostSchema = new Schema(
       type: String,
       required: true,
     },
-    post: {
+    tone: {
       type: String,
       required: true,
     },

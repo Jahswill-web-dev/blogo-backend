@@ -1,7 +1,7 @@
 
 //---pipeline to generate final educational subtopic post--
 
-import { generateSubtopicPost, generateSubtopicSkeletonPost, rewriteSubtopicPost } from "../../pipelines/educationalPost";
+import { generateSkeletonTone, generateSubtopicSkeletonPost, rewriteSubtopicPost } from "../../pipelines/educationalPost";
 import { getRandomSubtopicForUser, storeSubtopicPost } from "../../repositories/subtopicPosts.repository";
 
 
@@ -27,12 +27,14 @@ export async function generateFinalSubtopicPost({
 
     const skeletonPost = skeletonResult.skeleton;
 
-    // Generate full post
-    const postResult = await generateSubtopicPost(skeletonPost);
-    const post = postResult.post;
+    // Generate tone
+    const toneResult = await generateSkeletonTone(skeletonPost, contentPillar,
+        pain,
+        subtopic,);
+    const tone = toneResult.tone;
 
     // Rewrite post
-    const finalResult = await rewriteSubtopicPost(post);
+    const finalResult = await rewriteSubtopicPost(skeletonPost, contentPillar, subtopic, pain, tone);
 
     // Store in DB
     const storedPost = await storeSubtopicPost({
@@ -40,18 +42,21 @@ export async function generateFinalSubtopicPost({
         contentPillar,
         pain,
         subtopic,
-        post,
+        tone,
         skeleton: skeletonPost,
         finalPost: finalResult.post,
     });
 
     return {
         id: storedPost._id,
-        post,
+        tone,
         skeleton: skeletonPost,
         finalPost: finalResult.post,
+        contentPillar,
+        subtopic,
+        pain,
     };
-} 
+}
 
 
 // New function that randomly selects subtopic and generates post
