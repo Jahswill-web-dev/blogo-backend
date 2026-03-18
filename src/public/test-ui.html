@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HackrPost — API Test UI</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --sidebar-bg: #161b22;
+      --card-bg: #1c2128;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --get: #238636;
+      --post: #1f6feb;
+      --put: #9a3412;
+      --delete: #b91c1c;
+      --success: #238636;
+      --error: #b91c1c;
+      --warn: #9a6700;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Auth Bar ─────────────────────────────── */
+    #auth-bar {
+      background: var(--sidebar-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+      min-height: 52px;
+    }
+    #auth-bar .logo {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--accent);
+      margin-right: 8px;
+    }
+    #auth-status {
+      font-size: 13px;
+      color: var(--muted);
+      flex: 1;
+    }
+    #auth-status .user-info {
+      color: var(--text);
+      font-weight: 500;
+    }
+    #auth-status .user-email {
+      color: var(--muted);
+      font-size: 12px;
+      margin-left: 6px;
+    }
+    .btn {
+      padding: 5px 14px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: var(--accent); color: #000; }
+    .btn-danger  { background: #3d1f1f; color: #f87171; border: 1px solid #7f1d1d; }
+    .btn-ghost   { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); }
+    .btn-send    { background: var(--accent); color: #000; padding: 5px 18px; }
+    .btn-open    { background: #21262d; color: var(--accent); border: 1px solid var(--border); }
+
+    /* ── App Layout ───────────────────────────── */
+    #app {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ──────────────────────────────── */
+    #sidebar {
+      width: 210px;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      padding: 16px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+    .sidebar-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      padding: 8px 8px 4px;
+    }
+    .group-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--muted);
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      transition: background 0.1s, color 0.1s;
+    }
+    .group-btn:hover { background: #1c2128; color: var(--text); }
+    .group-btn.active { background: #1c2128; color: var(--accent); font-weight: 600; }
+    .group-btn .count {
+      margin-left: auto;
+      font-size: 11px;
+      background: #21262d;
+      color: var(--muted);
+      border-radius: 10px;
+      padding: 1px 7px;
+    }
+
+    /* ── Main Content ─────────────────────────── */
+    #main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+    #main h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    #main .group-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .endpoints-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* ── Endpoint Card ────────────────────────── */
+    .ep-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .ep-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: var(--card-bg);
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.1s;
+    }
+    .ep-header:hover { background: #21262d; }
+    .method-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: .04em;
+      min-width: 44px;
+      text-align: center;
+    }
+    .badge-GET    { background: #0d2818; color: #3fb950; border: 1px solid #238636; }
+    .badge-POST   { background: #0c1f3f; color: #79b8ff; border: 1px solid #1f6feb; }
+    .badge-PUT    { background: #2d1a0a; color: #ffa657; border: 1px solid #9a3412; }
+    .badge-DELETE { background: #2d0a0a; color: #f78166; border: 1px solid #b91c1c; }
+    .ep-path {
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .ep-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: auto;
+      text-align: right;
+      max-width: 300px;
+    }
+    .ep-chevron {
+      color: var(--muted);
+      font-size: 11px;
+      margin-left: 6px;
+      transition: transform 0.15s;
+    }
+    .ep-card.open .ep-chevron { transform: rotate(180deg); }
+
+    .ep-body {
+      display: none;
+      padding: 14px 16px;
+      background: #13181f;
+      border-top: 1px solid var(--border);
+    }
+    .ep-card.open .ep-body { display: block; }
+
+    .ep-body label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .ep-body textarea {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: 12px;
+      padding: 10px;
+      resize: vertical;
+      min-height: 90px;
+      outline: none;
+      transition: border-color 0.15s;
+      margin-bottom: 10px;
+    }
+    .ep-body textarea:focus { border-color: var(--accent); }
+
+    .redirect-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      padding: 8px 10px;
+      background: #1c2128;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .ep-actions { display: flex; gap: 8px; align-items: center; }
+
+    /* ── Response ─────────────────────────────── */
+    .response-area { margin-top: 14px; }
+    .response-area .resp-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .status-2xx { background: #0d2818; color: #3fb950; border: 1px solid #238636; }
+    .status-4xx { background: #2d0a0a; color: #f78166; border: 1px solid #b91c1c; }
+    .status-5xx { background: #2d1a0a; color: #ffa657; border: 1px solid #9a3412; }
+
+    .response-area pre {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+      overflow-x: auto;
+      font-size: 12px;
+      line-height: 1.5;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .response-area pre code { background: none !important; padding: 0 !important; }
+
+    .spinner {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Scrollbar ────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- Auth Bar -->
+<div id="auth-bar">
+  <span class="logo">HackrPost</span>
+  <div id="auth-status"><span class="muted">Checking auth…</span></div>
+  <div id="auth-actions"></div>
+</div>
+
+<!-- App -->
+<div id="app">
+  <nav id="sidebar">
+    <div class="sidebar-label">Route Groups</div>
+  </nav>
+  <main id="main">
+    <p style="color:var(--muted);font-size:13px;">Select a group from the sidebar.</p>
+  </main>
+</div>
+
+<script>
+// ── Endpoint definitions ───────────────────────────────────────────────────
+const GROUPS = [
+  {
+    id: 'auth',
+    label: 'Auth',
+    icon: '🔐',
+    desc: 'Authentication and OAuth flows',
+    endpoints: [
+      { method: 'GET', path: '/auth/me', desc: 'Get current authenticated user' },
+      { method: 'GET', path: '/auth/google', desc: 'Login with Google OAuth (redirects)', redirect: true },
+      { method: 'GET', path: '/auth/logout', desc: 'Logout and clear session cookie' },
+      { method: 'GET', path: '/auth/x', desc: 'Connect X/Twitter account (redirects)', redirect: true },
+      { method: 'GET', path: '/auth/linkedin', desc: 'Connect LinkedIn account (redirects)', redirect: true },
+    ]
+  },
+  {
+    id: 'content',
+    label: 'Content',
+    icon: '✍️',
+    desc: 'AI content generation pipelines',
+    endpoints: [
+      { method: 'POST', path: '/generate-saas-profile', desc: 'Generate AI-enhanced SaaS profile summary', body: {} },
+      { method: 'POST', path: '/generate-categories', desc: 'Generate pain, general, and question-type categories', body: {} },
+      { method: 'POST', path: '/generate-subtopics', desc: 'Generate content pillars and subtopics', body: {} },
+      {
+        method: 'POST', path: '/generate-subtopic-post',
+        desc: 'Generate subtopic posts (skeleton → tone → rewrite)',
+        body: { count: 3 }
+      },
+      {
+        method: 'POST', path: '/generate-bulk-posts',
+        desc: 'Bulk post generation',
+        body: { count: 5 }
+      },
+      {
+        method: 'POST', path: '/generate-ideas',
+        desc: 'Generate content ideas (legacy)',
+        body: { contentType: 'conceptual', voice: 'founder', platform: 'linkedin' }
+      },
+    ]
+  },
+  {
+    id: 'user',
+    label: 'User',
+    icon: '👤',
+    desc: 'User profile management',
+    endpoints: [
+      { method: 'GET', path: '/profile', desc: 'Get current user profile' },
+      {
+        method: 'POST', path: '/profile',
+        desc: 'Create or update user profile',
+        body: {
+          saasName: '',
+          productDescription: '',
+          productPromise: '',
+          targetAudience: '',
+          painPoints: ''
+        }
+      },
+    ]
+  },
+  {
+    id: 'socials',
+    label: 'Socials',
+    icon: '📣',
+    desc: 'Social publishing and scheduling',
+    endpoints: [
+      {
+        method: 'POST', path: '/x/tweet',
+        desc: 'Post a tweet to X/Twitter',
+        body: { text: 'Hello from HackrPost!' }
+      },
+      {
+        method: 'POST', path: '/linkedin/post',
+        desc: 'Post to LinkedIn',
+        body: { text: 'Hello from HackrPost!' }
+      },
+      {
+        method: 'POST', path: '/schedule-post',
+        desc: 'Schedule a post for future publishing',
+        body: { batchId: '', postId: '', platform: 'X', scheduledFor: '' }
+      },
+      {
+        method: 'POST', path: '/post',
+        desc: 'Publish a post immediately (legacy)',
+        body: { postId: '', batchId: '', platform: 'X' }
+      },
+    ]
+  },
+];
+
+// ── Auth ───────────────────────────────────────────────────────────────────
+async function checkAuth() {
+  const statusEl = document.getElementById('auth-status');
+  const actionsEl = document.getElementById('auth-actions');
+  try {
+    const res = await fetch('/auth/me', { credentials: 'include' });
+    if (res.ok) {
+      const user = await res.json();
+      const name = user.displayName || user.name || 'User';
+      const email = user.email || '';
+      statusEl.innerHTML = `
+        <span class="user-info">● ${name}</span>
+        <span class="user-email">${email}</span>
+      `;
+      actionsEl.innerHTML = `<button class="btn btn-danger" onclick="logout()">Logout</button>`;
+    } else {
+      showLoggedOut();
+    }
+  } catch {
+    showLoggedOut();
+  }
+}
+
+function showLoggedOut() {
+  document.getElementById('auth-status').innerHTML =
+    '<span style="color:var(--muted)">Not logged in</span>';
+  document.getElementById('auth-actions').innerHTML =
+    `<button class="btn btn-primary" onclick="window.location.href='/auth/google'">Login with Google</button>`;
+}
+
+async function logout() {
+  await fetch('/auth/logout', { credentials: 'include' });
+  showLoggedOut();
+}
+
+// ── Sidebar ────────────────────────────────────────────────────────────────
+let activeGroup = null;
+
+function buildSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.innerHTML = '<div class="sidebar-label">Route Groups</div>';
+  GROUPS.forEach(g => {
+    const btn = document.createElement('button');
+    btn.className = 'group-btn';
+    btn.dataset.id = g.id;
+    btn.innerHTML = `
+      <span>${g.icon}</span>
+      <span>${g.label}</span>
+      <span class="count">${g.endpoints.length}</span>
+    `;
+    btn.addEventListener('click', () => selectGroup(g.id));
+    sidebar.appendChild(btn);
+  });
+}
+
+function selectGroup(id) {
+  activeGroup = id;
+  document.querySelectorAll('.group-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.id === id);
+  });
+  renderGroup(GROUPS.find(g => g.id === id));
+}
+
+// ── Main content ───────────────────────────────────────────────────────────
+function renderGroup(group) {
+  const main = document.getElementById('main');
+  main.innerHTML = `
+    <h2>${group.icon} ${group.label}</h2>
+    <p class="group-desc">${group.desc}</p>
+    <div class="endpoints-list" id="endpoints-list"></div>
+  `;
+  const list = document.getElementById('endpoints-list');
+  group.endpoints.forEach((ep, i) => {
+    list.appendChild(buildCard(ep, `${group.id}-${i}`));
+  });
+}
+
+function buildCard(ep, cardId) {
+  const card = document.createElement('div');
+  card.className = 'ep-card';
+  card.id = `card-${cardId}`;
+
+  const hasBody = ep.body !== undefined;
+  const isRedirect = !!ep.redirect;
+
+  // Header
+  const header = document.createElement('div');
+  header.className = 'ep-header';
+  header.innerHTML = `
+    <span class="method-badge badge-${ep.method}">${ep.method}</span>
+    <span class="ep-path">${ep.path}</span>
+    <span class="ep-desc">${ep.desc}</span>
+    <span class="ep-chevron">▼</span>
+  `;
+  header.addEventListener('click', () => card.classList.toggle('open'));
+  card.appendChild(header);
+
+  // Body panel
+  const body = document.createElement('div');
+  body.className = 'ep-body';
+
+  let bodyContent = '';
+
+  if (isRedirect) {
+    bodyContent += `
+      <div class="redirect-note">
+        This endpoint redirects to an external OAuth provider. Use the button below to open it in the browser.
+        After completing OAuth, navigate back to <code>/test-ui</code>.
+      </div>
+      <div class="ep-actions">
+        <button class="btn btn-open" onclick="window.open('${ep.path}', '_blank')">Open in browser →</button>
+      </div>
+    `;
+  } else {
+    if (hasBody) {
+      bodyContent += `
+        <label>Request Body (JSON)</label>
+        <textarea id="body-${cardId}">${JSON.stringify(ep.body, null, 2)}</textarea>
+      `;
+    }
+    bodyContent += `
+      <div class="ep-actions">
+        <button class="btn btn-send" onclick="sendRequest('${ep.method}', '${ep.path}', '${cardId}', ${hasBody})">
+          Send
+        </button>
+        <span id="spinner-${cardId}" style="display:none"><span class="spinner"></span></span>
+      </div>
+    `;
+  }
+
+  bodyContent += `<div id="response-${cardId}" class="response-area"></div>`;
+  body.innerHTML = bodyContent;
+  card.appendChild(body);
+
+  return card;
+}
+
+// ── Request / Response ─────────────────────────────────────────────────────
+async function sendRequest(method, path, cardId, hasBody) {
+  const spinnerEl = document.getElementById(`spinner-${cardId}`);
+  const responseEl = document.getElementById(`response-${cardId}`);
+
+  spinnerEl.style.display = 'inline-block';
+  responseEl.innerHTML = '';
+
+  const opts = {
+    method,
+    credentials: 'include',
+    headers: {},
+  };
+
+  if (hasBody && method !== 'GET') {
+    const bodyText = document.getElementById(`body-${cardId}`).value;
+    try {
+      JSON.parse(bodyText); // validate
+    } catch {
+      spinnerEl.style.display = 'none';
+      responseEl.innerHTML = `<div style="color:#f78166;font-size:12px;margin-top:8px">⚠ Invalid JSON in request body</div>`;
+      return;
+    }
+    opts.headers['Content-Type'] = 'application/json';
+    opts.body = bodyText;
+  }
+
+  let status, data, elapsed;
+  const start = Date.now();
+  try {
+    const res = await fetch(path, opts);
+    elapsed = Date.now() - start;
+    status = res.status;
+    const text = await res.text();
+    try { data = JSON.parse(text); } catch { data = text; }
+  } catch (err) {
+    spinnerEl.style.display = 'none';
+    responseEl.innerHTML = `<div style="color:#f78166;font-size:12px;margin-top:8px">⚠ Network error: ${err.message}</div>`;
+    return;
+  }
+
+  spinnerEl.style.display = 'none';
+
+  const cls = status >= 500 ? 'status-5xx' : status >= 400 ? 'status-4xx' : 'status-2xx';
+  const formatted = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+  const highlighted = hljs.highlight(formatted, { language: 'json' }).value;
+
+  responseEl.innerHTML = `
+    <div class="resp-header">
+      <span class="status-badge ${cls}">${status}</span>
+      <span>${elapsed}ms</span>
+    </div>
+    <pre><code class="hljs language-json">${highlighted}</code></pre>
+  `;
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+buildSidebar();
+checkAuth();
+</script>
+</body>
+</html>

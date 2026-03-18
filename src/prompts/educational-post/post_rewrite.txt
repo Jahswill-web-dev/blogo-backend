@@ -13,8 +13,7 @@ I want you to generate a post using this tone and style:
 
 
 but make sure to use clear and simple words, 
-words 8th–9th grader would understand
-avoid long sentences and 
+words 8th–9th grader would understand and 
 make sure it does not exceed 800 character limit.
 
 output only the post

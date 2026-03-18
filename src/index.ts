@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
+import path from "path";
 import swaggerUi from "swagger-ui-express";
 import swaggerFile from "./swagger-output.json";
 import session from "express-session";
@@ -43,6 +44,10 @@ app.use(
   })
 );
 
+
+app.get("/test-ui", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "test-ui.html"));
+});
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use("/auth", authRoutes);
