@@ -1,7 +1,31 @@
-based on this saas founders Product information:
-{content} 
-Generate a List of 7 educational content Pillars with a short description of the pain they solve and with 5 subtopics for each pillar that would Helps Position the saas founder as an expert in this niche. 
+using this input:
 
+Niche: {userNiche}
 
-Based on the target audience, niche, and pains, generate a list of educational subtopics that would help position the account as an expert in this niche. 
-These should reflect real problems, decisions, and patterns the audience encounters. 
+Audience: {targetAudience}
+
+Focus: {focusArea}
+
+generate 5 content pillars
+for each of this pillars generate 5 subtopic
+
+For each subtopic include:
+- Subtopic (specific and narrow)
+- Angle (must be strong, unique, and non-generic)
+- Goal the AIM of the content
+Use the example below as a reference for:
+- level of specificity
+- strength of the angle
+- clarity of the goal
+- and use simple and descriptive words
+
+Do NOT copy the example.
+Generate completely new ideas based on the input given to you.
+
+Subtopic: Subreddit selection for SaaS products
+
+Angle:
+Why high-traffic subreddits rarely convert (and where to post instead)
+
+Goal:
+Help founders identify smaller, niche subreddits that are more likely to drive qualified traffic and signups

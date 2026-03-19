@@ -1,16 +1,15 @@
 # HackrPost Backend
 
-An AI-powered platform that helps saas founders create content for their niche to attract their target users, it create content and scheudles them on X
+An AI-powered platform that helps content creators generate niche-targeted educational posts for X (Twitter) and schedule them for publishing.
 
 ## Tech Stack
 
 - **Runtime:** Node.js with TypeScript (strict mode, `ts-node-dev` for dev)
 - **Framework:** Express.js v5
 - **Database:** MongoDB via Mongoose v8
-- **Auth:** Google OAuth 2.0 (Passport.js) + JWT (httpOnly cookie or `Authorization: Bearer`)
-- **AI/LLM:** Google Gemini 2.5-flash and OpenAI GPT-4o-mini via LangChain (`@langchain/google-genai`, `@langchain/openai`)
+- **Auth:** Google OAuth 2.0 (Passport.js) + JWT (httpOnly cookie or `Authorization: Bearer`); X/Twitter OAuth 2.0 (PKCE)
+- **AI/LLM:** OpenAI GPT-5.1 (structured outputs via LangChain) + fine-tuned model `ft:gpt-4.1-2025-04-14:hackrpost:hacker-post-v2:DKWIZmzy` (educational post generation)
 - **Validation:** Zod v4
-- **Job Scheduling:** Agenda v5
 - **API Docs:** Swagger (swagger-autogen + swagger-ui-express)
 
 ## Project Structure
@@ -18,35 +17,49 @@ An AI-powered platform that helps saas founders create content for their niche t
 ```
 src/
 ├── index.ts                  # Express app entry point, DB connection, route mounting
-├── auth/                     # Passport OAuth strategy configs (Google)
+├── auth/                     # Passport Google OAuth strategy config
 ├── middleware/               # JWT auth middleware
-├── models/                   # Mongoose schemas (User, UserProfile, Categories, Subtopics, SubtopicPosts, etc.)
+├── models/                   # Mongoose schemas
+│   ├── User.ts               # Auth user (Google + X tokens)
+│   ├── UserProfile.ts        # Niche, audience, focus area, product details
+│   ├── SaasAIProfile.ts      # AI-generated creator profile
+│   ├── Categories.ts         # Pain / general / question categories
+│   ├── Subtopics.ts          # Content pillars with subtopics (angle + goal)
+│   └── SubtopicPosts.ts      # Generated educational posts
 ├── routes/
-│   ├── auth/                 # Google and X/Twitter OAuth routes
-│   ├── content/              # Content generation routes (categories, subtopics, posts, bulk)
-│   ├── user/                 # User profile CRUD routes
-│   ├── socials/              # Scheduled post management routes
-│   └── not-in-use/           # Deprecated/WIP routes (not registered)
+│   ├── auth/                 # Google OAuth + X/Twitter OAuth + tweet posting
+│   ├── content/              # Content generation routes
+│   └── user/                 # User profile CRUD
 ├── services/
-│   ├── domain/               # Core business logic (category gen, post gen, bulk gen, SaaS profile)
-│   ├── prompts/              # Prompt-building helpers
-│   ├── langchainGemini.ts    # Gemini LLM client
-│   ├── langchainOpenAI.ts    # OpenAI LLM client
-│   ├── agenda.ts             # Job scheduler setup
-│   ├── socialPublisher.ts    # Social media publishing
-│   └── linkedinTokenService.ts # LinkedIn token refresh logic
-├── pipelines/                # Multi-step LLM workflows (categories, educational post, saas profile)
-├── repositories/             # MongoDB data-access layer (categories, subtopics, posts, saasProfile)
+│   ├── domain/               # Core business logic (orchestration layer)
+│   ├── langchainOpenAI.ts    # OpenAI LLM clients (lcOpenAI + lcFineTuned)
+│   ├── socialPublisher.ts    # Publish to X / LinkedIn
+│   ├── xTokenService.ts      # X token refresh logic
+│   ├── linkedinTokenService.ts # LinkedIn token refresh logic
+│   └── tokendecrypt.ts       # AES-256-CBC token encryption/decryption
+├── pipelines/                # LLM workflow functions (each does one LLM call or chain)
+│   ├── categoriesPipeline.ts # Pain, general, question categories + subtopics
+│   ├── educationalPost.ts    # Single-step educational post (fine-tuned model)
+│   └── generateSaasProfile.ts # AI creator profile generation
+├── repositories/             # MongoDB data-access layer
+│   ├── category.repository.ts
+│   ├── saasProfile.repository.ts
+│   └── subtopicPosts.repository.ts
 ├── schemas/                  # Zod schemas for LLM output validation
+│   ├── SaasProfile.schema.ts
+│   ├── painCategories.schema.ts
+│   ├── questionsTypes.schema.ts
+│   └── subtopic.schema.ts
 ├── lib/
 │   ├── promptLoader.ts       # Loads .txt prompt files with in-memory caching
 │   ├── promptFactory.ts      # Builds LangChain PromptTemplate objects
 │   ├── parsers.ts            # Zod-based output parsers + format instructions
 │   └── retry.ts              # Retry wrapper with JSON cleaning for LLM calls
-├── prompts/                  # Prompt templates as .txt files, organized by feature
-├── constants/                # Shared constants (category types, model posts)
-├── types/                    # TypeScript type definitions and Express augmentations
-└── utils/                    # Small utilities (random item selection)
+└── prompts/                  # Prompt templates as .txt files
+    ├── categories/           # painCategories.txt, categories.txt, subtopics.txt
+    ├── educational-post/     # education.txt (fine-tuned model prompt)
+    ├── questions-post/       # questionTypes.txt
+    └── saasProfile/          # base.txt
 ```
 
 ## Running the Project
@@ -54,21 +67,20 @@ src/
 ```bash
 npm install
 
-# Development (auto-reloads, regenerates Swagger docs on start)
+# Development (auto-reloads)
 npm run dev
 
-# Regenerate Swagger docs only
+# Regenerate Swagger docs
 npm run swagger-autogen
-
-# Test prompts manually
-npm run test-prompt
 ```
 
-Server runs on `http://localhost:4000`. Swagger UI at `http://localhost:4000/docs`.
+Server runs on `http://localhost:4000`.
+Swagger UI at `http://localhost:4000/docs`.
+Test UI at `http://localhost:4000/test-ui`.
 
 ## Environment Variables
 
-No `.env.example` exists — create a `.env` file with the following:
+Create a `.env` file:
 
 ```
 PORT=4000
@@ -79,23 +91,13 @@ SESSION_SECRET=
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 
-GOOGLE_API_KEY=               # For Gemini
-OPENAI_API_KEY=
-
-LINKEDIN_CLIENT_ID=
-LINKEDIN_CLIENT_SECRET=
-LINKEDIN_REDIRECT_URI=
+OPENAI_API_KEY=               # Used for gpt-5.1 and the fine-tuned model
 
 X_CLIENT_ID=
 X_CLIENT_SECRET=
 X_REDIRECT_URI=
 
-FACEBOOK_APP_ID=
-FACEBOOK_APP_SECRET=
-FACEBOOK_REDIRECT_URI=
-FACEBOOK_CONFIGURATION_ID=
-
-TOKEN_ENCRYPTION_KEY=
+TOKEN_ENCRYPTION_KEY=         # AES-256 key for encrypting OAuth tokens
 RANDOM_STATE=
 FRONTEND_URL=
 ```
@@ -105,14 +107,14 @@ FRONTEND_URL=
 - **Naming:** camelCase functions/variables, PascalCase interfaces/models (`I` prefix for interfaces e.g. `IUser`), camelCase filenames with `.service.ts` / `.routes.ts` / `.repository.ts` suffixes
 - **Async:** async/await throughout; errors propagated via try-catch returning `{ error }` or `{ success: false, message }` with appropriate HTTP status codes
 - **Layering:** Routes → Services → Pipelines → Repositories; pipelines encapsulate all LLM interaction
-- **Prompt templates:** Stored as `.txt` files under `src/prompts/`, loaded via `promptLoader.ts` (cached in memory), turned into LangChain `PromptTemplate` via `promptFactory.ts`
-- **LLM output validation:** Zod schemas in `src/schemas/`, parsed with helpers from `src/lib/parsers.ts`; unreliable JSON outputs retried via `src/lib/retry.ts`
+- **Two LLM clients:** `lcOpenAI` (gpt-5.1, temp 1, structured JSON outputs) and `lcFineTuned` (fine-tuned model, temp 1, raw text output) — both exported from `src/services/langchainOpenAI.ts`
+- **Prompt templates:** Stored as `.txt` files under `src/prompts/`, loaded via `promptLoader.ts` (cached in memory), turned into LangChain `PromptTemplate` via `promptFactory.ts`. Fine-tuned model prompt does NOT append JSON format instructions.
+- **LLM output validation:** Zod schemas in `src/schemas/`, parsed with helpers from `src/lib/parsers.ts`; unreliable JSON outputs retried via `src/lib/retry.ts`. Fine-tuned model returns raw text — no Zod parsing needed.
 - **Auth guard:** Wrap protected routes with the `jwtAuth` middleware from `src/middleware/jwtAuth.ts`
 - **Imports:** ES module `import`/`export` syntax; environment variables via `process.env` (no config abstraction layer)
 
 ## Session discipline
-- At the start of every session, read PROGRESS.md and PHASES.md to understand 
-  current state before doing anything
+- At the start of every session, read PROGRESS.md and PHASES.md to understand current state before doing anything
 - At the end of every session, append an entry to PROGRESS.md with:
   - Date
   - What was completed

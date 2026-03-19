@@ -1,7 +1,7 @@
 
 //---pipeline to generate final educational subtopic post--
 
-import { generateSkeletonTone, generateSubtopicSkeletonPost, rewriteSubtopicPost } from "../../pipelines/educationalPost";
+import { generateEducationalPost } from "../../pipelines/educationalPost";
 import { getRandomSubtopicForUser, storeSubtopicPost } from "../../repositories/subtopicPosts.repository";
 
 
@@ -9,72 +9,53 @@ export async function generateFinalSubtopicPost({
     contentPillar,
     pain,
     subtopic,
+    angle,
+    goal,
     userId,
 }: {
     contentPillar: string;
     pain: string;
     subtopic: string;
+    angle: string;
+    goal: string;
     userId: string;
 }) {
-    // Generate skeleton
-    // console.log("Generating post for:", { userId, contentPillar, pain, subtopic });
-    const skeletonResult = await generateSubtopicSkeletonPost(
-        contentPillar,
-        pain,
-        subtopic,
-        userId
-    );
+    const { post } = await generateEducationalPost({ contentPillar, subtopic, angle, goal });
 
-    const skeletonPost = skeletonResult.skeleton;
-
-    // Generate tone
-    const toneResult = await generateSkeletonTone(skeletonPost, contentPillar,
-        pain,
-        subtopic,);
-    const tone = toneResult.tone;
-
-    // Rewrite post
-    const finalResult = await rewriteSubtopicPost(skeletonPost, contentPillar, subtopic, pain, tone);
-
-    // Store in DB
     const storedPost = await storeSubtopicPost({
         userId,
         contentPillar,
         pain,
         subtopic,
-        tone,
-        skeleton: skeletonPost,
-        finalPost: finalResult.post,
+        finalPost: post,
     });
 
     return {
         id: storedPost._id,
-        tone,
-        skeleton: skeletonPost,
-        finalPost: finalResult.post,
+        finalPost: post,
         contentPillar,
         subtopic,
+        angle,
+        goal,
         pain,
     };
 }
 
 
-// New function that randomly selects subtopic and generates post
+// Randomly selects a subtopic and generates a post
 export async function generateRandomSubtopicPost(userId: string) {
     if (!userId) {
         throw new Error("userId is required");
     }
 
-    // Get random content pillar and subtopic
     const randomSelection = await getRandomSubtopicForUser(userId);
 
-    // console.log("Random selection:", randomSelection);
-
-    // Generate post with the random selection
     return generateFinalSubtopicPost({
         userId,
         contentPillar: randomSelection.contentPillar,
-        pain: randomSelection.pain,
-        subtopic: randomSelection.subtopic,
+        pain:          randomSelection.pain,
+        subtopic:      randomSelection.subtopic,
+        angle:         randomSelection.angle,
+        goal:          randomSelection.goal,
     });
 }

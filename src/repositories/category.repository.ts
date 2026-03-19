@@ -28,26 +28,27 @@ export async function getCategoriesByUser(
 export async function storeSubtopics({
   userId,
   parsedPillars,
-  }:{
-    userId: string;
-    parsedPillars:{
-      contentPillar: string;
-      pain: string;
-      subtopics: string[];
-    }[];
-  }) {
-
-    if (!userId) {
+}: {
+  userId: string;
+  parsedPillars: {
+    contentPillar: string;
+    pain: string;
+    subtopics: { subtopic: string; angle: string; goal: string }[];
+  }[];
+}) {
+  if (!userId) {
     throw new Error("storeSubtopics: userId is required");
-  } 
-   const pillars = parsedPillars.map(p => ({
-    pillar: p.contentPillar,
-    pain: p.pain,
-    subtopics: p.subtopics.map(sub => ({ subtopic: sub })),
+  }
+
+  const pillars = parsedPillars.map(p => ({
+    pillar:    p.contentPillar,
+    pain:      p.pain,
+    subtopics: p.subtopics, // already { subtopic, angle, goal } objects
   }));
 
-  return AISaasContentPillarsModel.create({
-    userId, 
-    pillars,
-  });
+  return AISaasContentPillarsModel.findOneAndUpdate(
+    { userId },
+    { $set: { pillars } },
+    { upsert: true, new: true }
+  );
 }

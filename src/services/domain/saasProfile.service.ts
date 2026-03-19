@@ -6,13 +6,15 @@ export async function createSaasAIProfile(userId: string) {
     const userProfile = await UserProfile.findOne({ userId });
     if (!userProfile) throw new Error("User profile not found");
 
-    const aiProfile = await generateSaasProfile({ //generates and stores AI saas profile
+    await generateSaasProfile({ // generates and stores AI profile
         userId,
-        saasName: userProfile.SaasName,
+        userNiche:          userProfile.userNiche,
+        targetAudience:     userProfile.targetAudience,
+        productName:        userProfile.productName,
         productDescription: userProfile.productDescription,
-        productPromise: userProfile.productPromise,
-        targetAudience: userProfile.targetAudience,
-        audiencePainPoints: userProfile.audiencePainPoints
+        productAudience:    userProfile.productAudience,
+        productSolution:    userProfile.productSolution,
     });
+
     return SaasAIProfile.findOne({ userId });
 }

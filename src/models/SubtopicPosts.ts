@@ -6,7 +6,8 @@ export interface ISubtopicPost {
   contentPillar: string;
   pain: string;
   subtopic: string;
-  post: string;
+  post?: string;
+  tone?: string;
   skeleton?: string;
   finalPost?: string;
   meta?: Record<string, any>;
@@ -38,7 +39,6 @@ const SubtopicPostSchema = new Schema(
     },
     tone: {
       type: String,
-      required: true,
     },
     skeleton: {
       type: String,

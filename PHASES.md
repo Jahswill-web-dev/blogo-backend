@@ -1,138 +1,94 @@
 # Project Phases
 
-## Phase 1 — Complete
+## Phase 1 — Complete ✅
 
 Everything below is fully implemented end-to-end: route → service → pipeline → database.
 
 ### Auth
-- **Google OAuth 2.0 + JWT**
-  - `src/routes/auth/auth.ts` — `/auth/google`, `/auth/google/callback`, `/auth/me`
-  - `src/auth/google.ts` — Passport Google strategy
-  - `src/middleware/jwtAuth.ts` — JWT verification middleware (cookie + Bearer header)
-- **X/Twitter OAuth 2.0 (PKCE)**
-  - `src/routes/auth/xAuth.ts` — `/auth/x`, `/auth/x/callback`, `/x/tweet`
-  - `src/services/xTokenService.ts` — token refresh logic
-- **Token encryption**
-  - `src/services/tokendecrypt.ts` — AES encryption/decryption for stored OAuth tokens
+- **Google OAuth 2.0 + JWT** — `src/routes/auth/auth.ts`
+  - `GET /auth/google`, `GET /auth/google/callback`, `GET /auth/me`, `GET /auth/logout`
+  - Passport Google strategy: `src/auth/google.ts`
+  - JWT middleware: `src/middleware/jwtAuth.ts`
+- **X/Twitter OAuth 2.0 (PKCE)** — `src/routes/auth/xAuth.ts`
+  - `GET /auth/x`, `GET /auth/x/callback`, `POST /x/tweet`
+  - Token refresh: `src/services/xTokenService.ts`
+  - Token encryption: `src/services/tokendecrypt.ts`
 
 ### User Profile
 - `src/routes/user/userProfile.ts` — `POST /profile`, `GET /profile`
-- `src/models/UserProfile.ts` — schema: saasName, productDescription, targetAudience, painPoints
+- Fields: `userNiche`, `targetAudience`, `focusArea`, `productName`, `productDescription`, `productAudience`, `productSolution`
+- `src/models/UserProfile.ts`
 
 ### Content Generation Pipeline
-- **SaaS AI Profile generation**
-  - `src/routes/content/saasProfile.routes.ts` — `POST /generate-saas-profile`
-  - `src/services/domain/saasProfile.service.ts`
-  - `src/pipelines/generateSaasProfile.ts`
-  - `src/schemas/SaasProfile.schema.ts`
-  - `src/repositories/saasProfile.repository.ts`
-  - `src/models/SaasAIProfile.ts`
+- **AI Creator Profile**
+  - `POST /generate-saas-profile`, `GET /saas-profile` — `src/routes/content/saasProfile.routes.ts`
+  - Pipeline: `src/pipelines/generateSaasProfile.ts`
+  - Model: `src/models/SaasAIProfile.ts`
 
-- **Content categories generation** (3 parallel LLM calls: pain, general, questions)
-  - `src/routes/content/categories.routes.ts` — `POST /generate-categories`
-  - `src/services/domain/generateCategories.service.ts`
-  - `src/pipelines/categoriesPipeline.ts`
-  - `src/schemas/painCategories.schema.ts`, `src/schemas/questionsTypes.schema.ts`
-  - `src/repositories/category.repository.ts`
-  - `src/models/Categories.ts`
-  - `src/prompts/categories/`
+- **Content Categories** (3 types: pain, general, questions)
+  - `POST /generate-categories` — `src/routes/content/categories.routes.ts`
+  - Pipeline: `src/pipelines/categoriesPipeline.ts`
+  - Prompts: `src/prompts/categories/painCategories.txt`, `categories.txt`, `src/prompts/questions-post/questionTypes.txt`
+  - Model: `src/models/Categories.ts`
 
-- **Subtopics / content pillars generation**
-  - `src/routes/content/subtopic.routes.ts` — `POST /generate-subtopics`
-  - `src/services/domain/generateCategories.service.ts` (`generateSubtopicsForUser`)
-  - `src/pipelines/categoriesPipeline.ts` (`generateSubtopics`)
-  - `src/schemas/subtopic.schema.ts`
-  - `src/repositories/subtopic.repository.ts`
-  - `src/models/Subtopics.ts`
-  - `src/prompts/categories/subtopics.txt`
+- **Content Pillars + Subtopics**
+  - `POST /generate-subtopics` — `src/routes/content/subtopic.routes.ts`
+  - Pipeline: `src/pipelines/categoriesPipeline.ts` (`generateSubtopics`)
+  - Prompt: `src/prompts/categories/subtopics.txt`
+  - Each pillar → 5 subtopics, each with `{ subtopic, angle, goal }`
+  - Model: `src/models/Subtopics.ts`
 
-- **Subtopic post generation** (3-step: skeleton → tone → rewrite, parallelised up to 20 posts)
-  - `src/routes/content/subtopicPost.routes.ts` — `POST /generate-subtopic-post`
-  - `src/services/domain/multipleSubtopicPosts.service.ts`
-  - `src/services/domain/subtopicPosts.service.ts`
-  - `src/pipelines/educationalPost.ts` — `generateSubtopicSkeletonPost`, `generateSkeletonTone`, `rewriteSubtopicPost`
-  - `src/schemas/subtopicPost.schema.ts`
-  - `src/repositories/subtopicPosts.repository.ts`
-  - `src/models/SubtopicPosts.ts`
-  - `src/prompts/educational-post/`
-
-### Social Publishing
-- **LinkedIn OAuth + posting** (token refresh with 60-day refresh token support)
-  - `src/routes/not-in-use/linkedinAuth.ts` — `/auth/linkedin`, `/auth/linkedin/callback`
-  - `src/routes/not-in-use/linkedinPost.ts` — `/post/linkedin`
-  - `src/services/linkedinTokenService.ts` — token validation and refresh
-  - `src/services/socialPublisher.ts` — `publishToSocial()` (LinkedIn + X)
-
-- **Post scheduling**
-  - `src/routes/socials/scheduledPost.ts` — `POST /schedule-post`
-  - `src/services/agenda.ts` — Agenda job: `"publish scheduled post"`
-  - `src/models/ContentSchedule.ts`
+- **Educational Post Generation** (single-step, fine-tuned model)
+  - `POST /generate-subtopic-post` — `src/routes/content/subtopicPost.routes.ts`
+  - Body: `{ count: number }` (1–20 posts, generated in parallel)
+  - Randomly picks a subtopic from stored pillars, passes `content_pillar`, `subtopic`, `angle`, `goal` to fine-tuned model
+  - Pipeline: `src/pipelines/educationalPost.ts` (`generateEducationalPost`)
+  - Prompt: `src/prompts/educational-post/education.txt`
+  - Model: `ft:gpt-4.1-2025-04-14:hackrpost:hacker-post-v2:DKWIZmzy`
+  - Stored in: `src/models/SubtopicPosts.ts`
 
 ### Core Infrastructure
 - `src/lib/promptLoader.ts` — loads `.txt` prompt files with in-memory cache
 - `src/lib/promptFactory.ts` — builds LangChain `PromptTemplate` objects
 - `src/lib/parsers.ts` — Zod-based structured output parsers + format instructions
 - `src/lib/retry.ts` — `runWithRetry()` wrapper with JSON cleaning (2 retries)
-- `src/services/langchainOpenAI.ts` / `src/services/langchainGemini.ts` — LLM clients
+- `src/services/langchainOpenAI.ts` — `lcOpenAI` (gpt-5.1) + `lcFineTuned` (fine-tuned model)
+- `src/public/test-ui.html` — developer test UI at `GET /test-ui`
 
 ---
 
-## Phase 2 — In Progress
+## Phase 2 — Up Next
 
-### Bulk Post Generation
-- Route is mounted: `src/routes/content/generateBulk.routes.ts` — `POST /generate-bulk-posts`
-- Service is entirely commented out: `src/services/domain/bulkGeneration.service.ts`
-- No active pipeline wired to this route
+### Retrieve & Browse Generated Posts
+- No `GET /posts` endpoint exists yet — users can generate posts but can't list or retrieve them via API
+- Needs: `GET /posts` (all posts for user), `GET /posts/:id` (single post)
+- Repository functions already exist: `getSubtopicPostsByUser`, `getSubtopicPostById` in `src/repositories/subtopicPosts.repository.ts`
 
-### Pain Solution Posts
-- Route file exists but is 100% commented: `src/routes/content/painSolution.routes.ts`
-- Route registration commented out in `src/index.ts`
-- No service or pipeline implemented
-- Prompt file exists: `src/prompts/pain-solution-post/base.txt`
-- Schema exists: `src/schemas/painSolution.schema.ts`
+### Scheduled Posting
+- X token management is in place (`xTokenService.ts`, `tokendecrypt.ts`)
+- `POST /x/tweet` works for immediate posting
+- Need: ability to schedule a generated post for later publishing
+- No scheduling infrastructure exists currently (Agenda was removed with the old pipeline)
 
-### How-To Post Pipeline
-- Full multi-pass pipeline implemented (6 critique/rewrite passes) but not connected to any route
-- `src/pipelines/howtoPipelines.ts`
-- Uses Gemini (`lcGemini`) unlike all other active pipelines (OpenAI)
+### Additional Post Formats
+- Only educational posts are generated currently
+- Potential: question-type posts, pain-solution posts, how-to posts (each as a separate prompt + pipeline)
 
-### Facebook Publishing
-- User model has `facebookPageId` and `facebookPageToken` fields
-- Route file exists: `src/routes/not-in-use/facebookPost.ts` — `POST /post/facebook/page`
-- Not imported or mounted in `src/index.ts`
-- No Facebook OAuth flow implemented
-
-### Orphaned Artifacts
-- `src/pipelines/generateSubtopicPost.ts` — empty function stub, unused
-- `src/constants/modelPosts.ts` — 5 model post examples defined but imported nowhere
-- `src/utils/logger.ts` — empty file, no implementation
+### LinkedIn Publishing
+- `socialPublisher.ts` supports LinkedIn but no LinkedIn OAuth flow is mounted
+- `linkedinTokenService.ts` exists and is ready
+- Need: LinkedIn OAuth routes + LinkedIn post endpoint
 
 ---
 
-## Phase 3+ — Upcoming
+## Phase 3+ — Future
 
-_Inferred from models, architecture, and partial scaffolding that exists in the codebase._
+### Content Calendar
+- Schedule multiple posts across days/weeks
+- View and manage scheduled queue
 
-### Scheduled Posts Management
-- Agenda schedules jobs but there are no endpoints to list, cancel, or reschedule them
-- `ContentSchedule` model (`src/models/ContentSchedule.ts`) is defined but not surfaced via API
+### Analytics
+- Track which posts were published, when, and to which platform
 
-### Content Analytics
-- `ContentPost` model (`src/models/ContentPost.ts`) tracks `isPublished` and `publishedAt`
-- No API endpoints exist to query publish status, history, or performance
-
-### Content Ideas
-- `ContentIdeas` model (`src/models/ContentIdeas.ts`) is defined
-- No generation service, route, or pipeline implemented
-
-### Content Prompt Storage
-- `ContentPrompt` model (`src/models/ContentPrompt.ts`) is defined
-- No route or service to create, list, or reuse stored prompts
-
-### Structured Logging
-- `src/utils/logger.ts` is a stub suggesting a logging system is planned
-- Currently all logging is ad-hoc `console.log` / `console.error`
-
-### Onboarding / Content Wizard
-- Architecture implies a linear flow: Profile → Categories → Subtopics → Posts
-- No orchestration endpoint or flow controller exists to guide users through this sequence end-to-end
+### Multi-platform Support
+- Extend beyond X to LinkedIn (partially scaffolded), threads, etc.

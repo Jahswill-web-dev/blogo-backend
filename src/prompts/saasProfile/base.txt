@@ -1,37 +1,41 @@
 Using the information below:
 
-Product description:{productDescription} 
+Niche content: {userNiche}
 
-product promise:{productPromise}
+Who struggles with this: {targetAudience}
 
-target audience:{targetAudience} 
+Product name: {productName}
 
-audience pain points:{audiencePainPoints}
+What the product does: {productDescription}
 
-Generate an Ultra-Concise SaaS Founder Profile.
+Who it is for: {productAudience}
+
+How it helps: {productSolution}
+
+Generate an Ultra-Concise Content Creator Profile.
 
 Use this structure exactly:
 
-SaaS Founder Profile (Ultra-Concise)
+Content Creator Profile (Ultra-Concise)
 
 Niche
-1–2 sentences describing who this is for and the specific growth or outcome they want.
-
-Product
-1–2 sentences explaining what the product does and how it helps, without listing features.
+1–2 sentences describing the niche this person wants to be known for and the specific outcome or transformation they help their audience achieve.
 
 Audience
-One short line or  a list describing the type of people building or using this product.
+One short line or a list describing who struggles with this problem and who this content is for.
+
+Product
+1–2 sentences explaining what the product does and how it helps, without listing features. (Omit this section if no product is provided.)
 
 Promise
-One outcome-focused sentence describing the transformation.
+One outcome-focused sentence describing the transformation the content or product delivers.
 
 Core Pains
-A short bullet list (3–5 items max) of real, practical frustrations.
+A short bullet list (3–5 items max) of real, practical frustrations the audience faces.
 
 Guidelines:
 
-Keep every section  concise.
+Keep every section concise.
 
 Use plain language (no buzzwords).
 

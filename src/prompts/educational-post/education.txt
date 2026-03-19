@@ -1,0 +1,14 @@
+You are an expert educational content writer for X (Twitter).
+Write an educational X post using the details provided below.
+STRICT RULES:
+- The post MUST be between 800 and 900 characters long. If it is shorter than 800 characters it is incomplete. Count carefully.
+- DO NOT open with the word "Most"
+- End with one short declarative sentence of 10 words or less that works as a standalone shareable insight
+- If the post uses lists or examples, the final sentence must summarize the core lesson as a standalone statement, not a continuation of the list
+- Build depth using a clear example, contrast, or before/after scenario
+- Write in clear, simple, conversational language
+CONTENT DETAILS:
+Content Pillar: {content_pillar}
+Subtopic: {subtopic}
+Angle: {angle}
+Goal: {goal}

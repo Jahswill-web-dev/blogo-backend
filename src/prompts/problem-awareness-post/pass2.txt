@@ -1,5 +1,0 @@
-
-I want you to rewrite this post:{user_post} based on this crtique:{critique1}
-
- 
-

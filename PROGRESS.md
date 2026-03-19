@@ -17,6 +17,39 @@ _Newest entry first. Append new entries at the top using the template below._
 
 ---
 
+## 2026-03-19
+
+### Completed
+- **UserProfile field rename** — all fields renamed to content-creator-centric names:
+  - `audienceStruggles` → `targetAudience`; `saasName` → `productName`; `productPromise` → `productSolution`; old `targetAudience` → `productAudience`
+  - Added `focusArea` as a required field
+  - Updated model, routes, context builder, SaaS profile service, and `saasProfile/base.txt` prompt template
+- **Subtopic schema upgraded** — each subtopic now has `{ subtopic, angle, goal }` instead of a plain string; schema, model, repository, and pipeline all updated
+- **Educational post pipeline replaced** — 3-step skeleton→tone→rewrite pipeline removed; replaced with single-step generation using fine-tuned model `ft:gpt-4.1-2025-04-14:hackrpost:hacker-post-v2:DKWIZmzy`
+  - New prompt: `src/prompts/educational-post/education.txt`
+  - New pipeline function: `generateEducationalPost()` in `src/pipelines/educationalPost.ts`
+  - `tone` field made optional in `SubtopicPosts` model
+- **Two bugs fixed in POST /generate-subtopics:**
+  - DB not saving: `findOneAndUpdate` was using plain `{ pillars }` (replacement doc in Mongoose 8); fixed to `{ $set: { pillars } }`
+  - No response in test UI: `res.json(subtopics)` was serialising a LangChain class instance as `{}`; fixed to `res.json({ pillars: subtopics.pillars })`
+- **Model updated** — switched from `gpt-4o-mini` to `gpt-5.1` (`lcOpenAI`)
+- **Major dead code cleanup** — ~40 files and 5 folders deleted:
+  - Removed: `routes/not-in-use/` (8 files), `prompts/pain-solution-post/`, `prompts/problem-awareness-post/`, `prompts/educational-threads/`, `prompts/educational/`
+  - Removed: old pipelines (`howtoPipelines.ts`, `generateSubtopicPost.ts`), dead services (`bulkGeneration`, `fetchCategory`, `geminiClient`, `langchainGemini`, `contentGenerator`, `agenda`), dead models (`ContentIdeas`, `ContentPrompt`, `ContentPost`, `ContentSchedule`), dead schemas (`painSolution`, `subtopicPost`), dead repository (`subtopic.repository.ts`), empty constants/types/utils files
+  - Cleaned up dead code within: `index.ts`, `parsers.ts`, `promptFactory.ts`, `educationalPost.ts`, `getSaasContext.ts`, `categoriesPipeline.ts`
+
+### Decisions
+- Fine-tuned model returns raw text (not JSON) — prompt template does NOT append `FORMAT INSTRUCTIONS` or `Generate JSON now.`; post content extracted directly from `result.content`
+- Kept `socialPublisher.ts`, `xTokenService.ts`, `linkedinTokenService.ts`, `tokendecrypt.ts` — still used by active X tweet posting flow
+- Scheduled posting (Agenda + scheduledPost route) removed — was tightly coupled to deleted `ContentPost` model; can be rebuilt against `SubtopicPosts` in a future phase
+
+### Next
+1. Add `GET /posts` and `GET /posts/:id` endpoints — repository functions already exist in `subtopicPosts.repository.ts`
+2. Rebuild scheduled posting against `SubtopicPosts` model
+3. Consider adding more post format types (question posts, pain-solution posts) as separate pipelines
+
+---
+
 ## 2026-03-18
 
 ### Completed
@@ -35,13 +68,6 @@ _Newest entry first. Append new entries at the top using the template below._
 - All active pipelines use OpenAI (GPT-4o-mini) via LangChain; Gemini client exists but only used in the unconnected how-to pipeline
 - Prompt templates are stored as `.txt` files in `src/prompts/` and loaded with in-memory caching — avoids embedding long prompts in code
 - Retry wrapper (`runWithRetry`, 2 retries) wraps all structured LLM output calls to handle malformed JSON
-
-### In Progress
-- **Bulk post generation** (`POST /generate-bulk-posts`) — route is mounted but `src/services/domain/bulkGeneration.service.ts` is entirely commented out; no pipeline wired
-- **Pain solution posts** — schema (`src/schemas/painSolution.schema.ts`) and prompt (`src/prompts/pain-solution-post/base.txt`) exist; route file is 100% commented; no service or pipeline
-- **How-to post pipeline** — complete 6-pass critique/rewrite pipeline in `src/pipelines/howtoPipelines.ts` but not connected to any route
-- **Facebook publishing** — User model fields (`facebookPageId`, `facebookPageToken`) and route file (`src/routes/not-in-use/facebookPost.ts`) exist but are not mounted; no Facebook OAuth flow
-- **Orphaned stubs**: `src/pipelines/generateSubtopicPost.ts` (empty), `src/constants/modelPosts.ts` (unused), `src/utils/logger.ts` (empty)
 
 ### Next
 1. Implement bulk post generation service — wire `src/services/domain/bulkGeneration.service.ts` to the existing route and an appropriate pipeline

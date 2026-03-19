@@ -16,7 +16,7 @@ export async function storeSubtopicPost({
   contentPillar: string;
   pain: string;
   subtopic: string;
-  tone: string;
+  tone?: string;
   skeleton?: string;
   finalPost?: string;
   meta?: Record<string, any>;
@@ -107,7 +107,9 @@ export async function getRandomSubtopicForUser(userId: string) {
 
   return {
     contentPillar: selectedPillar.pillar,
-    pain: selectedPillar.pain || "",
-    subtopic: selectedSubtopic.subtopic,
+    pain:          selectedPillar.pain || "",
+    subtopic:      selectedSubtopic.subtopic,
+    angle:         selectedSubtopic.angle || "",
+    goal:          selectedSubtopic.goal  || "",
   };
 }

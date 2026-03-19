@@ -1,5 +1,4 @@
 import express, { Request, Response } from "express";
-// import { IUserProfile } from "../models/UserProfile"
 import jwtAuth from "../../middleware/jwtAuth";
 import UserProfile from "../../models/UserProfile";
 const router = express.Router();
@@ -10,7 +9,15 @@ router.post("/", jwtAuth, async (req: Request, res: Response) => {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" });
         }
-        const { saasName, productDescription, productPromise, targetAudience, painPoints } = req.body;
+        const {
+            userNiche,
+            targetAudience,
+            focusArea,
+            productName,
+            productDescription,
+            productAudience,
+            productSolution,
+        } = req.body;
         const userId = (req.user as any)._id;
 
         const existingProfile = await UserProfile.findOne({ userId });
@@ -18,20 +25,25 @@ router.post("/", jwtAuth, async (req: Request, res: Response) => {
 
         if (existingProfile) {
             existingProfile.set({
-                saasName, 
+                userNiche,
+                targetAudience,
+                focusArea,
+                productName,
                 productDescription,
-                productPromise, 
-                targetAudience, 
-                painPoints
+                productAudience,
+                productSolution,
             });
             profile = await existingProfile.save();
         } else {
             profile = await UserProfile.create({
                 userId,
-                saasName, productDescription,
-                productPromise, 
-                targetAudience, 
-                painPoints
+                userNiche,
+                targetAudience,
+                focusArea,
+                productName,
+                productDescription,
+                productAudience,
+                productSolution,
             });
         }
 

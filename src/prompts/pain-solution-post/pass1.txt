@@ -1,5 +1,0 @@
-Rewrite this as if you’re explaining it casually to a friend. 
-Strip out polished phrasing, jargon, and “smart-sounding” language. 
-It should sound slightly messy and human.
-
-POST: {user_post}

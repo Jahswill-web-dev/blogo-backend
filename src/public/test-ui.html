@@ -345,7 +345,8 @@ const GROUPS = [
     icon: '✍️',
     desc: 'AI content generation pipelines',
     endpoints: [
-      { method: 'POST', path: '/generate-saas-profile', desc: 'Generate AI-enhanced SaaS profile summary', body: {} },
+      { method: 'POST', path: '/generate-saas-profile', desc: 'Generate AI-enhanced Content Creator profile', body: {} },
+      { method: 'GET',  path: '/saas-profile', desc: 'Retrieve stored AI-generated profile' },
       { method: 'POST', path: '/generate-categories', desc: 'Generate pain, general, and question-type categories', body: {} },
       { method: 'POST', path: '/generate-subtopics', desc: 'Generate content pillars and subtopics', body: {} },
       {
@@ -376,11 +377,13 @@ const GROUPS = [
         method: 'POST', path: '/profile',
         desc: 'Create or update user profile',
         body: {
-          saasName: '',
+          userNiche: 'Productivity systems for solopreneurs',
+          targetAudience: 'Solopreneurs who feel overwhelmed managing tasks and projects alone',
+          focusArea: 'Task management and daily planning systems',
+          productName: '',
           productDescription: '',
-          productPromise: '',
-          targetAudience: '',
-          painPoints: ''
+          productAudience: '',
+          productSolution: ''
         }
       },
     ]

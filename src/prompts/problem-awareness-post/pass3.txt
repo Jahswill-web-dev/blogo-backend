@@ -1,5 +1,0 @@
-I want you as an experienced copywriter to Identify the weakest part of the is post
-
-Do not rewrite the post.
-Only Critique and state how it can be improved
-Post: {rewrite1}
