@@ -17,6 +17,7 @@ import categoriesRoutes from "./routes/content/categories.routes";
 import aiSaasProfile from "./routes/content/saasProfile.routes";
 import subtopicRoutes from "./routes/content/subtopic.routes";
 import subtopicPostRoutes from "./routes/content/subtopicPost.routes";
+import focusAreasRoutes from "./routes/content/focusAreas.routes";
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use(categoriesRoutes);
 app.use(aiSaasProfile);
 app.use(subtopicRoutes);
 app.use(subtopicPostRoutes);
+app.use(focusAreasRoutes);
 
 async function startServer() {
   try {

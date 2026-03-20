@@ -49,6 +49,16 @@ export async function buildSubtopicsPromptTemplate(inputVars: string[]) {
   });
 }
 
+// Focus Areas Prompt Template Builder
+export async function buildFocusAreasPromptTemplate(inputVars: string[]) {
+  const prompt = await loadPrompt("/focus-areas/focusAreas.txt");
+  const template = `${prompt}\nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
+  return new PromptTemplate({
+    template,
+    inputVariables: inputVars.concat("format_instructions"),
+  });
+}
+
 // Build educational post prompt template (fine-tuned model — no JSON format instructions)
 export async function buildEducationalPostTemplate(inputVars: string[]) {
   const educationPrompt = await loadPrompt("/educational-post/education.txt");
