@@ -32,8 +32,8 @@ export async function storeSubtopics({
   userId: string;
   parsedPillars: {
     contentPillar: string;
-    pain: string;
-    subtopics: { subtopic: string; angle: string; goal: string }[];
+    description: string;
+    subtopics: { type: string; subtopic: string; angle: string; goal: string }[];
   }[];
 }) {
   if (!userId) {
@@ -41,14 +41,60 @@ export async function storeSubtopics({
   }
 
   const pillars = parsedPillars.map(p => ({
-    pillar:    p.contentPillar,
-    pain:      p.pain,
-    subtopics: p.subtopics, // already { subtopic, angle, goal } objects
+    pillar:      p.contentPillar,
+    description: p.description,
+    subtopics:   p.subtopics,
   }));
 
   return AISaasContentPillarsModel.findOneAndUpdate(
     { userId },
     { $set: { pillars } },
     { upsert: true, new: true }
+  );
+}
+
+// Phase 1 — store 5 pillars with empty subtopics
+export async function storePillarsOnly({
+  userId,
+  pillars,
+}: {
+  userId: string;
+  pillars: { contentPillar: string; description: string }[];
+}) {
+  if (!userId) {
+    throw new Error("storePillarsOnly: userId is required");
+  }
+
+  const mapped = pillars.map(p => ({
+    pillar:      p.contentPillar,
+    description: p.description,
+    subtopics:   [],
+  }));
+
+  return AISaasContentPillarsModel.findOneAndUpdate(
+    { userId },
+    { $set: { pillars: mapped } },
+    { upsert: true, new: true }
+  );
+}
+
+// Phase 2 — update one pillar's subtopics by array index
+export async function updatePillarSubtopics({
+  userId,
+  pillarIndex,
+  subtopics,
+}: {
+  userId: string;
+  pillarIndex: number;
+  subtopics: { type: string; subtopic: string; angle: string; goal: string }[];
+}) {
+  if (!userId) {
+    throw new Error("updatePillarSubtopics: userId is required");
+  }
+
+  return AISaasContentPillarsModel.findOneAndUpdate(
+    { userId },
+    { $set: { [`pillars.${pillarIndex}.subtopics`]: subtopics } },
+    { new: true }
   );
 }

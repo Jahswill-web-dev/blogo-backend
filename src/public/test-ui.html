@@ -349,6 +349,7 @@ const GROUPS = [
       { method: 'GET',  path: '/saas-profile', desc: 'Retrieve stored AI-generated profile' },
       { method: 'POST', path: '/generate-categories', desc: 'Generate pain, general, and question-type categories', body: {} },
       { method: 'POST', path: '/generate-subtopics', desc: 'Generate content pillars and subtopics', body: {} },
+      { method: 'POST', path: '/generate-content-strategy', desc: 'Generate 5 pillars then 6 subtopics per pillar (two-phase pipeline)', body: {} },
       {
         method: 'POST', path: '/generate-subtopic-post',
         desc: 'Generate subtopic posts (skeleton → tone → rewrite)',

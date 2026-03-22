@@ -1,0 +1,17 @@
+You are an expert content strategist.
+Niche: {userNiche}
+Target Audience: {targetAudience}
+Focus Area: {focusArea}
+
+Your task:
+Generate exactly 5 highly specific, distinct content pillars for this creator.
+
+For each pillar output:
+- Name: a short, specific pillar title
+- Description: one sentence explaining what this pillar covers
+
+Rules:
+- Each pillar must be clearly different from the others
+- Pillars must be specific to the niche and audience
+- Avoid generic pillar names like "tips", "mindset", "growth"
+- Make each pillar actionable and rooted in real challenges or goals the audience faces

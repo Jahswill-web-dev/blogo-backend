@@ -4,7 +4,9 @@ import {
   buildPainCategoriesPromptTemplate,
   buildCategoriesPromptTemplate,
   buildQuestionTypesPromptTemplate,
-  buildSubtopicsPromptTemplate
+  buildSubtopicsPromptTemplate,
+  buildPillarsPromptTemplate,
+  buildSinglePillarSubtopicsPromptTemplate,
 } from "../lib/promptFactory";
 import {
   PainCategoriesParser,
@@ -12,10 +14,20 @@ import {
   questionTypesParser,
   QuestionTypesformatInstructions,
   ContentStrategyFormatInstructions,
-  contentStrategyParser
+  contentStrategyParser,
+  pillarsOnlyParser,
+  PillarsOnlyFormatInstructions,
+  singlePillarSubtopicsParser,
+  SinglePillarSubtopicsFormatInstructions,
 } from "../lib/parsers";
-import { storeCategories, storeSubtopics } from "../repositories/category.repository";
+import {
+  storeCategories,
+  storeSubtopics,
+  storePillarsOnly,
+  updatePillarSubtopics,
+} from "../repositories/category.repository";
 import { runWithRetry }  from "../lib/retry";
+import { PillarItem } from "../schemas/subtopic.schema";
 
 
 /**
@@ -140,5 +152,78 @@ export async function generateSubtopics(inputVars: Record<string, any>) {
 }
 
 
+
+// Phase 1 — generate 5 pillars only, store without subtopics
+export async function generatePillarsOnly(inputVars: { userId: string; saasContext: Record<string, any> }) {
+  const { userId, saasContext } = inputVars;
+  if (!userId) {
+    throw new Error("userId is required to generate pillars");
+  }
+  const promptTemplate = await buildPillarsPromptTemplate(Object.keys(saasContext));
+  const promptText = await promptTemplate.format({
+    ...saasContext,
+    format_instructions: PillarsOnlyFormatInstructions,
+  });
+  const parsed = await runWithRetry(
+    () => lcOpenAI.invoke(promptText),
+    pillarsOnlyParser,
+    2
+  );
+  await storePillarsOnly({ userId, pillars: parsed.pillars });
+  return parsed.pillars; // PillarItem[]
+}
+
+// Phase 2 — generate 6 subtopics for ONE pillar, update that pillar's subtopics in DB
+export async function generateSubtopicsForOnePillar(inputVars: {
+  userId: string;
+  pillarIndex: number;
+  pillar: PillarItem;
+  saasContext: Record<string, any>;
+}) {
+  const { userId, pillarIndex, pillar, saasContext } = inputVars;
+  const vars = {
+    pillarName:        pillar.contentPillar,
+    pillarDescription: pillar.description,
+    ...saasContext,
+  };
+  const promptTemplate = await buildSinglePillarSubtopicsPromptTemplate(Object.keys(vars));
+  const promptText = await promptTemplate.format({
+    ...vars,
+    format_instructions: SinglePillarSubtopicsFormatInstructions,
+  });
+  const parsed = await runWithRetry(
+    () => lcOpenAI.invoke(promptText),
+    singlePillarSubtopicsParser,
+    2
+  );
+  await updatePillarSubtopics({ userId, pillarIndex, subtopics: parsed.subtopics });
+  return parsed.subtopics;
+}
+
+// Orchestrator — Phase 1 then Phase 2 × 5 (one pillar at a time)
+export async function generateContentStrategy(inputVars: { userId: string; saasContext: Record<string, any> }) {
+  const { userId, saasContext } = inputVars;
+  if (!userId) {
+    throw new Error("userId is required to generate content strategy");
+  }
+
+  // Phase 1: get pillars
+  const pillars = await generatePillarsOnly({ userId, saasContext });
+
+  // Phase 2: generate subtopics for each pillar sequentially
+  const fullPillars = [];
+  for (let i = 0; i < pillars.length; i++) {
+    console.log(`Generating subtopics for pillar ${i + 1}/${pillars.length}: ${pillars[i].contentPillar}`);
+    const subtopics = await generateSubtopicsForOnePillar({
+      userId,
+      pillarIndex: i,
+      pillar: pillars[i],
+      saasContext,
+    });
+    fullPillars.push({ ...pillars[i], subtopics });
+  }
+
+  return { pillars: fullPillars };
+}
 
 //Last step store in DB

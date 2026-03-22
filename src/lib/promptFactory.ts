@@ -67,3 +67,23 @@ export async function buildEducationalPostTemplate(inputVars: string[]) {
     inputVariables: inputVars,
   });
 }
+
+// Phase 1 — pillars only (no subtopics)
+export async function buildPillarsPromptTemplate(inputVars: string[]) {
+  const prompt = await loadPrompt("/categories/pillars.txt");
+  const template = `${prompt}\nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
+  return new PromptTemplate({
+    template,
+    inputVariables: inputVars.concat("format_instructions"),
+  });
+}
+
+// Phase 2 — subtopics for a single pillar
+export async function buildSinglePillarSubtopicsPromptTemplate(inputVars: string[]) {
+  const prompt = await loadPrompt("/categories/subtopics.txt");
+  const template = `${prompt}\nFORMAT INSTRUCTIONS:\n{format_instructions}\n\nGenerate JSON now.`;
+  return new PromptTemplate({
+    template,
+    inputVariables: inputVars.concat("format_instructions"),
+  });
+}

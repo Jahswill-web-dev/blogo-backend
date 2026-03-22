@@ -3,6 +3,7 @@ import { Schema, model, models } from "mongoose";
 
 // TypeScript interfaces
 export interface ISubtopic {
+  type:     string;
   subtopic: string;
   angle:    string;
   goal:     string;
@@ -10,7 +11,7 @@ export interface ISubtopic {
 
 export interface IPillar {
   pillar: string;
-  pain?: string;
+  description?: string;
   subtopics: ISubtopic[];
 }
 
@@ -28,6 +29,7 @@ export interface AISaasContentPillarsDocument extends IAISaasContentPillars, Doc
 
 const SubtopicSchema = new Schema(
     {
+        type:     { type: String, required: true },
         subtopic: { type: String, required: true },
         angle:    { type: String, required: true },
         goal:     { type: String, required: true },
@@ -37,9 +39,9 @@ const SubtopicSchema = new Schema(
 
 const PillarSchema = new Schema(
     {
-        pillar:    { type: String, required: true },
-        pain:      String,
-        subtopics: { type: [SubtopicSchema], required: true },
+        pillar:      { type: String, required: true },
+        description: String,
+        subtopics:   { type: [SubtopicSchema], required: true },
     },
     { _id: false }
 );

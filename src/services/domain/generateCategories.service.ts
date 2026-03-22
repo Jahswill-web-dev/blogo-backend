@@ -2,7 +2,8 @@ import {
     generateGeneralCategories,
     generatePainCategories,
     generateQuestionTypes,
-    generateSubtopics
+    generateSubtopics,
+    generateContentStrategy,
 } from "../../pipelines/categoriesPipeline";
 
 export async function generateCategories({
@@ -41,4 +42,14 @@ export async function generateSubtopicsForUser({
     const subtopics = await generateSubtopics(inputVars);
     console.log("Generated subtopics:", subtopics);
     return subtopics;
-}   
+}
+
+export async function generateContentStrategyForUser({
+    userId,
+    saasContext,
+}: {
+    userId: string;
+    saasContext: Record<string, any>;
+}) {
+    return generateContentStrategy({ userId, saasContext });
+}

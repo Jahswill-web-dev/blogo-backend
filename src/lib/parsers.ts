@@ -2,7 +2,7 @@ import { StructuredOutputParser } from "@langchain/core/output_parsers";
 import { PainCategoriesSchema } from "../schemas/painCategories.schema";
 import { QuestionTypesSchema } from "../schemas/questionsTypes.schema";
 import { SaasProfileSchema } from "../schemas/SaasProfile.schema";
-import { contentStrategySchema } from "../schemas/subtopic.schema";
+import { contentStrategySchema, pillarsOnlySchema, singlePillarSubtopicsSchema } from "../schemas/subtopic.schema";
 import { FocusAreasSchema } from "../schemas/focusAreas.schema";
 
 export const PainCategoriesParser = StructuredOutputParser.fromZodSchema(PainCategoriesSchema);
@@ -19,3 +19,11 @@ export const ContentStrategyFormatInstructions = contentStrategyParser.getFormat
 
 export const focusAreasParser = StructuredOutputParser.fromZodSchema(FocusAreasSchema);
 export const FocusAreasFormatInstructions = focusAreasParser.getFormatInstructions();
+
+// Phase 1 — pillars only
+export const pillarsOnlyParser = StructuredOutputParser.fromZodSchema(pillarsOnlySchema);
+export const PillarsOnlyFormatInstructions = pillarsOnlyParser.getFormatInstructions();
+
+// Phase 2 — subtopics for a single pillar
+export const singlePillarSubtopicsParser = StructuredOutputParser.fromZodSchema(singlePillarSubtopicsSchema);
+export const SinglePillarSubtopicsFormatInstructions = singlePillarSubtopicsParser.getFormatInstructions();
