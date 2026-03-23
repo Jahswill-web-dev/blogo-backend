@@ -4,7 +4,7 @@ import { Schema, model, models, Document } from "mongoose";
 export interface ISubtopicPost {
   userId: Schema.Types.ObjectId;
   contentPillar: string;
-  pain: string;
+  pain?: string;
   subtopic: string;
   post?: string;
   tone?: string;
@@ -31,7 +31,6 @@ const SubtopicPostSchema = new Schema(
     },
     pain: {
       type: String,
-      required: true,
     },
     subtopic: {
       type: String,

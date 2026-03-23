@@ -355,6 +355,8 @@ const GROUPS = [
         desc: 'Generate subtopic posts (skeleton → tone → rewrite)',
         body: { count: 3 }
       },
+      { method: 'GET', path: '/posts', desc: 'Retrieve all generated posts for the logged-in user' },
+      { method: 'GET', path: '/posts/:id', desc: 'Retrieve a single generated post by ID' },
       {
         method: 'POST', path: '/generate-bulk-posts',
         desc: 'Bulk post generation',

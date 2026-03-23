@@ -3,7 +3,7 @@ import "dotenv/config";
 
 export const lcOpenAI = new ChatOpenAI({
 //   apiKey: process.env.OPENAI_API_KEY!,
-  model: "gpt-5.1",
+  model: "gpt-5.3-chat-latest",
   temperature: 1,
   maxTokens: 4096,
 });

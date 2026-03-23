@@ -107,7 +107,7 @@ export async function getRandomSubtopicForUser(userId: string) {
 
   return {
     contentPillar: selectedPillar.pillar,
-    pain:          selectedPillar.pain || "",
+    pain:          selectedPillar.description || "",
     subtopic:      selectedSubtopic.subtopic,
     angle:         selectedSubtopic.angle || "",
     goal:          selectedSubtopic.goal  || "",

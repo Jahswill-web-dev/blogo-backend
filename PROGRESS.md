@@ -17,6 +17,37 @@ _Newest entry first. Append new entries at the top using the template below._
 
 ---
 
+## 2026-03-22
+
+### Completed
+- **Subtopic schema upgraded** — each subtopic now has a `type` field (Mistake / Contrarian / Framework / Breakdown / Comparison / Results); `pain` renamed to `description` on pillars
+  - Updated: `src/schemas/subtopic.schema.ts`, `src/models/Subtopics.ts`, `src/repositories/category.repository.ts`
+- **New two-phase content strategy pipeline** — replaced single monolithic LLM call with 6 sequential calls:
+  - Phase 1: one call generates 5 pillars (name + description only), stored immediately
+  - Phase 2: one call per pillar generates exactly 6 subtopics, DB updated after each
+  - New orchestrator: `generateContentStrategy()` in `src/pipelines/categoriesPipeline.ts`
+  - New endpoint: `POST /generate-content-strategy` — `src/routes/content/subtopic.routes.ts`
+- **New prompts**
+  - `src/prompts/categories/pillars.txt` — pillars-only prompt (Phase 1)
+  - `src/prompts/categories/subtopics.txt` — rewritten for single-pillar use (Phase 2); accepts `{pillarName}`, `{pillarDescription}` plus user context
+- **New Zod schemas** — `pillarsOnlySchema`, `singlePillarSubtopicsSchema` added to `src/schemas/subtopic.schema.ts`
+- **New parsers** — `pillarsOnlyParser`, `singlePillarSubtopicsParser` added to `src/lib/parsers.ts`
+- **New prompt builders** — `buildPillarsPromptTemplate`, `buildSinglePillarSubtopicsPromptTemplate` added to `src/lib/promptFactory.ts`
+- **New repository functions** — `storePillarsOnly`, `updatePillarSubtopics` added to `src/repositories/category.repository.ts`
+- **Test UI updated** — `POST /generate-content-strategy` card added to Content section in `src/public/test-ui.html`
+
+### Decisions
+- Kept old `POST /generate-subtopics` route and `generateSubtopics` pipeline intact for backward compatibility
+- Used index-based pillar updates (`pillars.${i}.subtopics`) in MongoDB — avoids name collision issues and is safe since pillar order is fixed at generation time
+- Each subtopic must use one of 6 angle types exactly once per pillar, enforced in the prompt (not in Zod, to avoid over-constraining retries)
+
+### Next
+1. Test `POST /generate-content-strategy` end-to-end via test UI
+2. Add `GET /posts` and `GET /posts/:id` endpoints — repository functions already exist in `subtopicPosts.repository.ts`
+3. Rebuild scheduled posting against `SubtopicPosts` model
+
+---
+
 ## 2026-03-19
 
 ### Completed

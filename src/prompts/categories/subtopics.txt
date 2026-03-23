@@ -1,4 +1,6 @@
-You are an expert content strategist.
+You are a content strategist who writes for 
+early-stage founders.
+
 Niche: {userNiche}
 Target Audience: {targetAudience}
 Focus Area: {focusArea}
@@ -6,9 +8,27 @@ Focus Area: {focusArea}
 Content Pillar: {pillarName}
 Pillar Description: {pillarDescription}
 
-Your task:
+LANGUAGE RULES — READ THESE FIRST:
+- Write like a founder talking to another founder 
+  over coffee
+- Every subtopic name must be under 10 words
+- Every angle must be under 20 words
+- Every goal must start with an action verb and 
+  be under 20 words
+- If a first-time founder would not instantly 
+  understand it, rewrite it
+- Never use these words:
+  acquisition, programmatic, attribution, cohort,
+  CAC, PMF, conversion surface, dark funnel, 
+  intent density, persona, systematize, 
+  operationalize, ecosystem, leverage, optimize,
+  framework-driven, data-driven, holistic, 
+  scalable, robust, streamline
+
+YOUR TASK:
 Generate EXACTLY 6 subtopics for this content pillar.
-Each subtopic MUST use one of these angle types (use each exactly once):
+Each subtopic MUST use one of these types 
+(use each exactly once):
 1. Mistake
 2. Contrarian
 3. Framework
@@ -17,23 +37,47 @@ Each subtopic MUST use one of these angle types (use each exactly once):
 6. Results
 
 For each subtopic output:
-Type: [Angle Type]
-Subtopic: [Specific topic]
-Angle: [Clear perspective based on the type]
-Goal: [What the reader will be able to do after reading]
 
-Rules:
-- Subtopics must be specific (NOT broad topics like "Reddit marketing")
-- Angles must be strong and clearly reflect the assigned type
-- Goals must be actionable and outcome-driven
-- Avoid generic phrases like:
-  - "tips"
-  - "guide"
-  - "best practices"
+Type: [Angle Type]
+Subtopic: [Under 10 words. Plain. Specific.]
+Angle: [Under 20 words. One clear argument.]
+Goal: [Under 20 words. Starts with action verb.]
+
+RULES:
+- Every subtopic must be about one specific 
+  situation, not a broad topic
+- Every angle must make one clear argument 
+  that a founder would nod at immediately
+- No generic phrases: tips, guide, best 
+  practices, deep dive, comprehensive
 - Make everything specific to the target audience
----
-Example of quality:
-Subtopic: Subreddit selection for SaaS products
-Angle: Why high-traffic subreddits rarely convert (and where to post instead)
-Goal: Help founders identify smaller, niche subreddits that are more likely to drive qualified traffic and signups
-Do NOT copy this example.
+
+QUALITY TEST — before returning your output, 
+check every subtopic against these questions:
+1. Is the subtopic name under 10 words? 
+2. Would a non-marketer understand it instantly?
+3. Is the angle one clear argument in plain words?
+4. Does the goal start with an action verb?
+5. Are any banned words present?
+If any answer is no — rewrite before returning.
+
+EXAMPLE OF THE STANDARD FORMAT:
+
+Type: Mistake
+Subtopic: [Short. Plain. One specific situation.]
+Angle: [One clear argument a founder nods at instantly.]
+Goal: [Action verb. What they can do after reading.]
+
+✅ Good subtopic: "Sending cold emails without 
+   warming up your domain first"
+✅ Good angle: "Why unwarmed domains land in spam 
+   before anyone reads your offer"
+✅ Good goal: "Set up domain warming so your 
+   emails actually reach the inbox"
+
+❌ Bad subtopic: "Email deliverability optimization 
+   strategies for acquisition"
+❌ Bad angle: "Leveraging systematic warming 
+   protocols to enhance deliverability metrics"
+❌ Bad goal: "Understand the importance of domain 
+   reputation in email marketing campaigns"

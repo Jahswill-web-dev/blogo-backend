@@ -32,10 +32,13 @@ Everything below is fully implemented end-to-end: route → service → pipeline
   - Model: `src/models/Categories.ts`
 
 - **Content Pillars + Subtopics**
-  - `POST /generate-subtopics` — `src/routes/content/subtopic.routes.ts`
-  - Pipeline: `src/pipelines/categoriesPipeline.ts` (`generateSubtopics`)
-  - Prompt: `src/prompts/categories/subtopics.txt`
-  - Each pillar → 5 subtopics, each with `{ subtopic, angle, goal }`
+  - `POST /generate-subtopics` (legacy) — `src/routes/content/subtopic.routes.ts`
+  - `POST /generate-content-strategy` (current) — two-phase pipeline:
+    - Phase 1: one LLM call → 5 pillars (name + description), stored immediately via `storePillarsOnly()`
+    - Phase 2: one LLM call per pillar → 6 subtopics, stored via `updatePillarSubtopics()`
+  - Pipelines: `generatePillarsOnly`, `generateSubtopicsForOnePillar`, `generateContentStrategy` in `src/pipelines/categoriesPipeline.ts`
+  - Prompts: `src/prompts/categories/pillars.txt` (Phase 1), `src/prompts/categories/subtopics.txt` (Phase 2)
+  - Each subtopic: `{ type, subtopic, angle, goal }` — type is one of: Mistake, Contrarian, Framework, Breakdown, Comparison, Results
   - Model: `src/models/Subtopics.ts`
 
 - **Educational Post Generation** (single-step, fine-tuned model)
